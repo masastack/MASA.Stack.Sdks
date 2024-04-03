@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Masa.BuildingBlocks.StackSdks.Dcc/1.0.0": {
+        "dependencies": {
+          "Masa.BuildingBlocks.StackSdks.Dcc.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "Masa.BuildingBlocks.StackSdks.Dcc.dll": {}
+        }
+      },
+      "Masa.BuildingBlocks.StackSdks.Dcc.Contracts/1.0.0": {
+        "runtime": {
+          "Masa.BuildingBlocks.StackSdks.Dcc.Contracts.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Masa.BuildingBlocks.StackSdks.Dcc/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Masa.BuildingBlocks.StackSdks.Dcc.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

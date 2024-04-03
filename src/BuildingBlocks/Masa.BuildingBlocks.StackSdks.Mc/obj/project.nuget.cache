@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "dgSpecHash": "ypYhmisUscfOARzQA+FfniLX+ov7eGvWusAHbRzpVBJgrEVQQt5MqOXnGSa5W18SYVAeohZ2wIOChOCgDvQkBA==",
+  "success": true,
+  "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Mc\\Masa.BuildingBlocks.StackSdks.Mc.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\masa.buildingblocks.data\\1.0.1-preview.16\\masa.buildingblocks.data.1.0.1-preview.16.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\masa.buildingblocks.data.contracts\\1.0.1-preview.16\\masa.buildingblocks.data.contracts.1.0.1-preview.16.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\masa.buildingblocks.data.uow\\1.0.1-preview.16\\masa.buildingblocks.data.uow.1.0.1-preview.16.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\masa.buildingblocks.ddd.domain\\1.0.1-preview.16\\masa.buildingblocks.ddd.domain.1.0.1-preview.16.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\masa.buildingblocks.dispatcher.events\\1.0.1-preview.16\\masa.buildingblocks.dispatcher.events.1.0.1-preview.16.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\masa.buildingblocks.dispatcher.integrationevents\\1.0.1-preview.16\\masa.buildingblocks.dispatcher.integrationevents.1.0.1-preview.16.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\masa.buildingblocks.readwritesplitting.cqrs\\1.0.1-preview.16\\masa.buildingblocks.readwritesplitting.cqrs.1.0.1-preview.16.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\masa.utils.caching.memory\\1.0.1-preview.16\\masa.utils.caching.memory.1.0.1-preview.16.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\masa.utils.extensions.dotnet\\1.0.1-preview.16\\masa.utils.extensions.dotnet.1.0.1-preview.16.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\masa.utils.models.config\\1.0.1-preview.16\\masa.utils.models.config.1.0.1-preview.16.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\6.0.0\\microsoft.extensions.dependencyinjection.6.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

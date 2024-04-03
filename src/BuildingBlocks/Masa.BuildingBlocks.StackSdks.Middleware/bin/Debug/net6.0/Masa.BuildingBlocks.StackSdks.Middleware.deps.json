@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Masa.BuildingBlocks.StackSdks.Middleware/1.0.0": {
+        "runtime": {
+          "Masa.BuildingBlocks.StackSdks.Middleware.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Masa.BuildingBlocks.StackSdks.Middleware/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "dgSpecHash": "eVI5zAJx+b2HXcIF5zjqA6rvYXov2Hn5PQADvLRgAriyBOxDq8u4Ap8NR7BPqy+hYoMXi59wuQCXNkC82dcL9A==",
+  "success": false,
+  "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1104",
+      "level": "Error",
+      "message": "找不到项目“D:\\MASA.Stack.Sdks\\src\\Isolation\\Masa.BuildingBlocks.Isolation\\Masa.BuildingBlocks.Isolation.csproj”。请检查项目引用是否有效以及项目文件是否存在。",
+      "libraryId": "D:\\MASA.Stack.Sdks\\src\\Isolation\\Masa.BuildingBlocks.Isolation\\Masa.BuildingBlocks.Isolation.csproj",
+      "targetGraphs": [
+        "net6.0",
+        "net7.0",
+        "net8.0"
+      ]
+    }
+  ]
+}

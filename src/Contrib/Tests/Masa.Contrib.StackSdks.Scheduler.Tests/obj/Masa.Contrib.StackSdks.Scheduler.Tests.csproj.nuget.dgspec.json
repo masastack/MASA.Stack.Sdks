@@ -1,0 +1,1166 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\MASA.Stack.Sdks\\src\\Contrib\\Tests\\Masa.Contrib.StackSdks.Scheduler.Tests\\Masa.Contrib.StackSdks.Scheduler.Tests.csproj": {}
+  },
+  "projects": {
+    "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj",
+        "projectName": "Masa.BuildingBlocks.StackSdks.Isolation",
+        "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\obj\\",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0",
+          "net7.0",
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\Isolation\\Masa.BuildingBlocks.Isolation\\Masa.BuildingBlocks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Isolation\\Masa.BuildingBlocks.Isolation\\Masa.BuildingBlocks.Isolation.csproj"
+              }
+            }
+          },
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\Isolation\\Masa.BuildingBlocks.Isolation\\Masa.BuildingBlocks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Isolation\\Masa.BuildingBlocks.Isolation\\Masa.BuildingBlocks.Isolation.csproj"
+              }
+            }
+          },
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\Isolation\\Masa.BuildingBlocks.Isolation\\Masa.BuildingBlocks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Isolation\\Masa.BuildingBlocks.Isolation\\Masa.BuildingBlocks.Isolation.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Pm\\Masa.BuildingBlocks.StackSdks.Pm.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Pm\\Masa.BuildingBlocks.StackSdks.Pm.csproj",
+        "projectName": "Masa.BuildingBlocks.StackSdks.Pm",
+        "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Pm\\Masa.BuildingBlocks.StackSdks.Pm.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Pm\\obj\\",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0",
+          "net7.0",
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          },
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          },
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Scheduler\\Masa.BuildingBlocks.StackSdks.Scheduler.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Scheduler\\Masa.BuildingBlocks.StackSdks.Scheduler.csproj",
+        "projectName": "Masa.BuildingBlocks.StackSdks.Scheduler",
+        "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Scheduler\\Masa.BuildingBlocks.StackSdks.Scheduler.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Scheduler\\obj\\",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0",
+          "net7.0",
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          },
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          },
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Caller\\Masa.Contrib.StackSdks.Caller.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Caller\\Masa.Contrib.StackSdks.Caller.csproj",
+        "projectName": "Masa.Contrib.StackSdks.Caller",
+        "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Caller\\Masa.Contrib.StackSdks.Caller.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Caller\\obj\\",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0",
+          "net7.0",
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj"
+              }
+            }
+          },
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj"
+              }
+            }
+          },
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "IdentityModel": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Masa.BuildingBlocks.Service.Caller": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Isolation.MultiEnvironment": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Service.Caller.HttpClient": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "IdentityModel": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Masa.BuildingBlocks.Service.Caller": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Isolation.MultiEnvironment": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Service.Caller.HttpClient": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "IdentityModel": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Masa.BuildingBlocks.Service.Caller": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Isolation.MultiEnvironment": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Service.Caller.HttpClient": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Isolation\\Masa.Contrib.StackSdks.Isolation.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Isolation\\Masa.Contrib.StackSdks.Isolation.csproj",
+        "projectName": "Masa.Contrib.StackSdks.Isolation",
+        "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Isolation\\Masa.Contrib.StackSdks.Isolation.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Isolation\\obj\\",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0",
+          "net7.0",
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj"
+              },
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Pm\\Masa.BuildingBlocks.StackSdks.Pm.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Pm\\Masa.BuildingBlocks.StackSdks.Pm.csproj"
+              }
+            }
+          },
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj"
+              },
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Pm\\Masa.BuildingBlocks.StackSdks.Pm.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Pm\\Masa.BuildingBlocks.StackSdks.Pm.csproj"
+              }
+            }
+          },
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Isolation\\Masa.BuildingBlocks.StackSdks.Isolation.csproj"
+              },
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Pm\\Masa.BuildingBlocks.StackSdks.Pm.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Pm\\Masa.BuildingBlocks.StackSdks.Pm.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Masa.Contrib.Configuration": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Configuration.ConfigurationApi.Dcc": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Isolation": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Isolation.MultiEnvironment": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.StackSdks.Config": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Storage.ObjectStorage.Aliyun": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Masa.Contrib.Configuration": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Configuration.ConfigurationApi.Dcc": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Isolation": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Isolation.MultiEnvironment": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.StackSdks.Config": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Storage.ObjectStorage.Aliyun": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Masa.Contrib.Configuration": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Configuration.ConfigurationApi.Dcc": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Isolation": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Isolation.MultiEnvironment": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.StackSdks.Config": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Storage.ObjectStorage.Aliyun": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Scheduler\\Masa.Contrib.StackSdks.Scheduler.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Scheduler\\Masa.Contrib.StackSdks.Scheduler.csproj",
+        "projectName": "Masa.Contrib.StackSdks.Scheduler",
+        "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Scheduler\\Masa.Contrib.StackSdks.Scheduler.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Scheduler\\obj\\",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0",
+          "net7.0",
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Scheduler\\Masa.BuildingBlocks.StackSdks.Scheduler.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Scheduler\\Masa.BuildingBlocks.StackSdks.Scheduler.csproj"
+              },
+              "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Caller\\Masa.Contrib.StackSdks.Caller.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Caller\\Masa.Contrib.StackSdks.Caller.csproj"
+              },
+              "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Isolation\\Masa.Contrib.StackSdks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Isolation\\Masa.Contrib.StackSdks.Isolation.csproj"
+              }
+            }
+          },
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Scheduler\\Masa.BuildingBlocks.StackSdks.Scheduler.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Scheduler\\Masa.BuildingBlocks.StackSdks.Scheduler.csproj"
+              },
+              "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Caller\\Masa.Contrib.StackSdks.Caller.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Caller\\Masa.Contrib.StackSdks.Caller.csproj"
+              },
+              "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Isolation\\Masa.Contrib.StackSdks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Isolation\\Masa.Contrib.StackSdks.Isolation.csproj"
+              }
+            }
+          },
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Scheduler\\Masa.BuildingBlocks.StackSdks.Scheduler.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Masa.BuildingBlocks.StackSdks.Scheduler\\Masa.BuildingBlocks.StackSdks.Scheduler.csproj"
+              },
+              "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Caller\\Masa.Contrib.StackSdks.Caller.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Caller\\Masa.Contrib.StackSdks.Caller.csproj"
+              },
+              "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Isolation\\Masa.Contrib.StackSdks.Isolation.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Isolation\\Masa.Contrib.StackSdks.Isolation.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Masa.BuildingBlocks.Authentication.Identity": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Service.Caller.HttpClient": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Masa.BuildingBlocks.Authentication.Identity": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Service.Caller.HttpClient": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Masa.BuildingBlocks.Authentication.Identity": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            },
+            "Masa.Contrib.Service.Caller.HttpClient": {
+              "target": "Package",
+              "version": "[1.0.1-preview.16, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\MASA.Stack.Sdks\\src\\Contrib\\Tests\\Masa.Contrib.StackSdks.Scheduler.Tests\\Masa.Contrib.StackSdks.Scheduler.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Tests\\Masa.Contrib.StackSdks.Scheduler.Tests\\Masa.Contrib.StackSdks.Scheduler.Tests.csproj",
+        "projectName": "Masa.Contrib.StackSdks.Scheduler.Tests",
+        "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Tests\\Masa.Contrib.StackSdks.Scheduler.Tests\\Masa.Contrib.StackSdks.Scheduler.Tests.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Tests\\Masa.Contrib.StackSdks.Scheduler.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0",
+          "net7.0",
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Scheduler\\Masa.Contrib.StackSdks.Scheduler.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Scheduler\\Masa.Contrib.StackSdks.Scheduler.csproj"
+              }
+            }
+          },
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Scheduler\\Masa.Contrib.StackSdks.Scheduler.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Scheduler\\Masa.Contrib.StackSdks.Scheduler.csproj"
+              }
+            }
+          },
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Scheduler\\Masa.Contrib.StackSdks.Scheduler.csproj": {
+                "projectPath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Scheduler\\Masa.Contrib.StackSdks.Scheduler.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.9.4, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.16.1, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.2, )"
+            },
+            "coverlet.msbuild": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.9.4, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.16.1, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.2, )"
+            },
+            "coverlet.msbuild": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        },
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.9.4, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.16.1, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.2, )"
+            },
+            "coverlet.msbuild": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

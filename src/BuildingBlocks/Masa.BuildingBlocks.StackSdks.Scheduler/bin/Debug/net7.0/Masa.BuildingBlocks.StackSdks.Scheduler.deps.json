@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "Masa.BuildingBlocks.StackSdks.Scheduler/1.0.0": {
+        "runtime": {
+          "Masa.BuildingBlocks.StackSdks.Scheduler.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Masa.BuildingBlocks.StackSdks.Scheduler/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

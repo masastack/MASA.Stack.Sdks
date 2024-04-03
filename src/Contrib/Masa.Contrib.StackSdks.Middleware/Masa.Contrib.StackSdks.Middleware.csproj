@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.4" />
+    <PackageReference Include="FluentValidation" Version="$(FluentValidationPackageVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="$(MicrosoftPackageVersion)" />
+
+	  <PackageReference Include="Masa.BuildingBlocks.Authentication.Identity" Version="$(MasaFrameworkPackageVersion)" />
+	  <PackageReference Include="Masa.BuildingBlocks.Dispatcher.Events" Version="$(MasaFrameworkPackageVersion)" />
+	  <PackageReference Include="Masa.BuildingBlocks.ReadWriteSplitting.Cqrs" Version="$(MasaFrameworkPackageVersion)" />
+	  <PackageReference Include="Masa.Contrib.Dispatcher.Events.FluentValidation" Version="$(MasaFrameworkPackageVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\Auth\Masa.BuildingBlocks.StackSdks.Auth.Contracts\Masa.BuildingBlocks.StackSdks.Auth.Contracts.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Config\Masa.BuildingBlocks.StackSdks.Config.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Middleware\Masa.BuildingBlocks.StackSdks.Middleware.csproj" />
+  </ItemGroup>
+
+</Project>

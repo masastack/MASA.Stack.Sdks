@@ -1,0 +1,27 @@
+<Project>
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+		<MicrosoftPackageVersion Condition="'$(TargetFramework)' == 'net6.0'">6.0.0</MicrosoftPackageVersion>
+		<MicrosoftPackageVersion Condition="'$(TargetFramework)' == 'net7.0'">7.0.0</MicrosoftPackageVersion>
+		<MicrosoftPackageVersion Condition="'$(TargetFramework)' == 'net8.0'">8.0.0</MicrosoftPackageVersion>
+		<MasaFrameworkPackageVersion>1.0.1-preview.16</MasaFrameworkPackageVersion>
+
+		<OpenTelemetryVersion>1.5.1</OpenTelemetryVersion>
+		<OpenTelemetryContribVersion>1.5.0</OpenTelemetryContribVersion>
+		<OpenTelemetryInstrumentationVersion>1.0.0-rc9.10</OpenTelemetryInstrumentationVersion>
+
+		<FluentValidationPackageVersion>11.1.0</FluentValidationPackageVersion>
+		<IdentityModelPackageVersion>6.0.0</IdentityModelPackageVersion>
+		<NESTPackageVersion>7.17.4</NESTPackageVersion>
+		<MoqPackageVersion>4.16.1</MoqPackageVersion>
+		<MSTestPackageVersion>2.2.3</MSTestPackageVersion>
+		<CoverletPackageVersion>3.0.2</CoverletPackageVersion>
+		<MicrosoftTeskSdkPackageVersion>16.9.4</MicrosoftTeskSdkPackageVersion>
+	</PropertyGroup>
+	
+	<!--<ItemGroup>
+		<PackageReference Include="Masa.BuildingBlocks.Ddd.Domain" Version="$(MasaFrameworkPackageVersion)" />
+		<PackageReference Include="Masa.BuildingBlocks.Data" Version="$(MasaFrameworkPackageVersion)" />
+		<PackageReference Include="Masa.Contrib.Service.Caller.HttpClient" Version="$(MasaFrameworkPackageVersion)" />
+	</ItemGroup>-->
+</Project>
