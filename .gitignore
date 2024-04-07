@@ -220,8 +220,8 @@ Thunbs.db
 packages/
 .vscode/
 coverage.opencover.xml
-bin/
-obj/
+*/*.dll
+*.pdb
 
 # Run Tests
 BenchmarkDotNet.Artifacts/
