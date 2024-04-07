@@ -5,9 +5,9 @@
 
 
 
-# MASA.Framework
+# MASA.Stack.Sdks
 
-.NET下一代微服务开发框架，提供基于分布式应用运行时--Dapr云原生最佳实践，能够快速实现分布式、微服务、DDD，SaaS等现代应用开发
+提供了一系列的SDK，用于简化与MASA.Stack产品服务的交互。
 
 ![Framework](https://s2.loli.net/2022/08/08/ZVT7De239abvYnw.png)
 
@@ -32,33 +32,6 @@
 
 ![feature.png](https://s2.loli.net/2022/08/08/ELBPiYvSj6KwNg8.png)
 
-
-
-## 快速使用
-
-### 必要条件
-
-* 安装[.NET SDK 6.0](https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0)
-
-#### 安装模板
-
-``` shell
-dotnet new --install Masa.Template
-```
-
-#### 创建项目
-
-``` shell
-dotnet new masafx -o Masa.Framework.Demo
-```
-
-> 或通过Visual Studio选择`MASA Framework Project`模板进行创建
-
-#### 启动项目
-
-``` shell
-dotnet run
-```
 
 
 

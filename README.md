@@ -5,9 +5,9 @@
 
 
 
-# MASA.Framework
+# MASA.Stack.Sdks
 
-.NET next-generation microservice development framework, which provides cloud native best practices based on Distributed Application Runtime--Dapr, which can quickly realize modern application development such as distributed, microservices, DDD, SaaS, etc.
+A series of SDKs are provided to simplify interaction with MASA.Stack product services.
 
 ![Framework](https://s2.loli.net/2022/08/18/ZHLMpQ6tnGTvuzP.png)
 
@@ -31,35 +31,6 @@
 The following are the building block abilities provided by the Framework:
 
 ![feature.png](https://s2.loli.net/2022/08/08/ELBPiYvSj6KwNg8.png)
-
-
-
-## Quick use
-
-### Prerequisites
-
-* Install [.NET SDK 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
-
-
-#### Install Template
-
-``` shell
-dotnet new --install Masa.Template
-```
-
-#### Create Project
-
-``` shell
-dotnet new masafx -o Masa.Framework.Demo
-```
-
-> Or Use the `MASA Framework Project` template to create through Visual Studio
-
-#### Run
-
-``` shell
-dotnet run
-```
 
 
 
