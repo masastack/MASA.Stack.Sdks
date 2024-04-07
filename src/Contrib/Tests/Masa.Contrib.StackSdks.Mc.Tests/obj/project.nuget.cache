@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qiHmlVFSUzCw6iTaM+RLIsgTkiUSrnw3P/goLx/GW1rZmBBdo0WDr1qyq5gQ1bCkI7DImtL0M9puVZp0Ax4+XA==",
+  "dgSpecHash": "9HMuE1ENkTM1sXCYoUtLywQpMNGGzkUlq5qFL0+ZxrO18rlCAMzhe28htG4nQsjKI2EoNAe2zi/SNydq8QcwtA==",
   "success": false,
   "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Tests\\Masa.Contrib.StackSdks.Mc.Tests\\Masa.Contrib.StackSdks.Mc.Tests.csproj",
   "expectedPackageFiles": [

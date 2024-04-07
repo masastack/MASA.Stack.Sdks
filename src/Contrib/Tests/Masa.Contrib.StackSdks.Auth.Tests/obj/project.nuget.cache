@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2LralOcnPPkKcjv0XZhxFOkrGJN8wKrzvsCWBvj0t8xKCKd4TAInaME534DeylgCzcyBeX5UL9KdU1s71yB9LA==",
+  "dgSpecHash": "Sl01xZdEmV1um4R2/sp/4/3cUwFJ36rTTtc83KLpNxUDQtf9OwAjnz3RwMxS3jz/R0kpdJEXbVr5A4YwgiCKtA==",
   "success": false,
   "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Tests\\Masa.Contrib.StackSdks.Auth.Tests\\Masa.Contrib.StackSdks.Auth.Tests.csproj",
   "expectedPackageFiles": [

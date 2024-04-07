@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TI22Lx33pwFQPF7VZNpCkHD9ESsKtHlTUJa3PJaXwIowBc8HXUw771fPBZrPwsLfVYq17PvHdiJ5t3aCjU2KAQ==",
+  "dgSpecHash": "c22rUwBgLY6AInDYZ6l9DCd3dLr08yeo1J21JYFGxvvw2AJiE4dp7/PIMum7G66PinSUb8RGXdY4aAaZuyI28Q==",
   "success": true,
   "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Tsc\\Masa.BuildingBlocks.StackSdk.Tsc\\Masa.BuildingBlocks.StackSdks.Tsc.csproj",
   "expectedPackageFiles": [

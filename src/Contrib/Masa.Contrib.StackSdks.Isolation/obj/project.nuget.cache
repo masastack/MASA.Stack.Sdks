@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eWTrom5OwAtWBkTJJibV0FZyO/NQxvpVEVQchNAxuP5oA2Lhfy/I+t1l3cNRfv71O6StQBAo0SMPIuNIjzXQdQ==",
+  "dgSpecHash": "OnZID6E3x3JAKBt33bD1TunNKpynNO9IVdCseE7+2aHHSk//2l5DF/GoMckM6lKt5GJWfLqf0EqApTrFrmHhxA==",
   "success": false,
   "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Isolation\\Masa.Contrib.StackSdks.Isolation.csproj",
   "expectedPackageFiles": [

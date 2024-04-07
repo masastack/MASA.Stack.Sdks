@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XdJIw4Btkhv3oRIRs64DbW5FgMNhUWGuuqoTz9wsbH0L8EgLWarZyVBDl7nz/MGMgbF4j5ExVLjS3+wencqsGA==",
+  "dgSpecHash": "hS2OrFkCOAqp/yv+sh93wcD0+RDX1X7Ly2TfB/c9GPSrOckKGzlu0H9y3Nfu3CDxHDm7dai1xw9RfILmSal3XA==",
   "success": false,
   "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Caller\\Masa.Contrib.StackSdks.Caller.csproj",
   "expectedPackageFiles": [
