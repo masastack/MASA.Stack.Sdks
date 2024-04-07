@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FCc0h+W9TjxrBGjYArJiYtbEMIWJQ7/TedpwTmjBTOqE8anGzn2kf7WX7ygsh0BIRWewafHsxcC999ReBnSpcg==",
+  "dgSpecHash": "PyYXTuLPb2VfSLxB9vEpRnu67/gqBuZg7+BJSTs91RWX7zkHUcNSoG+gnS5Rfhtk6Y+EMbskaFq2Q2OLg8CN1Q==",
   "success": true,
   "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Tsc.OpenTelemetry\\Masa.Contrib.StackSdks.Tsc.OpenTelemetry.csproj",
   "expectedPackageFiles": [

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LLfPkIx2qjBthgnVfft9z3Ne/bcrsE6Q9Cn8t7EsJR3+Zo/eYPMDEFFGj0BU8f7I09JXxu287CmiFET/Yki8cw==",
+  "dgSpecHash": "HjRXafIMfCMLQnEp0yUVP/GtYGnyvFHgS4B0vuzRbtuxFxZat/eh/wCRzcWHW+SCOAo0I2Gfcu4RxU/n3uSujg==",
   "success": false,
   "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Tests\\Masa.Contrib.StackSdks.Tsc.Elasticsearch.Tests\\Masa.Contrib.StackSdks.Tsc.Elasticsearch.Tests.csproj",
   "expectedPackageFiles": [

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "UVDBFOXJyInBYaX8r8DGIGNc4/MJWofuoF/AT3DtOPkCLVxMYr2pohL/0bRtjDjr2HAE+/6p8E4a+GDbI87i1A==",
+  "dgSpecHash": "kwyEx6F9quUqhzoUhUsW5gdyFfcdzmwrb2ePzP2RHSk0XpvT41mC4tYikI3rR7Z/h3bSqHb3s5kdzLanojt1mw==",
   "success": true,
   "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Tests\\Masa.Contrib.StackSdks.Tsc.Clickhouse.Tests\\Masa.Contrib.StackSdks.Tsc.Clickhouse.Tests.csproj",
   "expectedPackageFiles": [

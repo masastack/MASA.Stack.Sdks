@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/0OQoNu9q33XPmq/FfLVYBMAdMqBudgskUs+uEtplAMgtGPONC2joXqOZrZSACO1PIu0gIHlCQJUzRMF0h0+5Q==",
+  "dgSpecHash": "RUUWbyb+fcpOdQ5EbR27Nzs/gsTnC+C3mY5yhWgT0EkcZdB7eWj+YngekqWZ3N4g7/OWcnQNGS0L78SiOQRaaQ==",
   "success": false,
   "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Tests\\Masa.Contrib.StackSdks.Scheduler.Tests\\Masa.Contrib.StackSdks.Scheduler.Tests.csproj",
   "expectedPackageFiles": [

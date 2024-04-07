@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "DQQvD3Ghfm5u+BFSKGfDI8Zbr06OuU234WC7/YhQzw5kIxlkoDkKYBF1hPJQXJMXwxp90+QOonvvaNFrVBc3hw==",
+  "dgSpecHash": "j2wSU2S2h3AEzBq18Z7sgWDAtwjTN0/OoUvyFV73WPghH7o+01Kmz4pB0k2Qo21viTwyhZJkEMPefzvBUuPFWQ==",
   "success": true,
   "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\Contrib\\Masa.Contrib.StackSdks.Tsc.Apm.Clickhouse\\Masa.Contrib.StackSdks.Tsc.Apm.Clickhouse.csproj",
   "expectedPackageFiles": [

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ar+SyMgHVybglKZLAeFzpYAqMRLm7YNAkIPvIqYIFa55UsIERB4UmIwiettr8Re8aM9jSEZBMwLP4jB8D+41NQ==",
+  "dgSpecHash": "3pobPVFBmtyylnWUddbc2XhlnZJ3LSJV04p7d25rRqf45xC/TqGEoEggOOwxStU+osUJuFGqEqnZ/hN5BcKdEg==",
   "success": false,
   "projectFilePath": "D:\\MASA.Stack.Sdks\\src\\BuildingBlocks\\Auth\\Masa.BuildingBlocks.StackSdks.Auth.Contracts\\Masa.BuildingBlocks.StackSdks.Auth.Contracts.csproj",
   "expectedPackageFiles": [

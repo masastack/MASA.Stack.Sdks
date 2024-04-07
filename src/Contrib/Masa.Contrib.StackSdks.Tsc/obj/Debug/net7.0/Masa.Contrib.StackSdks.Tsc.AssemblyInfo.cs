@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Masa.Contrib.StackSdks.Tsc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+759635636f66c7ec9ad23057432863f1bd25ce3d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Masa.Contrib.StackSdks.Tsc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Masa.Contrib.StackSdks.Tsc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
