@@ -1,0 +1,113 @@
+name: PR_Run_Test_CI
+on:
+  pull_request:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: redis on base image
+    runs-on: ubuntu-latest
+    services:
+      # Label used to access the service container
+      redis:
+        # Docker Hub image
+        image: redis:alpine
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps port 6379 on service container to the host
+          - 6379:6379
+
+#     strategy:
+#       matrix:
+#         redis-version: [5]
+    steps:
+    - name: git pull
+      uses: actions/checkout@v2
+
+    - name: run a one-line script
+      run: env
+
+    - name: setting dotnet version
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          8.0.x
+          7.0.x
+          6.0.x
+          
+        include-prerelease: true
+
+#     - name: Start Redis
+#       uses: supercharge/redis-github-action@1.4.0
+#       with:
+#         redis-version: ${{ matrix.redis-version }}
+
+    - name: Configure sysctl limits
+      run: |
+        sudo swapoff -a
+        sudo sysctl -w vm.swappiness=1
+        sudo sysctl -w fs.file-max=262144
+        sudo sysctl -w vm.max_map_count=262144
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.17
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~\sonar\cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+    - name: Cache SonarCloud scanner
+      id: cache-sonar-scanner
+      uses: actions/cache@v1
+      with:
+        path: .\.sonar\scanner
+        key: ${{ runner.os }}-sonar-scanner
+        restore-keys: ${{ runner.os }}-sonar-scanner
+    - name: Install SonarCloud scanner
+      run: |
+        dotnet tool install --global dotnet-sonarscanner
+    - name: Start Elasticsearch
+      uses: everpcpc/elasticsearch-action@v2
+      with:
+        version: 7.6.1
+        plugins: |
+          https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.6.1/elasticsearch-analysis-ik-7.6.1.zip
+          https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download/v7.6.1/elasticsearch-analysis-pinyin-7.6.1.zip
+          analysis-icu
+          analysis-smartcn
+          analysis-kuromoji
+    - name: Setup ClickHouse     
+      uses: vahid-sohrabloo/clickhouse-action@v1
+      with:
+         # Version of ClickHouse to use
+        version: latest # optional, default is latest
+    - name: Build and analyze for internal
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      if: ${{ env.SONAR_TOKEN != '' }}
+      run: |
+        dotnet-sonarscanner begin /k:"masastack_MASA.Framework" /o:"masastack" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        dotnet build /p:ContinuousIntegrationBuild=true
+        dotnet test --filter FullyQualifiedName!~Masa.Utils --no-build --verbosity normal --collect "Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.Tests]*"
+        dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+    - name: Build and analyze for outside
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      if: ${{ env.SONAR_TOKEN == '' }}
+      run: |
+        dotnet build /p:ContinuousIntegrationBuild=true
+        dotnet test --filter FullyQualifiedName!~Masa.Utils --no-build --verbosity normal --collect "Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.Tests]*"
