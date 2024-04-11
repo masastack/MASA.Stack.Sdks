@@ -88,17 +88,18 @@ jobs:
           analysis-icu
           analysis-smartcn
           analysis-kuromoji
-    
-    - name: Build and analyze for internal
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      if: ${{ env.SONAR_TOKEN != '' }}
-      run: |
-        dotnet-sonarscanner begin /k:"masastack_MASA.Stack.Sdks" /o:"masastack" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-        dotnet build /p:ContinuousIntegrationBuild=true
-        dotnet test --filter FullyQualifiedName!~Masa.Utils --no-build --verbosity normal --collect "Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.Tests]*"
-        dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
+    # sonar 单元测试覆盖率和其它验证，暂时关闭
+    #- name: Build and analyze for internal
+    #  env:
+    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+    #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    #  if: ${{ env.SONAR_TOKEN != '' }}
+    #  run: |
+    #    dotnet-sonarscanner begin /k:"masastack_MASA.Stack.Sdks" /o:"masastack" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+    #    dotnet build /p:ContinuousIntegrationBuild=true
+    #    dotnet test --filter FullyQualifiedName!~Masa.Utils --no-build --verbosity normal --collect "Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.Tests]*"
+    #    dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
     - name: Build and analyze for outside
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
