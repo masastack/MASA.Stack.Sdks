@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Isolation\Masa.BuildingBlocks.Isolation\Masa.BuildingBlocks.Isolation.csproj" />
+	  <PackageReference Include="Masa.BuildingBlocks.Isolation" Version="$(MasaFrameworkPackageVersion)" />
   </ItemGroup>
 
 </Project>

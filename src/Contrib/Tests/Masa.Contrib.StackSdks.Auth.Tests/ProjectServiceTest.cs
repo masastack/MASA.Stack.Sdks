@@ -21,7 +21,8 @@ public class ProjectServiceTest
         userContext.Setup(user => user.GetUserId<Guid>()).Returns(userId).Verifiable();
         userContext.SetupGet(user => user.Environment).Returns("development");
         var projectService = new Mock<ProjectService>(caller.Object, userContext.Object);
-        var result = await projectService.Object.GetGlobalNavigations();
+        var clientId = "auth-web-dev";
+        var result = await projectService.Object.GetGlobalNavigations(clientId);
         caller.Verify(provider => provider.GetAsync<List<ProjectModel>>(requestUri, default), Times.Once);
         Assert.IsTrue(result.Count == 1);
     }
