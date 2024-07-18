@@ -8,4 +8,8 @@ public class ElasticModel
     public List<string> Nodes { get; set; }
 
     public string Index { get; set; }
+
+    public string UserName { get; set; }
+
+    public string Password { get; set; }
 }
