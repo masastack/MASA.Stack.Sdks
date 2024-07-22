@@ -120,5 +120,7 @@ public interface IUserService
     Task<GetImpersonateOutputModel> GetImpersonateAsync(GetImpersonateInputModel model);
 
     Task<ImpersonateOutputModel> ImpersonateAsync(ImpersonateInputModel model);
+
+    Task<Dictionary<Guid, string>> GetLdapUsersAccountAsync<T>(IEnumerable<Guid> userIds);
 }
 
