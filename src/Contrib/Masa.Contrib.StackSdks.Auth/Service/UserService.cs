@@ -412,7 +412,7 @@ public class UserService : IUserService
         return await _caller.PostAsync<object, ImpersonateOutputModel>(requestUri, model) ?? new();
     }
 
-    public async Task<Dictionary<Guid, string>> GetLdapUsersAccountAsync<T>(IEnumerable<Guid> userIds)
+    public async Task<Dictionary<Guid, string>> GetLdapUsersAccountAsync(IEnumerable<Guid> userIds)
     {
         var requestUri = $"api/thirdPartyUser/ldapUsersAccount";
         return await _caller.PostAsync<Dictionary<Guid, string>>(requestUri, new GetLdapUsersAccountModel { UserIds = userIds.ToList()}) ?? new();
