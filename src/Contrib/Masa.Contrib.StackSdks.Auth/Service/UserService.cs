@@ -417,5 +417,11 @@ public class UserService : IUserService
         var requestUri = $"api/thirdPartyUser/ldapUsersAccount";
         return await _caller.PostAsync<Dictionary<Guid, string>>(requestUri, new GetLdapUsersAccountModel { UserIds = userIds.ToList()}) ?? new();
     }
+
+    public async Task<Dictionary<Guid, string>> GetThirdPartyUserFieldValueAsync(GetThirdPartyUserFieldValueModel model)
+    {
+        var requestUri = $"api/thirdPartyUser/thirdPartyUserFieldValue";
+        return await _caller.PostAsync<Dictionary<Guid, string>>(requestUri, model) ?? new();
+    }
 }
 
