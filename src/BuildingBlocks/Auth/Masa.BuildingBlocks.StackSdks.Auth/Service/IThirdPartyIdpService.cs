@@ -10,4 +10,6 @@ public interface IThirdPartyIdpService
     Task<List<ThirdPartyIdpModel>> GetAllFromCacheAsync();
 
     Task<LdapOptionsModel?> GetLdapOptionsAsync(string scheme);
+
+    Task<List<ThirdPartyIdpSelectModel>> GetSelectAsync(string? search, bool includeLdap);
 }

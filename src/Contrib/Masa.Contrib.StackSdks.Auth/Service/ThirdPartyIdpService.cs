@@ -31,4 +31,10 @@ public class ThirdPartyIdpService : IThirdPartyIdpService
         var requestUri = $"api/thirdPartyIdp/ldapOptions";
         return _caller.GetAsync<LdapOptionsModel>(requestUri, new { scheme });
     }
+
+    public async Task<List<ThirdPartyIdpSelectModel>> GetSelectAsync(string? search, bool includeLdap)
+    {
+        var requestUri = $"api/thirdPartyIdp/getSelect";
+        return await _caller.GetAsync<List<ThirdPartyIdpSelectModel>>(requestUri, new { search, includeLdap }) ?? new();
+    }
 }
