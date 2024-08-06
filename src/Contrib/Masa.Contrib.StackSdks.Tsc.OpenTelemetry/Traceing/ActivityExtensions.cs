@@ -1,6 +1,8 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the Apache License. See LICENSE.txt in the project root for license information.
 
+using Microsoft.Extensions.Primitives;
+
 namespace System.Diagnostics;
 
 public static class ActivityExtension
@@ -15,9 +17,7 @@ public static class ActivityExtension
         {
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_AUTHORIZATION, httpRequest.Headers.Authorization);
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_USER_AGENT, httpRequest.Headers.UserAgent);
-            var realIP = httpRequest.Headers["X-Real-IP"].ToString();
-            realIP ??= httpRequest.HttpContext!.Connection.RemoteIpAddress!.ToString();
-            activity.SetTag(OpenTelemetryAttributeName.Http.CLIENT_IP, realIP);
+            activity.SetTag(OpenTelemetryAttributeName.Http.CLIENT_IP, GetIp(httpRequest.Headers, httpRequest.HttpContext!.Connection.RemoteIpAddress));
         }
 
         if ((httpRequest.HttpContext.User?.Claims.Count() ?? 0) > 0)
@@ -35,6 +35,28 @@ public static class ActivityExtension
         return activity;
     }
 
+    private static string GetIp(IHeaderDictionary headers, IPAddress? deafultIp)
+    {
+        StringValues value;
+        if (headers.TryGetValue("X-Original-Forwarded-For", out value))
+        {
+            var ip = value.ToString().Split(',')[0].Trim();
+            if (ip.Length > 0) return ip;
+        }
+        if (headers.TryGetValue("X-Forwarded-For", out value))
+        {
+            var ip = value.ToString().Split(',')[0].Trim();
+            if (ip.Length > 0) return ip;
+        }
+        if (headers.TryGetValue("X-Real-IP", out value))
+        {
+            var ip = value.ToString();
+            if (ip.Length > 0) return ip;
+        }
+
+        return deafultIp?.ToString() ?? string.Empty;
+    }
+
     public static Activity AddMasaSupplement(this Activity activity, HttpRequestMessage httpRequest)
     {
         activity.SetTag(OpenTelemetryAttributeName.Http.SCHEME, httpRequest.RequestUri?.Scheme);
@@ -44,6 +66,7 @@ public static class ActivityExtension
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_AUTHORIZATION, httpRequest.Headers.Authorization);
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_USER_AGENT, httpRequest.Headers.UserAgent);
         }
+        
         if (httpRequest.Content != null)
         {
             SetActivityBody(activity,
@@ -67,9 +90,7 @@ public static class ActivityExtension
         }
         if (httpResponse.HttpContext.Request != null && httpResponse.HttpContext.Request.Headers != null)
         {
-            var realIP = httpResponse.HttpContext.Request.Headers["X-Real-IP"].ToString();
-            realIP ??= httpResponse.HttpContext!.Connection.RemoteIpAddress!.ToString();
-            activity.SetTag(OpenTelemetryAttributeName.Http.CLIENT_IP, realIP);
+            activity.SetTag(OpenTelemetryAttributeName.Http.CLIENT_IP, GetIp(httpResponse.HttpContext.Request.Headers, httpResponse.HttpContext!.Connection.RemoteIpAddress));
         }
         return activity;
     }
