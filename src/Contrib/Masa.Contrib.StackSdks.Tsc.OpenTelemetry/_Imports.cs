@@ -10,6 +10,7 @@ global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Primitives;
 global using OpenTelemetry;
 global using OpenTelemetry.Instrumentation.AspNetCore;
 global using OpenTelemetry.Instrumentation.ElasticsearchClient;

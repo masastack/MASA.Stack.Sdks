@@ -37,8 +37,7 @@ public static class ActivityExtension
 
     private static string GetIp(IHeaderDictionary headers, IPAddress? deafultIp)
     {
-        StringValues value;
-        if (headers.TryGetValue("X-Original-Forwarded-For", out value))
+        if (headers.TryGetValue("X-Original-Forwarded-For", out StringValues value))
         {
             var ip = value.ToString().Split(',')[0].Trim();
             if (ip.Length > 0) return ip;
@@ -66,7 +65,7 @@ public static class ActivityExtension
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_AUTHORIZATION, httpRequest.Headers.Authorization);
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_USER_AGENT, httpRequest.Headers.UserAgent);
         }
-        
+
         if (httpRequest.Content != null)
         {
             SetActivityBody(activity,
