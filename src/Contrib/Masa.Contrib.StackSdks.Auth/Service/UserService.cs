@@ -423,5 +423,11 @@ public class UserService : IUserService
         var requestUri = $"api/thirdPartyUser/thirdPartyUserFieldValue";
         return await _caller.PostAsync<Dictionary<Guid, string>>(requestUri, model) ?? new();
     }
+
+    public async Task DeleteAccountAsync(DeleteAccountModel model)
+    {
+        var requestUri = $"api/user/account/delete";
+        await _caller.PostAsync(requestUri, model);
+    }
 }
 
