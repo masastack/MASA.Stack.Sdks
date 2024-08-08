@@ -10,5 +10,7 @@ public enum SendMsgCodeTypes
     Login = 3,
     Register = 4,
     Bind = 5,
-    ForgotPassword = 6
+    ForgotPassword = 6,
+    DeleteAccount = 7
+
 }
