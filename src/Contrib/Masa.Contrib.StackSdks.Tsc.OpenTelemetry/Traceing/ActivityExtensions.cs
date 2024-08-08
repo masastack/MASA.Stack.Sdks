@@ -37,12 +37,7 @@ public static class ActivityExtension
 
     private static string GetIp(IHeaderDictionary headers, IPAddress? deafultIp)
     {
-        if (headers.TryGetValue("X-Original-Forwarded-For", out StringValues value))
-        {
-            var ip = value.ToString().Split(',')[0].Trim();
-            if (ip.Length > 0) return ip;
-        }
-        if (headers.TryGetValue("X-Forwarded-For", out value))
+        if (headers.TryGetValue("X-Forwarded-For", out StringValues value))
         {
             var ip = value.ToString().Split(',')[0].Trim();
             if (ip.Length > 0) return ip;
@@ -50,6 +45,12 @@ public static class ActivityExtension
         if (headers.TryGetValue("X-Real-IP", out value))
         {
             var ip = value.ToString();
+            if (ip.Length > 0) return ip;
+        }
+
+        if (headers.TryGetValue("X-Original-Forwarded-For", out value))
+        {
+            var ip = value.ToString().Split(',')[0].Trim();
             if (ip.Length > 0) return ip;
         }
 
