@@ -2,5 +2,5 @@
 
 public class DeleteAccountModel
 {
-    public string SmsCode { get; set; } = string.Empty;
+    public string? SmsCode { get; set; }
 }
