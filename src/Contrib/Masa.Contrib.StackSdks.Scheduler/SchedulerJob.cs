@@ -7,14 +7,11 @@ public abstract class SchedulerJob : ISchedulerJob
 {
     protected SchedulerLogger<SchedulerJob> Logger { get; set; }
 
-    protected WebApplicationBuilder Builder { get; set; }
-
     protected IServiceProvider ServiceProvider { get; set; }
 
-    public Task InitializeAsync(WebApplicationBuilder builder, Guid jobId, Guid taskId)
+    public Task InitializeAsync(IServiceProvider serviceProvider, Guid jobId, Guid taskId)
     {
-        Builder = builder;
-        ServiceProvider = builder.Services.BuildServiceProvider();
+        ServiceProvider = serviceProvider;
         var loggerFactory = ServiceProvider.GetRequiredService<ILoggerFactory>();
         Logger = new SchedulerLogger<SchedulerJob>(loggerFactory, jobId, taskId);
         return Task.CompletedTask;
