@@ -5,4 +5,3 @@ global using Masa.BuildingBlocks.StackSdks.Scheduler.Enum;
 global using Masa.BuildingBlocks.StackSdks.Scheduler.Model;
 global using Masa.BuildingBlocks.StackSdks.Scheduler.Request;
 global using Masa.BuildingBlocks.StackSdks.Scheduler.Service;
-global using Microsoft.AspNetCore.Builder;
