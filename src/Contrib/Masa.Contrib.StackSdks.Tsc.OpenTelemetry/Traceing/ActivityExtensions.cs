@@ -48,12 +48,6 @@ public static class ActivityExtension
             if (ip.Length > 0) return ip;
         }
 
-        if (headers.TryGetValue("X-Original-Forwarded-For", out value))
-        {
-            var ip = value.ToString().Split(',')[0].Trim();
-            if (ip.Length > 0) return ip;
-        }
-
         return deafultIp?.ToString() ?? string.Empty;
     }
 
