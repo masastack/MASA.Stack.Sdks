@@ -7,13 +7,13 @@ public class HttpClientInstrumentHandler : ExceptionHandler
 {
     public virtual void OnHttpRequestMessage(Activity activity, HttpRequestMessage httpRequestMessage)
     {
-        activity.AddMasaSupplement(httpRequestMessage);
+        activity.AddMasaHttpRequestMessage(httpRequestMessage);
         HttpMetricProviders.AddHttpRequestMessageMetric(httpRequestMessage);
     }
 
     public virtual void OnHttpResponseMessage(Activity activity, HttpResponseMessage httpResponseMessage)
     {
-        activity.AddMasaSupplement(httpResponseMessage);
+        activity.AddMasaHttpResponseMessage(httpResponseMessage);
         HttpMetricProviders.AddHttpResponseMessageMetric(httpResponseMessage);
     }
 
