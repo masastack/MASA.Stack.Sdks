@@ -7,13 +7,13 @@ public class AspNetCoreInstrumentationHandler : ExceptionHandler
 {
     public virtual void OnHttpRequest(Activity activity, HttpRequest httpRequest)
     {
-        activity.AddMasaSupplement(httpRequest);
+        activity.AddMasaHttpRequest(httpRequest);
         HttpMetricProviders.AddHttpRequestMetric(httpRequest);
     }
 
     public virtual void OnHttpResponse(Activity activity, HttpResponse httpResponse)
     {
-        activity.AddMasaSupplement(httpResponse);
+        activity.AddMasaHttpResponse(httpResponse);
         HttpMetricProviders.AddHttpResponseMetric(httpResponse);
     }
 }

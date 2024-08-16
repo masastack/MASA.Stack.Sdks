@@ -1,13 +1,11 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the Apache License. See LICENSE.txt in the project root for license information.
 
-using Microsoft.Extensions.Primitives;
-
 namespace System.Diagnostics;
 
 public static class ActivityExtension
 {
-    public static Activity AddMasaSupplement(this Activity activity, HttpRequest httpRequest)
+    public static Activity AddMasaHttpRequest(this Activity activity, HttpRequest httpRequest)
     {
         activity.SetTag(OpenTelemetryAttributeName.Http.FLAVOR, httpRequest.Protocol);
         activity.SetTag(OpenTelemetryAttributeName.Http.SCHEME, httpRequest.Scheme);
@@ -20,11 +18,7 @@ public static class ActivityExtension
             activity.SetTag(OpenTelemetryAttributeName.Http.CLIENT_IP, GetIp(httpRequest.Headers, httpRequest.HttpContext!.Connection.RemoteIpAddress));
         }
 
-        if ((httpRequest.HttpContext.User?.Claims.Count() ?? 0) > 0)
-        {
-            activity.AddTag(OpenTelemetryAttributeName.EndUser.ID, httpRequest.HttpContext.User?.FindFirst("sub")?.Value ?? string.Empty);
-            activity.AddTag(OpenTelemetryAttributeName.EndUser.USER_NICK_NAME, httpRequest.HttpContext.User?.FindFirst("https://masastack.com/security/authentication/MasaNickName")?.Value ?? string.Empty);
-        }
+        SetUserInfo(activity, httpRequest.HttpContext.User);
         if (httpRequest.Body != null)
         {
             if (!httpRequest.Body.CanSeek)
@@ -51,7 +45,7 @@ public static class ActivityExtension
         return deafultIp?.ToString() ?? string.Empty;
     }
 
-    public static Activity AddMasaSupplement(this Activity activity, HttpRequestMessage httpRequest)
+    public static Activity AddMasaHttpRequestMessage(this Activity activity, HttpRequestMessage httpRequest)
     {
         activity.SetTag(OpenTelemetryAttributeName.Http.SCHEME, httpRequest.RequestUri?.Scheme);
         activity.SetTag(OpenTelemetryAttributeName.Host.NAME, Dns.GetHostName());
@@ -60,7 +54,6 @@ public static class ActivityExtension
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_AUTHORIZATION, httpRequest.Headers.Authorization);
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_USER_AGENT, httpRequest.Headers.UserAgent);
         }
-
         if (httpRequest.Content != null)
         {
             SetActivityBody(activity,
@@ -71,27 +64,25 @@ public static class ActivityExtension
         return activity;
     }
 
-    public static Activity AddMasaSupplement(this Activity activity, HttpResponse httpResponse)
+    public static Activity AddMasaHttpResponse(this Activity activity, HttpResponse httpResponse)
     {
         activity.SetTag(OpenTelemetryAttributeName.Http.RESPONSE_CONTENT_LENGTH, httpResponse.ContentLength);
         activity.SetTag(OpenTelemetryAttributeName.Http.RESPONSE_CONTENT_TYPE, httpResponse.ContentType);
         activity.SetTag(OpenTelemetryAttributeName.Host.NAME, Dns.GetHostName());
 
-        if ((httpResponse.HttpContext.User?.Claims.Count() ?? 0) > 0)
-        {
-            activity.AddTag(OpenTelemetryAttributeName.EndUser.ID, httpResponse.HttpContext.User?.FindFirst("sub")?.Value ?? string.Empty);
-            activity.AddTag(OpenTelemetryAttributeName.EndUser.USER_NICK_NAME, httpResponse.HttpContext.User?.FindFirst("https://masastack.com/security/authentication/MasaNickName")?.Value ?? string.Empty);
-        }
+        SetUserInfo(activity, httpResponse.HttpContext.User);
         if (httpResponse.HttpContext.Request != null && httpResponse.HttpContext.Request.Headers != null)
         {
             activity.SetTag(OpenTelemetryAttributeName.Http.CLIENT_IP, GetIp(httpResponse.HttpContext.Request.Headers, httpResponse.HttpContext!.Connection.RemoteIpAddress));
         }
+        activity.SetStatus(GetStatusResult(httpResponse.StatusCode));
         return activity;
     }
 
-    public static Activity AddMasaSupplement(this Activity activity, HttpResponseMessage httpResponse)
+    public static Activity AddMasaHttpResponseMessage(this Activity activity, HttpResponseMessage httpResponse)
     {
         activity.SetTag(OpenTelemetryAttributeName.Host.NAME, Dns.GetHostName());
+        activity.SetStatus(GetStatusResult((int)httpResponse.StatusCode));
         return activity;
     }
 
@@ -139,5 +130,30 @@ public static class ActivityExtension
         {
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_CONTENT_BODY, body);
         }
+    }
+
+    /// <summary>
+    /// 存在坑，masaauth声明不规范导致，之后有调整了再调整此处
+    /// </summary>
+    /// <param name="activity"></param>
+    /// <param name="claims"></param>
+    private static void SetUserInfo(Activity activity, ClaimsPrincipal? claims)
+    {
+        if (claims == null || !claims.Claims.Any()) return;
+        string userId = claims.FindFirstValue(JwtRegisteredClaimNames.Sub) ?? claims.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+        string userName = claims.FindFirstValue("userName") ?? claims.FindFirstValue(JwtRegisteredClaimNames.Name) ?? claims.FindFirstValue(ClaimTypes.Name) ?? string.Empty;
+
+        activity.AddTag(OpenTelemetryAttributeName.EndUser.ID, userId);
+        activity.AddTag(OpenTelemetryAttributeName.EndUser.USER_NICK_NAME, userName);
+    }
+
+    private static ActivityStatusCode GetStatusResult(int statusCode)
+    {
+        if (statusCode - 200 >= 0 && statusCode - 299 <= 0 || statusCode - 599 == 0)
+            return ActivityStatusCode.Ok;
+        if (statusCode - HttpStatusCode.BadRequest >= 0 && statusCode - 599 < 0)
+            return ActivityStatusCode.Error;
+
+        return ActivityStatusCode.Unset;
     }
 }

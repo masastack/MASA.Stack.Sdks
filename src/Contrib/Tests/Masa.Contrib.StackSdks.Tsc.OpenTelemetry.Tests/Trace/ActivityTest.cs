@@ -1,6 +1,8 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
+using StackExchange.Redis;
+
 namespace Masa.Contrib.StackSdks.Tsc.OpenTelemetry.Tests.Trace;
 
 [TestClass]
@@ -24,7 +26,7 @@ public class ActivityTest
         request.RequestUri = new Uri("http://localhost");
 
         var activity = new Activity("tets");
-        activity.AddMasaSupplement(request);
+        activity.AddMasaHttpRequestMessage(request);
         Assert.AreEqual(body, activity.GetTagItem(OpenTelemetryAttributeName.Http.REQUEST_CONTENT_BODY) as string);
     }
 
@@ -38,7 +40,7 @@ public class ActivityTest
         };
 
         var activity = new Activity("tets");
-        activity.AddMasaSupplement(response);
+        activity.AddMasaHttpResponseMessage(response);
         Assert.IsNotNull(activity);
     }
 
@@ -61,7 +63,7 @@ public class ActivityTest
         mock.Setup(request => request.ContentLength).Returns(ms.Length);
 
         var activity = new Activity("tets");
-        activity.AddMasaSupplement(mock.Object);
+        activity.AddMasaHttpRequest(mock.Object);
         Assert.IsNotNull(activity);
         Assert.AreEqual("http", activity.GetTagItem(OpenTelemetryAttributeName.Http.SCHEME) as string);
         Assert.AreEqual("http1.1", activity.GetTagItem(OpenTelemetryAttributeName.Http.FLAVOR) as string);
@@ -77,8 +79,8 @@ public class ActivityTest
 
         var httpContext = new Mock<HttpContext>();
         httpContext.Setup(context => context.User).Returns(new ClaimsPrincipal(new List<ClaimsIdentity> {
-        new ClaimsIdentity( new Claim[]{ new Claim("sub","123456") },"userId"),
-         new ClaimsIdentity( new Claim[]{ new Claim("https://masastack.com/security/authentication/MasaNickName", "admin") },"userName")
+        new ClaimsIdentity( new Claim[]{ new(ClaimTypes.NameIdentifier,"123456") },"userId"),
+         new ClaimsIdentity( new Claim[]{ new(ClaimTypes.Name, "admin") },"userName")
     }));
         mock.Setup(request => request.HttpContext).Returns(httpContext.Object);
         var body = "{\"name\":\"张三\"}";
@@ -88,7 +90,7 @@ public class ActivityTest
         mock.Setup(request => request.ContentLength).Returns(ms.Length);
 
         var activity = new Activity("tets");
-        activity.AddMasaSupplement(mock.Object);
+        activity.AddMasaHttpResponse(mock.Object);
         Assert.IsNotNull(activity.GetTagItem(OpenTelemetryAttributeName.Http.RESPONSE_CONTENT_TYPE) as string);
     }
 }
