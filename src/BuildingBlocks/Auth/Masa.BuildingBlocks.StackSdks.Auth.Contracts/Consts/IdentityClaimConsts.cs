@@ -10,6 +10,11 @@ public static class IdentityClaimConsts
     public const string ENVIRONMENT = "environment";
     public const string CURRENT_TEAM = "current_team";
     public const string STAFF = "staff_id";
-    public const string PHONE_NUMBER = "phone_number";
+    public const string PHONE_NUMBER = "phoneNumber";
     public const string EMAIL = "email";
+    public const string USER_ID = "sub";
+    public const string USER_NAME = "userName";
+    public const string IMPERSONATOR_USER_ID = $"{DEFAULT_PREFIX}/impersonatorUserId";
+    public const string DOMAIN_NAME = $"{DEFAULT_PREFIX}/domainName";
+    private const string DEFAULT_PREFIX = "https://masastack.com/security/identity/claims";
 }
