@@ -1,6 +1,8 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the Apache License. See LICENSE.txt in the project root for license information.
 
+using Masa.BuildingBlocks.StackSdks.Config.Consts;
+
 namespace System.Diagnostics;
 
 public static class ActivityExtension
@@ -140,8 +142,8 @@ public static class ActivityExtension
     private static void SetUserInfo(Activity activity, ClaimsPrincipal? claims)
     {
         if (claims == null || !claims.Claims.Any()) return;
-        string userId = claims.FindFirstValue(JwtRegisteredClaimNames.Sub) ?? claims.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
-        string userName = claims.FindFirstValue("userName") ?? claims.FindFirstValue(JwtRegisteredClaimNames.Name) ?? claims.FindFirstValue(ClaimTypes.Name) ?? string.Empty;
+        string userId = claims.FindFirstValue(IdentityClaimConsts.USER_ID) ?? claims.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+        string userName = claims.FindFirstValue(IdentityClaimConsts.USER_NAME) ?? claims.FindFirstValue(ClaimTypes.Name) ?? string.Empty;
 
         activity.AddTag(OpenTelemetryAttributeName.EndUser.ID, userId);
         activity.AddTag(OpenTelemetryAttributeName.EndUser.USER_NICK_NAME, userName);

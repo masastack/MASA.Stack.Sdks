@@ -1,6 +1,7 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
+global using Masa.BuildingBlocks.StackSdks.Config.Consts;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;

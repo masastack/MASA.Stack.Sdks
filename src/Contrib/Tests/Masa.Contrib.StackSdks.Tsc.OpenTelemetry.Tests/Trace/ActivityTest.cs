@@ -1,8 +1,6 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
-using StackExchange.Redis;
-
 namespace Masa.Contrib.StackSdks.Tsc.OpenTelemetry.Tests.Trace;
 
 [TestClass]
@@ -79,8 +77,8 @@ public class ActivityTest
 
         var httpContext = new Mock<HttpContext>();
         httpContext.Setup(context => context.User).Returns(new ClaimsPrincipal(new List<ClaimsIdentity> {
-        new ClaimsIdentity( new Claim[]{ new(ClaimTypes.NameIdentifier,"123456") },"userId"),
-         new ClaimsIdentity( new Claim[]{ new(ClaimTypes.Name, "admin") },"userName")
+        new ClaimsIdentity( new Claim[]{ new(IdentityClaimConsts.USER_ID,"123456") },"userId"),
+         new ClaimsIdentity( new Claim[]{ new(IdentityClaimConsts.USER_ID, "admin") },"userName")
     }));
         mock.Setup(request => request.HttpContext).Returns(httpContext.Object);
         var body = "{\"name\":\"张三\"}";
