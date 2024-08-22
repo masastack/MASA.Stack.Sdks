@@ -14,7 +14,7 @@ public static partial class ServiceExtensions
         bool isInterruptSignalRTracing = true)
     {
         return services.AddObservable(loggingBuilder,
-            configuration.GetSection("Masa:Observable").Get<MasaObservableOptions>(),
+            configuration.GetSection("Masa:Observable").Get<MasaObservableOptions>()!,
             configuration.GetSection("Masa:Observable:OtlpUrl").Get<string>(),
             isBlazor,
             isInterruptSignalRTracing);
@@ -47,7 +47,7 @@ public static partial class ServiceExtensions
             throw new UriFormatException($"{nameof(otlpUrl)}:{otlpUrl} is invalid url");
         services.AddOpenTelemetry()
             .ConfigureResource(resource => resource.AddMasaService(option))
-            .AddMasaTracing(services, builder => builder.AddOtlpExporter(options => options.Endpoint = uri),
+            .AddMasaTracing(services, builder => builder.AddOtlpExporter(options => options.Endpoint = uri!),
             builder =>
             {
                 if (isBlazor)
@@ -55,13 +55,13 @@ public static partial class ServiceExtensions
                 else
                     builder.AspNetCoreInstrumentationOptions.AppendDefaultFilter(builder, isInterruptSignalRTracing);
             })
-            .AddMasaMetrics(builder => builder.AddOtlpExporter(otlp => otlp.Endpoint = uri));
+            .AddMasaMetrics(builder => builder.AddOtlpExporter(otlp => otlp.Endpoint = uri!));
 
         var resources = ResourceBuilder.CreateDefault().AddMasaService(option);
         loggingBuilder.AddMasaOpenTelemetry(builder =>
         {
             builder.SetResourceBuilder(resources);
-            builder.AddOtlpExporter(otlp => otlp.Endpoint = uri);
+            builder.AddOtlpExporter(otlp => otlp.Endpoint = uri!);
         });
 
         return services;

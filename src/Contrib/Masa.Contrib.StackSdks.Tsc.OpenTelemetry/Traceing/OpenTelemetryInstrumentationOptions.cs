@@ -23,8 +23,9 @@ public class OpenTelemetryInstrumentationOptions
     /// <summary>
     /// Default record all data. You can replace it or set null
     /// </summary>
-    public Action<AspNetCoreInstrumentationOptions> AspNetCoreInstrumentationOptions { get; set; } = options =>
+    public Action<AspNetCoreTraceInstrumentationOptions> AspNetCoreInstrumentationOptions { get; set; } = options =>
     {
+
         options.EnrichWithHttpRequest = aspNetCoreInstrumentationHandler.OnHttpRequest;
         options.EnrichWithHttpResponse = aspNetCoreInstrumentationHandler.OnHttpResponse;
         options.EnrichWithException = aspNetCoreInstrumentationHandler.OnException;
@@ -33,7 +34,7 @@ public class OpenTelemetryInstrumentationOptions
     /// <summary>
     /// Default record all data. You can replace it or set null
     /// </summary>
-    public Action<HttpClientInstrumentationOptions> HttpClientInstrumentationOptions { get; set; } = options =>
+    public Action<HttpClientTraceInstrumentationOptions> HttpClientInstrumentationOptions { get; set; } = options =>
     {
         options.EnrichWithException = httpClientInstrumentHandler.OnException;
         options.EnrichWithHttpRequestMessage = httpClientInstrumentHandler.OnHttpRequestMessage;

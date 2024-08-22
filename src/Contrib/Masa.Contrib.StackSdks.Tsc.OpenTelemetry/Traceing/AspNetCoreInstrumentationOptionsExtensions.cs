@@ -36,7 +36,7 @@ public static class AspNetCoreInstrumentationOptionsExtensions
     /// <param name="options"></param>
     /// <param name="openTelemetryInstrumentationOptions"></param>
     /// <param name="isInterruptSignalrTracing"></param>
-    public static void AppendDefaultFilter(this Action<AspNetCoreInstrumentationOptions> options,
+    public static void AppendDefaultFilter(this Action<AspNetCoreTraceInstrumentationOptions> options,
         OpenTelemetryInstrumentationOptions openTelemetryInstrumentationOptions,
         bool isInterruptSignalrTracing)
     {
@@ -49,8 +49,8 @@ public static class AspNetCoreInstrumentationOptionsExtensions
     }
 
     private static bool IsDefaultFilter(HttpContext httpContext) => !(IsInterruptSignalrTracing && IsWebsocket(httpContext)
-                 || IsReuqestPathMatchPrefix(httpContext, _CommonFilterIgnorePrefix)
-                 || IsReuqestPathMatchSuffix(httpContext, _CommonFilterIgnoreSuffix));
+                 || IsReuqestPathMatchHttpRequestPrefix(httpContext, _CommonFilterIgnorePrefix)
+                 || IsReuqestPathMatchHttpRequestSuffix(httpContext, _CommonFilterIgnoreSuffix));
 
     /// <summary>
     /// The filter ignore list includes swagger and blazor and static files.
@@ -58,7 +58,7 @@ public static class AspNetCoreInstrumentationOptionsExtensions
     /// <param name="options"></param>
     /// <param name="openTelemetryInstrumentationOptions"></param>
     /// <param name="isInterruptSignalrTracing"></param>
-    public static void AppendBlazorFilter(this Action<AspNetCoreInstrumentationOptions> options,
+    public static void AppendBlazorFilter(this Action<AspNetCoreTraceInstrumentationOptions> options,
         OpenTelemetryInstrumentationOptions openTelemetryInstrumentationOptions,
         bool isInterruptSignalrTracing)
     {
@@ -70,12 +70,29 @@ public static class AspNetCoreInstrumentationOptionsExtensions
         openTelemetryInstrumentationOptions.AspNetCoreInstrumentationOptions += options;
     }
 
-    private static bool IsBlazorFilter(HttpContext httpContext) => !IsReuqestPathMatchPrefix(httpContext, _BlazorFilterIgnorePrefix);
+
+    public static void AppendHttpRequestFilter(this Action<HttpClientTraceInstrumentationOptions> options,
+        OpenTelemetryInstrumentationOptions openTelemetryInstrumentationOptions,
+        bool isInterruptSignalrTracing)
+    {
+        IsInterruptSignalrTracing = isInterruptSignalrTracing;
+        options += opt =>
+        {
+            opt.FilterHttpRequestMessage = IsHttprquestFilter;
+        };
+        openTelemetryInstrumentationOptions.HttpClientInstrumentationOptions += options;
+    }
+
+    private static bool IsHttprquestFilter(HttpRequestMessage httpRequestMessage) => !(IsInterruptSignalrTracing &&
+                 || IsReuqestPathMatchPrefix(httpRequestMessage, _CommonFilterIgnorePrefix)
+                 || IsReuqestPathMatchSuffix(httpRequestMessage, _CommonFilterIgnoreSuffix));
+
+
+    private static bool IsBlazorFilter(HttpContext httpContext) => !IsReuqestPathMatchHttpRequestPrefix(httpContext, _BlazorFilterIgnorePrefix);
 
     private static bool IsWebsocket(HttpContext httpContext)
     {
-        if (httpContext.Request.Headers.ContainsKey("Connection")
-            && httpContext.Request.Headers.ContainsKey(httpContext.Request.Headers["Connection"]))
+        if (httpContext.Request.Headers.ContainsKey("Connection") && httpContext.Request.Headers.ContainsKey(httpContext.Request.Headers["Connection"]!))
         {
             Activity.Current = null;
             return true;
@@ -83,13 +100,23 @@ public static class AspNetCoreInstrumentationOptionsExtensions
         return false;
     }
 
-    private static bool IsReuqestPathMatchSuffix(HttpContext httpContext, List<string> suffix)
+    private static bool IsReuqestPathMatchHttpRequestSuffix(HttpContext httpContext, List<string> suffix)
     {
-        return !string.IsNullOrEmpty(httpContext.Request.Path.Value) && suffix.Exists(str => httpContext.Request.Path.Value.EndsWith(str));
+        return !string.IsNullOrEmpty(httpContext.Request.Path.Value) && suffix.Exists(httpContext.Request.Path.Value.EndsWith);
     }
 
-    private static bool IsReuqestPathMatchPrefix(HttpContext httpContext, List<string> prefix)
+    private static bool IsReuqestPathMatchHttpRequestPrefix(HttpContext httpContext, List<string> prefix)
     {
-        return !string.IsNullOrEmpty(httpContext.Request.Path.Value) && prefix.Exists(str => httpContext.Request.Path.Value.StartsWith(str));
+        return !string.IsNullOrEmpty(httpContext.Request.Path.Value) && prefix.Exists(httpContext.Request.Path.Value.StartsWith);
+    }
+
+    private static bool IsReuqestPathMatchPrefix(HttpRequestMessage httpRequestMessage, List<string> prefix)
+    {
+        return httpRequestMessage.RequestUri != null && !string.IsNullOrEmpty(httpRequestMessage.RequestUri.PathAndQuery) && prefix.Exists(httpRequestMessage.RequestUri.PathAndQuery.StartsWith);
+    }
+
+    private static bool IsReuqestPathMatchSuffix(HttpRequestMessage httpRequestMessage, List<string> suffix)
+    {
+        return httpRequestMessage.RequestUri != null && !string.IsNullOrEmpty(httpRequestMessage.RequestUri.PathAndQuery) && suffix.Exists(httpRequestMessage.RequestUri.PathAndQuery.EndsWith);
     }
 }
