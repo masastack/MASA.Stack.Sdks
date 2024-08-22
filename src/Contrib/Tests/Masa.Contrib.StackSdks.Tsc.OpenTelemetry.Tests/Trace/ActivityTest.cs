@@ -24,7 +24,7 @@ public class ActivityTest
         request.RequestUri = new Uri("http://localhost");
 
         var activity = new Activity("tets");
-        activity.AddMasaHttpRequestMessage(request);
+        HttpClientInstrumentHandler.AddMasaHttpRequestMessage(activity, request);
         Assert.AreEqual(body, activity.GetTagItem(OpenTelemetryAttributeName.Http.REQUEST_CONTENT_BODY) as string);
     }
 
@@ -38,7 +38,7 @@ public class ActivityTest
         };
 
         var activity = new Activity("tets");
-        activity.AddMasaHttpResponseMessage(response);
+        HttpClientInstrumentHandler.AddMasaHttpResponseMessage(activity, response);
         Assert.IsNotNull(activity);
     }
 
@@ -61,7 +61,7 @@ public class ActivityTest
         mock.Setup(request => request.ContentLength).Returns(ms.Length);
 
         var activity = new Activity("tets");
-        activity.AddMasaHttpRequest(mock.Object);
+        AspNetCoreInstrumentationHandler.AddMasaHttpRequest(activity, mock.Object);
         Assert.IsNotNull(activity);
         Assert.AreEqual("http", activity.GetTagItem(OpenTelemetryAttributeName.Http.SCHEME) as string);
         Assert.AreEqual("http1.1", activity.GetTagItem(OpenTelemetryAttributeName.Http.FLAVOR) as string);
@@ -88,7 +88,7 @@ public class ActivityTest
         mock.Setup(request => request.ContentLength).Returns(ms.Length);
 
         var activity = new Activity("tets");
-        activity.AddMasaHttpResponse(mock.Object);
+        AspNetCoreInstrumentationHandler.AddMasaHttpResponse(activity, mock.Object);
         Assert.IsNotNull(activity.GetTagItem(OpenTelemetryAttributeName.Http.RESPONSE_CONTENT_TYPE) as string);
     }
 }

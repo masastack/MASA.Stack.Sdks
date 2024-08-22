@@ -20,9 +20,9 @@ internal class HttpResponseMiddleware
         httpResponse.Body = ms;
         await _next(httpContext);
         ms.Seek(0, SeekOrigin.Begin);
-        var responseResult = new StreamReader(ms).ReadToEnd();
+        var responseResult = await new StreamReader(ms).ReadToEndAsync();
         ms.Seek(0, SeekOrigin.Begin);
-        ms.CopyTo(rawStream);
+        await ms.CopyToAsync(rawStream);
         httpResponse.Body = rawStream;
 
         if (httpResponse.StatusCode - 299 == 0 || httpResponse.StatusCode - 500 >= 0)
@@ -31,7 +31,7 @@ internal class HttpResponseMiddleware
         }
         else
         {
-            OpenTelemetryInstrumentationOptions.Logger.LogInformation("response length: {length}, context: {context}", responseResult.Length, responseResult);
+            OpenTelemetryInstrumentationOptions.Logger.LogInformation("response length: {Length}, context: {Context}", responseResult.Length, responseResult);
         }
     }
 }

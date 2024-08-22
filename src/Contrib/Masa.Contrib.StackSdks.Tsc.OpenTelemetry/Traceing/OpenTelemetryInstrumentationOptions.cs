@@ -25,7 +25,6 @@ public class OpenTelemetryInstrumentationOptions
     /// </summary>
     public Action<AspNetCoreTraceInstrumentationOptions> AspNetCoreInstrumentationOptions { get; set; } = options =>
     {
-
         options.EnrichWithHttpRequest = aspNetCoreInstrumentationHandler.OnHttpRequest;
         options.EnrichWithHttpResponse = aspNetCoreInstrumentationHandler.OnHttpResponse;
         options.EnrichWithException = aspNetCoreInstrumentationHandler.OnException;
