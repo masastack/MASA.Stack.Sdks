@@ -12,8 +12,7 @@ public static class ServiceExtensions
               options.IncludeScopes = true;
               options.IncludeFormattedMessage = true;
               options.ParseStateValues = true;
-              if (configure != null)
-                  configure.Invoke(options);
+              configure?.Invoke(options);
           });
     }
 }

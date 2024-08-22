@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
 global using Masa.BuildingBlocks.StackSdks.Config.Consts;
+global using Masa.Contrib.StackSdks.Tsc.OpenTelemetry.Tracing.Handler;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;

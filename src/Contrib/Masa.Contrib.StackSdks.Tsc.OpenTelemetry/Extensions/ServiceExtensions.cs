@@ -11,13 +11,15 @@ public static partial class ServiceExtensions
         ILoggingBuilder loggingBuilder,
         IConfiguration configuration,
         bool isBlazor = false,
-        bool isInterruptSignalRTracing = true)
+        bool isInterruptSignalRTracing = true,
+        IEnumerable<string>? activitySources = default)
     {
         return services.AddObservable(loggingBuilder,
-            configuration.GetSection("Masa:Observable").Get<MasaObservableOptions>(),
+            configuration.GetSection("Masa:Observable").Get<MasaObservableOptions>()!,
             configuration.GetSection("Masa:Observable:OtlpUrl").Get<string>(),
             isBlazor,
-            isInterruptSignalRTracing);
+            isInterruptSignalRTracing,
+            activitySources);
     }
 
     public static IServiceCollection AddObservable(this IServiceCollection services,
@@ -25,12 +27,13 @@ public static partial class ServiceExtensions
         Func<MasaObservableOptions> optionsConfigure,
         Func<string>? otlpUrlConfigure = null,
         bool isBlazor = false,
-        bool isInterruptSignalRTracing = true)
+        bool isInterruptSignalRTracing = true,
+        IEnumerable<string>? activitySources = default)
     {
         ArgumentNullException.ThrowIfNull(optionsConfigure);
         var options = optionsConfigure();
         var otlpUrl = otlpUrlConfigure?.Invoke() ?? string.Empty;
-        return services.AddObservable(loggingBuilder, options, otlpUrl, isBlazor, isInterruptSignalRTracing);
+        return services.AddObservable(loggingBuilder, options, otlpUrl, isBlazor, isInterruptSignalRTracing, activitySources);
     }
 
     public static IServiceCollection AddObservable(this IServiceCollection services,
@@ -38,7 +41,8 @@ public static partial class ServiceExtensions
         MasaObservableOptions option,
         string? otlpUrl = null,
         bool isBlazor = false,
-        bool isInterruptSignalRTracing = true)
+        bool isInterruptSignalRTracing = true,
+        IEnumerable<string>? activitySources = default)
     {
         ArgumentNullException.ThrowIfNull(option);
 
@@ -47,24 +51,40 @@ public static partial class ServiceExtensions
             throw new UriFormatException($"{nameof(otlpUrl)}:{otlpUrl} is invalid url");
         services.AddOpenTelemetry()
             .ConfigureResource(resource => resource.AddMasaService(option))
-            .AddMasaTracing(services, builder => builder.AddOtlpExporter(options => options.Endpoint = uri),
+            .AddMasaTracing(services, builder => AddTraceOtlpExporter(builder, uri!, activitySources?.ToArray()),
             builder =>
             {
                 if (isBlazor)
-                    builder.AspNetCoreInstrumentationOptions.AppendBlazorFilter(builder, isInterruptSignalRTracing);
+                    builder.AspNetCoreInstrumentationOptions.AddBlazorFilter(builder, isInterruptSignalRTracing);
                 else
-                    builder.AspNetCoreInstrumentationOptions.AppendDefaultFilter(builder, isInterruptSignalRTracing);
+                    builder.AspNetCoreInstrumentationOptions.AddAspNetCoreFilter(builder, isInterruptSignalRTracing);
+
+                builder.HttpClientInstrumentationOptions.AddHttpClientFilter(builder, isInterruptSignalRTracing);
             })
-            .AddMasaMetrics(builder => builder.AddOtlpExporter(otlp => otlp.Endpoint = uri));
+            .AddMasaMetrics(builder => AddMetricOtlpExporter(builder, uri!, activitySources?.ToArray()));
 
         var resources = ResourceBuilder.CreateDefault().AddMasaService(option);
         loggingBuilder.AddMasaOpenTelemetry(builder =>
         {
             builder.SetResourceBuilder(resources);
-            builder.AddOtlpExporter(otlp => otlp.Endpoint = uri);
+            builder.AddOtlpExporter(otlp => otlp.Endpoint = uri!);
         });
 
         return services;
+    }
+
+    private static void AddTraceOtlpExporter(TracerProviderBuilder builder, Uri uri, string[]? activitySources = default)
+    {
+        if (activitySources != null && activitySources.Any())
+            builder.AddSource(activitySources.ToArray());
+        builder.AddOtlpExporter(options => options.Endpoint = uri);
+    }
+
+    private static void AddMetricOtlpExporter(MeterProviderBuilder builder, Uri uri, string[]? activitySources = default)
+    {
+        if (activitySources != null && activitySources.Any())
+            builder.AddMeter(activitySources.ToArray());
+        builder.AddOtlpExporter(options => options.Endpoint = uri);
     }
 
     public static IApplicationBuilder UseMASAHttpReponseLog(this IApplicationBuilder app)

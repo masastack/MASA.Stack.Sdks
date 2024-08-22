@@ -10,7 +10,7 @@ public sealed class HttpMetricProviders
     static HttpMetricProviders()
     {
         Meter = new Meter("masa stack metrics", "1.0.0");
-        RegisterProvider(typeof(HttpResponseMeter));
+        //RegisterProvider(typeof(HttpResponseMeter));
     }
 
     internal static Meter Meter { get; private set; }
