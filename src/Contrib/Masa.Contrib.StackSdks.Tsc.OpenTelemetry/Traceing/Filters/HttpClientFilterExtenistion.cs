@@ -12,8 +12,8 @@ internal static class HttpClientFilterExtenistion
     }
 
     internal static bool IsHttpRequestMessageFilter(HttpRequestMessage httpRequestMessage) => !(FilterConsts.IsInterruptSignalrTracing && IsWebsocket(httpRequestMessage)
-             || IsReuqestPathMatchHttpRequestSuffix(httpRequestMessage, FilterConsts.CommonIgnorePrefix)
-             || IsReuqestPathMatchPrefix(httpRequestMessage, FilterConsts.CommonIgnoreSuffix)
+             || IsReuqestPathMatchHttpRequestSuffix(httpRequestMessage, FilterConsts.CommonIgnoreSuffix)
+             || IsReuqestPathMatchPrefix(httpRequestMessage, FilterConsts.CommonIgnorePrefix)
              || IsReuqestPathMatch(httpRequestMessage, FilterConsts.CommonIgnore));
 
     internal static bool IsWebsocket(HttpRequestMessage httpRequestMessage)
@@ -27,14 +27,14 @@ internal static class HttpClientFilterExtenistion
         return false;
     }
 
-    private static bool IsReuqestPathMatchHttpRequestSuffix(HttpRequestMessage httpRequestMessage, List<string> prefix)
-    {
-        return httpRequestMessage.RequestUri != null && !string.IsNullOrEmpty(httpRequestMessage.RequestUri.PathAndQuery) && prefix.Exists(httpRequestMessage.RequestUri.AbsolutePath.ToLower().StartsWith);
-    }
-
-    private static bool IsReuqestPathMatchPrefix(HttpRequestMessage httpRequestMessage, List<string> suffix)
+    private static bool IsReuqestPathMatchHttpRequestSuffix(HttpRequestMessage httpRequestMessage, List<string> suffix)
     {
         return httpRequestMessage.RequestUri != null && !string.IsNullOrEmpty(httpRequestMessage.RequestUri.PathAndQuery) && suffix.Exists(httpRequestMessage.RequestUri.AbsolutePath.ToLower().EndsWith);
+    }
+
+    private static bool IsReuqestPathMatchPrefix(HttpRequestMessage httpRequestMessage, List<string> prefix)
+    {
+        return httpRequestMessage.RequestUri != null && !string.IsNullOrEmpty(httpRequestMessage.RequestUri.PathAndQuery) && prefix.Exists(httpRequestMessage.RequestUri.AbsolutePath.ToLower().StartsWith);
     }
 
     private static bool IsReuqestPathMatch(HttpRequestMessage httpRequestMessage, List<string> pathes)
