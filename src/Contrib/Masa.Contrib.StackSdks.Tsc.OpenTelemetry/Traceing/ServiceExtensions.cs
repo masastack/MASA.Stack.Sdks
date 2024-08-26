@@ -18,6 +18,7 @@ public static partial class ServiceExtensions
         Action<TracerProviderBuilder> builderConfigure,
         Action<OpenTelemetryInstrumentationOptions>? openTelemetryInstrumentationOptions = null)
     {
+        FilterConsts.InitTraceFilter(services.BuildServiceProvider().GetRequiredService<IConfiguration>());
         return builder.WithTracing(builder =>
         {
             builder.SetSampler(new AlwaysOnSampler());

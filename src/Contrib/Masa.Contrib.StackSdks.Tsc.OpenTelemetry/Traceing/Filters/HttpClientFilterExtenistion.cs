@@ -6,14 +6,15 @@ internal static class HttpClientFilterExtenistion
         OpenTelemetryInstrumentationOptions openTelemetryInstrumentationOptions,
         bool isInterruptSignalrTracing)
     {
-        //FilterConsts.IsInterruptSignalrTracing = isInterruptSignalrTracing;
+        FilterConsts.IsInterruptSignalrTracing = isInterruptSignalrTracing;
         options += opt => opt.FilterHttpRequestMessage = IsHttpRequestMessageFilter;
         openTelemetryInstrumentationOptions.HttpClientInstrumentationOptions += options;
     }
 
     internal static bool IsHttpRequestMessageFilter(HttpRequestMessage httpRequestMessage) => !(FilterConsts.IsInterruptSignalrTracing && IsWebsocket(httpRequestMessage)
-             || IsReuqestPathMatchHttpRequestSuffix(httpRequestMessage, FilterConsts._CommonIgnorePrefix)
-             || IsReuqestPathMatchPrefix(httpRequestMessage, FilterConsts._CommonIgnoreSuffix));
+             || IsReuqestPathMatchHttpRequestSuffix(httpRequestMessage, FilterConsts.CommonIgnorePrefix)
+             || IsReuqestPathMatchPrefix(httpRequestMessage, FilterConsts.CommonIgnoreSuffix)
+             || IsReuqestPathMatch(httpRequestMessage, FilterConsts.CommonIgnore));
 
     internal static bool IsWebsocket(HttpRequestMessage httpRequestMessage)
     {
@@ -28,11 +29,16 @@ internal static class HttpClientFilterExtenistion
 
     private static bool IsReuqestPathMatchHttpRequestSuffix(HttpRequestMessage httpRequestMessage, List<string> prefix)
     {
-        return httpRequestMessage.RequestUri != null && !string.IsNullOrEmpty(httpRequestMessage.RequestUri.PathAndQuery) && prefix.Exists(httpRequestMessage.RequestUri.PathAndQuery.StartsWith);
+        return httpRequestMessage.RequestUri != null && !string.IsNullOrEmpty(httpRequestMessage.RequestUri.PathAndQuery) && prefix.Exists(httpRequestMessage.RequestUri.AbsolutePath.ToLower().StartsWith);
     }
 
     private static bool IsReuqestPathMatchPrefix(HttpRequestMessage httpRequestMessage, List<string> suffix)
     {
-        return httpRequestMessage.RequestUri != null && !string.IsNullOrEmpty(httpRequestMessage.RequestUri.PathAndQuery) && suffix.Exists(httpRequestMessage.RequestUri.PathAndQuery.EndsWith);
+        return httpRequestMessage.RequestUri != null && !string.IsNullOrEmpty(httpRequestMessage.RequestUri.PathAndQuery) && suffix.Exists(httpRequestMessage.RequestUri.AbsolutePath.ToLower().EndsWith);
+    }
+
+    private static bool IsReuqestPathMatch(HttpRequestMessage httpRequestMessage, List<string> pathes)
+    {
+        return httpRequestMessage.RequestUri != null && !string.IsNullOrEmpty(httpRequestMessage.RequestUri.PathAndQuery) && pathes.Exists(httpRequestMessage.RequestUri.AbsolutePath.ToLower().Equals);
     }
 }
