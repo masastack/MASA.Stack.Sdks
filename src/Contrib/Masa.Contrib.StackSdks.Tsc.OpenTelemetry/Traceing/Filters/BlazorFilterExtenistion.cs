@@ -6,13 +6,13 @@ internal static class BlazorFilterExtenistion
         OpenTelemetryInstrumentationOptions openTelemetryInstrumentationOptions,
         bool isInterruptSignalrTracing)
     {
-        //FilterConsts.IsInterruptSignalrTracing = isInterruptSignalrTracing;
+        FilterConsts.IsInterruptSignalrTracing = isInterruptSignalrTracing;
         options += opt => opt.Filter = IsBlazorFilter;
         openTelemetryInstrumentationOptions.AspNetCoreInstrumentationOptions += options;
     }
 
     internal static bool IsBlazorFilter(HttpContext httpContext)
     {
-        return AspNetCoreFilterExtenistion.IsAspNetCoreFilter(httpContext) && !AspNetCoreFilterExtenistion.IsReuqestPathMatchHttpRequestPrefix(httpContext, FilterConsts._BlazorIgnorePrefix);
+        return AspNetCoreFilterExtenistion.IsAspNetCoreFilter(httpContext) && !AspNetCoreFilterExtenistion.IsReuqestPathMatchHttpRequestPrefix(httpContext, FilterConsts.BlazorIgnorePrefix);
     }
 }
