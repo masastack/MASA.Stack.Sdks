@@ -21,11 +21,19 @@ public static class ServiceCollectionExtensions
         RedisConfigurationOptions redisOptions)
     {
         MasaArgumentException.ThrowIfNullOrEmpty(authServiceBaseAddress);
-
+        var authSdk = new AuthStackSdk();
+        services.AddSingleton(authSdk);
         return services.AddAuthClient(callerBuilder =>
         {
             callerBuilder
-                .UseHttpClient(builder => builder.BaseAddress = authServiceBaseAddress)
+                .UseHttpClient(builder =>
+                {
+                    builder.BaseAddress = authServiceBaseAddress;
+                    builder.Configure = http =>
+                    {
+                        http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", authSdk.UserAgent);
+                    };
+                })
                 .AddMiddleware<EnvironmentCallerMiddleware>()
                 .UseAuthentication();
         }, redisOptions);

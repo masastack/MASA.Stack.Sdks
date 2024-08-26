@@ -1,6 +1,8 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
+using Masa.BuildingBlocks.StackSdks.Base;
+
 namespace Masa.Contrib.StackSdks.Tsc.Tests.Service;
 
 [TestClass]
@@ -16,18 +18,20 @@ public class LogServiceTests
     public void Initialized()
     {
         IServiceCollection services = new ServiceCollection();
-        services.AddSingleton(_httpClientFactory.Object);
-        var httpClient = new HttpClient(_mockHandler.Object)
-        {
-            BaseAddress = new Uri(HOST)
-        };
-        _httpClientFactory.Setup(factory => factory.CreateClient(HTTP_CLIENT_NAME)).Returns(httpClient);
-        services.AddCaller(HTTP_CLIENT_NAME, builder =>
-        {
-            builder.UseHttpClient(options => options.BaseAddress = HOST);
-        });
-        var factory = services.BuildServiceProvider().GetRequiredService<ICallerFactory>();
-        _client = new TscClient(factory.Create(HTTP_CLIENT_NAME));
+        services.AddTscClient("http://localhost:18010");
+        //services.AddSingleton(_httpClientFactory.Object);
+        //var httpClient = new HttpClient(_mockHandler.Object)
+        //{
+        //    BaseAddress = new Uri(HOST)
+        //};
+        //httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", new StackSdksBase("tsc").UserAgent);
+        //_httpClientFactory.Setup(factory => factory.CreateClient(HTTP_CLIENT_NAME)).Returns(httpClient);
+        //services.AddCaller(HTTP_CLIENT_NAME, builder =>
+        //{
+        //    builder.UseHttpClient(options => options.BaseAddress = HOST);
+        //});
+        //var factory = services.BuildServiceProvider().GetRequiredService<ICallerFactory>();
+        _client = services.BuildServiceProvider().GetRequiredService<ITscClient>();// new TscClient(factory.Create(HTTP_CLIENT_NAME));
     }
 
     [TestMethod]

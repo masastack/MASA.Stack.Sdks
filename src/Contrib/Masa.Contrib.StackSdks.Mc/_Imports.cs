@@ -3,13 +3,13 @@
 
 global using Masa.BuildingBlocks.Data;
 global using Masa.BuildingBlocks.Service.Caller;
+global using Masa.BuildingBlocks.StackSdks.Base;
 global using Masa.BuildingBlocks.StackSdks.Mc;
 global using Masa.BuildingBlocks.StackSdks.Mc.Model;
 global using Masa.BuildingBlocks.StackSdks.Mc.Service;
 global using Masa.Contrib.StackSdks.Mc;
 global using Masa.Contrib.StackSdks.Mc.Infrastructure.Helper;
 global using Masa.Contrib.StackSdks.Mc.Service;
-global using Masa.Contrib.StackSdks.Isolation;
 global using System.Collections.Concurrent;
 global using System.ComponentModel;
 global using System.Diagnostics.CodeAnalysis;
