@@ -40,7 +40,7 @@ internal static class FilterConsts
         var prefixes = GetValues(configuration, MASASTACK_TRACE_IGNORE_PATH_PREFIX);
         if (prefixes != null && prefixes.Length > 0) SetValues(CommonIgnorePrefix, prefixes!);
 
-        var suffixes = GetValues(configuration, MASASTACK_TRACE_IGNORE_PATH_PREFIX);
+        var suffixes = GetValues(configuration, MASASTACK_TRACE_IGNORE_PATH_SUFFIX);
         if (suffixes != null && suffixes.Length > 0) SetValues(CommonIgnoreSuffix, suffixes!);
 
         var pathes = GetValues(configuration, MASASTACK_TRACE_IGNORE_PATH);
