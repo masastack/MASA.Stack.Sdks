@@ -3,6 +3,7 @@
 
 global using Masa.BuildingBlocks.Data;
 global using Masa.BuildingBlocks.Service.Caller;
+global using Masa.BuildingBlocks.StackSdks.Base;
 global using Masa.BuildingBlocks.StackSdks.Tsc;
 global using Masa.BuildingBlocks.StackSdks.Tsc.Contracts.Log;
 global using Masa.BuildingBlocks.StackSdks.Tsc.Contracts.Model;

@@ -16,12 +16,17 @@ public static partial class ServiceExtensions
 
         if (services.Any(service => service.ServiceType == typeof(ITscClient)))
             return services;
-
+        var tscSdk = new TscStackSdk();
+        services.AddSingleton(tscSdk);
         services.AddCaller(DEFAULT_CLIENT_NAME, builder =>
         {
             builder.UseHttpClient(options =>
             {
                 options.BaseAddress = tscServiceBaseUrl;
+                options.Configure = http =>
+                {
+                    http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", tscSdk.UserAgent);
+                };
             }).UseAuthentication();
         });
 
