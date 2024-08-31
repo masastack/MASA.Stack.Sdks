@@ -11,5 +11,7 @@ public class LogLatestRequest
 
     public DateTime End { get; set; }
 
+    public string Service { get; set; }
+
     public bool IsDesc { get; set; } = true;
 }
