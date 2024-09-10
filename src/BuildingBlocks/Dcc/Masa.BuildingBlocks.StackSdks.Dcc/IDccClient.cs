@@ -6,4 +6,6 @@ namespace Masa.BuildingBlocks.StackSdks.Dcc;
 public interface IDccClient
 {
     public ILabelService LabelService { get; }
+
+    public IOpenApiService OpenApiService { get; }
 }

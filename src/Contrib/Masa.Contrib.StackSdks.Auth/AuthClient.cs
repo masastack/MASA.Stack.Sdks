@@ -29,5 +29,7 @@ public class AuthClient : IAuthClient
     public ICustomLoginService CustomLoginService { get; }
 
     public IThirdPartyIdpService ThirdPartyIdpService { get; }
+
+    public IOssService OssService { get; }
 }
 

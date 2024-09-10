@@ -8,6 +8,7 @@ global using Masa.BuildingBlocks.StackSdks.Isolation;
 global using Masa.BuildingBlocks.Isolation;
 global using Masa.Contrib.Service.Caller.HttpClient;
 global using Masa.Contrib.StackSdks.Caller;
+global using Masa.Contrib.Isolation.MultiEnvironment;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.DependencyInjection.Extensions;

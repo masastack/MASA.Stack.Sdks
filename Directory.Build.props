@@ -4,7 +4,7 @@
 		<MicrosoftPackageVersion Condition="'$(TargetFramework)' == 'net6.0'">6.0.0</MicrosoftPackageVersion>
 		<MicrosoftPackageVersion Condition="'$(TargetFramework)' == 'net7.0'">7.0.0</MicrosoftPackageVersion>
 		<MicrosoftPackageVersion Condition="'$(TargetFramework)' == 'net8.0'">8.0.0</MicrosoftPackageVersion>
-		<MasaFrameworkPackageVersion>1.2.0-preview.2</MasaFrameworkPackageVersion>
+		<MasaFrameworkPackageVersion>1.2.0-preview.3</MasaFrameworkPackageVersion>
 
 		<OpenTelemetryVersion>1.9.0</OpenTelemetryVersion>
 		<OpenTelemetryContribVersion>1.9.0</OpenTelemetryContribVersion>
@@ -17,10 +17,4 @@
 		<CoverletPackageVersion>3.0.2</CoverletPackageVersion>
 		<MicrosoftTeskSdkPackageVersion>16.9.4</MicrosoftTeskSdkPackageVersion>
 	</PropertyGroup>
-	
-	<!--<ItemGroup>
-		<PackageReference Include="Masa.BuildingBlocks.Ddd.Domain" Version="$(MasaFrameworkPackageVersion)" />
-		<PackageReference Include="Masa.BuildingBlocks.Data" Version="$(MasaFrameworkPackageVersion)" />
-		<PackageReference Include="Masa.Contrib.Service.Caller.HttpClient" Version="$(MasaFrameworkPackageVersion)" />
-	</ItemGroup>-->
 </Project>

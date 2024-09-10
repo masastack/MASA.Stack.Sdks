@@ -11,4 +11,3 @@ public interface ITeamService
 
     Task<List<TeamModel>> GetUserTeamsAsync();
 }
-

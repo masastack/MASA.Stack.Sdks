@@ -18,5 +18,7 @@ public interface IAuthClient
     ICustomLoginService CustomLoginService { get; }
 
     IThirdPartyIdpService ThirdPartyIdpService { get; }
+
+    IOssService OssService { get; }
 }
 
