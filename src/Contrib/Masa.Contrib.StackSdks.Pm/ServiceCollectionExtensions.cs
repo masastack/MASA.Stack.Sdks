@@ -9,26 +9,23 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPmClient(this IServiceCollection services, string pmServiceBaseAddress)
     {
-        MasaArgumentException.ThrowIfNullOrEmpty(pmServiceBaseAddress);
-
-        return services.AddPmClient(callerBuilder =>
-        {
-            callerBuilder.UseHttpClient(builder =>
-            {
-                builder.BaseAddress = pmServiceBaseAddress;
-            }).UseAuthentication();
-        });
+        return services.AddPmClient(() => pmServiceBaseAddress);
     }
 
     public static IServiceCollection AddPmClient(this IServiceCollection services, Func<string> pmServiceBaseAddressFunc)
     {
         MasaArgumentException.ThrowIfNull(pmServiceBaseAddressFunc);
-
+        var pmSdk = new PmStackSdk();
+        services.AddSingleton(pmSdk);
         return services.AddPmClient(callerBuilder =>
         {
             callerBuilder.UseHttpClient(builder =>
             {
                 builder.BaseAddress = pmServiceBaseAddressFunc.Invoke();
+                builder.Configure = http =>
+                {
+                    http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", pmSdk.UserAgent);
+                };
             }).UseAuthentication();
         });
     }

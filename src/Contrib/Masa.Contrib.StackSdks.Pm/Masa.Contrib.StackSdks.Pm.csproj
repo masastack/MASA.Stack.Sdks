@@ -11,6 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Base\Masa.BuildingBlocks.StackSdks.Base.csproj" />
 		<ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Pm\Masa.BuildingBlocks.StackSdks.Pm.csproj" />
 		<ProjectReference Include="..\Masa.Contrib.StackSdks.Caller\Masa.Contrib.StackSdks.Caller.csproj" />
 	</ItemGroup>

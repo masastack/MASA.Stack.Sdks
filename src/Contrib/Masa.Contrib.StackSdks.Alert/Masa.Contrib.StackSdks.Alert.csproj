@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Alert\Masa.BuildingBlocks.StackSdks.Alert.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Base\Masa.BuildingBlocks.StackSdks.Base.csproj" />
     <ProjectReference Include="..\Masa.Contrib.StackSdks.Caller\Masa.Contrib.StackSdks.Caller.csproj" />
     <ProjectReference Include="..\Masa.Contrib.StackSdks.Isolation\Masa.Contrib.StackSdks.Isolation.csproj" />
   </ItemGroup>

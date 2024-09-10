@@ -9,28 +9,24 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddMcClient(this IServiceCollection services, string mcServiceBaseAddress)
     {
-        MasaArgumentException.ThrowIfNullOrEmpty(mcServiceBaseAddress);
-
-        return services.AddMcClient(callerBuilder =>
-        {
-            callerBuilder.UseHttpClient(builder =>
-            {
-                builder.Configure = opt => opt.BaseAddress = new Uri(mcServiceBaseAddress);
-            })
-            .UseAuthentication();
-        });
+        return services.AddMcClient(() => mcServiceBaseAddress);
     }
 
     public static IServiceCollection AddMcClient(this IServiceCollection services, Func<string> mcServiceBaseAddressFunc)
     {
         MasaArgumentException.ThrowIfNull(mcServiceBaseAddressFunc);
-
+        var mcSdk = new McStackSdk();
+        services.AddSingleton(mcSdk);
         return services.AddMcClient(callerBuilder =>
         {
             callerBuilder
                 .UseHttpClient(builder =>
                 {
                     builder.BaseAddress = mcServiceBaseAddressFunc.Invoke();
+                    builder.Configure = http =>
+                    {
+                        http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", mcSdk.UserAgent);
+                    };
                 })
                 .UseAuthentication();
         });

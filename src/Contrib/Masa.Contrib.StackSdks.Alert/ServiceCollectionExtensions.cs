@@ -7,28 +7,24 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAlertClient(this IServiceCollection services, string alertServiceBaseAddress)
     {
-        MasaArgumentException.ThrowIfNullOrEmpty(alertServiceBaseAddress);
-
-        return services.AddAlertClient(callerBuilder =>
-        {
-            callerBuilder.UseHttpClient(builder =>
-            {
-                builder.Configure = opt => opt.BaseAddress = new Uri(alertServiceBaseAddress);
-            })
-            .UseAuthentication();
-        });
+        return services.AddAlertClient(() => alertServiceBaseAddress);
     }
 
     public static IServiceCollection AddAlertClient(this IServiceCollection services, Func<string> alertServiceBaseAddressFunc)
     {
         MasaArgumentException.ThrowIfNull(alertServiceBaseAddressFunc);
-
+        var alertSdk = new AlertStackSdk();
+        services.AddSingleton(alertSdk);
         return services.AddAlertClient(callerBuilder =>
         {
             callerBuilder
                 .UseHttpClient(builder =>
                 {
                     builder.BaseAddress = alertServiceBaseAddressFunc.Invoke();
+                    builder.Configure = http =>
+                    {
+                        http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", alertSdk.UserAgent);
+                    };
                 })
                 .UseAuthentication();
         });
