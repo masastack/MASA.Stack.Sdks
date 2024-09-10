@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\Tsc\Masa.BuildingBlocks.StackSdk.Tsc\Masa.BuildingBlocks.StackSdks.Tsc.csproj" />
+    <ProjectReference Include="..\Masa.Contrib.StackSdks.Caller.Wasm\Masa.Contrib.StackSdks.Caller.Wasm.csproj" />
+  </ItemGroup>
+
+</Project>

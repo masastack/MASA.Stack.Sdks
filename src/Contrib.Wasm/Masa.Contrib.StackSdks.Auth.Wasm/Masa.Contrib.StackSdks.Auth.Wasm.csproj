@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="IdentityModel" Version="$(IdentityModelPackageVersion)" />
+	<PackageReference Include="Masa.BuildingBlocks.Authentication.OpenIdConnect.Models" Version="$(MasaFrameworkPackageVersion)" />
+	<PackageReference Include="Masa.BuildingBlocks.Authentication.Identity" Version="$(MasaFrameworkPackageVersion)" />
+    <ProjectReference Include="..\..\BuildingBlocks\Auth\Masa.BuildingBlocks.StackSdks.Auth\Masa.BuildingBlocks.StackSdks.Auth.csproj" />
+    <ProjectReference Include="..\Masa.Contrib.StackSdks.Caller.Wasm\Masa.Contrib.StackSdks.Caller.Wasm.csproj" />
+    <ProjectReference Include="..\Masa.Contrib.StackSdks.Isolation.Wasm\Masa.Contrib.StackSdks.Isolation.Wasm.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Masa.BuildingBlocks.Service.Caller" Version="$(MasaFrameworkPackageVersion)" />
+    <ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Isolation\Masa.BuildingBlocks.StackSdks.Isolation.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Pm\Masa.BuildingBlocks.StackSdks.Pm.csproj" />
+    <ProjectReference Include="..\..\Contrib.Wasm\Masa.Contrib.StackSdks.Config.Wasm\Masa.Contrib.StackSdks.Config.Wasm.csproj" />
+  </ItemGroup>
+
+</Project>

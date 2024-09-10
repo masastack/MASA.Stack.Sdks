@@ -11,4 +11,6 @@ public class DccClient : IDccClient
     }
 
     public ILabelService LabelService { get; }
+
+    public IOpenApiService OpenApiService { get; }
 }
