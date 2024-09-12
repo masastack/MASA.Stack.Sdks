@@ -30,4 +30,8 @@ public class AlarmRuleUpsertModel
     public List<MetricMonitorItemModel> MetricMonitorItems { get; set; } = new();
 
     public List<AlarmRuleItemModel> Items { get; set; } = new();
+
+    public string Source { get; set; } = default!;
+
+    public bool Show { get; set; }
 }
