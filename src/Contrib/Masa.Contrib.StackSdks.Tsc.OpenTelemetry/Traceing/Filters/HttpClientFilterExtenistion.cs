@@ -19,7 +19,7 @@ internal static class HttpClientFilterExtenistion
     internal static bool IsWebsocket(HttpRequestMessage httpRequestMessage)
     {
         var headers = httpRequestMessage.Headers;
-        if (headers.Connection != null && headers.Upgrade != null)
+        if (headers.Connection != null && headers.Connection.Any() && headers.Upgrade != null && headers.Upgrade.Any())
         {
             Activity.Current = null;
             return true;
