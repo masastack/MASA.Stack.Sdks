@@ -17,6 +17,6 @@ public class DbModel
 
     public string ToString(string datebase)
     {
-        return $"Server={Server},{Port};Database={datebase};User Id={UserId};Password={Password};";
+        return $"Server={Server};Port={Port};Database={datebase};User Id={UserId};Password={Password};";
     }
 }
