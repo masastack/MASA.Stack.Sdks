@@ -15,8 +15,16 @@ public class DbModel
 
     public string Password { get; set; }
 
-    public string ToString(string datebase)
+    public string? DbType { get; set; }
+
+    public string ToString(string database)
     {
-        return $"Server={Server};Port={Port};Database={datebase};User Id={UserId};Password={Password};";
+        return DbType switch
+        {
+            "SqlServer" => $"Server={Server},{Port};Database={database};User Id={UserId};Password={Password};",
+            "PostgreSql" => $"Host={Server};Port={Port};Username={UserId};Password={Password};Database={database};",
+            "MySql" => $"Server={Server};Port={Port};Database={database};Uid={UserId};Pwd={Password};",
+            _ => $"Server={Server},{Port};Database={database};User Id={UserId};Password={Password};"
+        };
     }
 }
