@@ -21,10 +21,9 @@ public class DbModel
     {
         return DbType switch
         {
-            "SqlServer" => $"Server={Server},{Port};Database={database};User Id={UserId};Password={Password};",
             "PostgreSql" => $"Host={Server};Port={Port};Username={UserId};Password={Password};Database={database};",
             "MySql" => $"Server={Server};Port={Port};Database={database};Uid={UserId};Pwd={Password};",
-            _ => $"Server={Server},{Port};Database={database};User Id={UserId};Password={Password};"
+            _ => $"Server={Server},{Port};Database={database};User Id={UserId};Password={Password};TrustServerCertificate=true;",
         };
     }
 }
