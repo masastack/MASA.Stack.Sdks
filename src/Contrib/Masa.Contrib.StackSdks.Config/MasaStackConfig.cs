@@ -74,7 +74,7 @@ public class MasaStackConfig : IMasaStackConfig
                DEFAULT_CONFIG_NAME).ConfigureAwait(false).GetAwaiter().GetResult();
             return remoteConfigs;
         }
-        catch (ArgumentException)
+        catch
         {
             return new(ConfigMap);
         }

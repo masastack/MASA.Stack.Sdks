@@ -26,7 +26,7 @@ namespace Masa.Contrib.StackSdks.Config
                    DEFAULT_CONFIG_NAME).ConfigureAwait(false).GetAwaiter().GetResult();
                 return remoteConfigs;
             }
-            catch (ArgumentException)
+            catch
             {
                 return new(ConfigMap);
             }

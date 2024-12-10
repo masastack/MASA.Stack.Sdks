@@ -31,7 +31,7 @@ public static class ServiceCollectionExtensions
                     configs);
             }
         }
-        catch (ArgumentException)
+        catch
         {
             // remoteConfigs is null
             await configurationApiManage.AddAsync(
