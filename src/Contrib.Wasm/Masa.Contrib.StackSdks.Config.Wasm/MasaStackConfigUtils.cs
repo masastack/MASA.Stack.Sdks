@@ -7,7 +7,7 @@ internal static class MasaStackConfigUtils
 {
     public static async Task<Dictionary<string, string>> GetDefaultPublicConfigAsync(IDccClient client, string environment)
     {
-        var publicConfig = await client.OpenApiService.GetPublicConfigAsync<Dictionary<string, string>>(Configs.DEFAULT_CONFIG_NAME, environment);
+        var publicConfig = await client.OpenApiService.GetStackConfigAsync(Configs.DEFAULT_CONFIG_NAME, environment);
         return publicConfig;
     }
 
