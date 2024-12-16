@@ -14,7 +14,7 @@ public class MasaStackConfigCache : ISingletonDependency
     {
         if (_dccClient != null)
         {
-            Section = await _dccClient.OpenApiService.GetPublicConfigAsync<Dictionary<string, string>>(Configs.DEFAULT_CONFIG_NAME);
+            Section = await _dccClient.OpenApiService.GetStackConfigAsync(Configs.DEFAULT_CONFIG_NAME);
         }
     }
 }

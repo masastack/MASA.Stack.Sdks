@@ -13,23 +13,49 @@ public class OpenApiService : IOpenApiService
         _masaStackConfig = masaStackConfig;
     }
 
-    public async Task<T> GetPublicConfigAsync<T>(string configObject, string environment, string cluster) where T : class, new()
+    public async Task<Dictionary<string, string>> GetStackConfigAsync(string environment, string cluster)
     {
         if (environment.IsNullOrEmpty())
         {
             environment = _environmentUserContext.Environment ?? string.Empty;
         }
+
         if (environment.IsNullOrEmpty())
         {
             environment = _masaStackConfig.Environment;
         }
+
         if (cluster.IsNullOrEmpty())
         {
             cluster = Configs.DEFAULT_CLUSTER;
         }
-        var requestUri = $"open-api/releasing/{environment}/{cluster}/publicConfig/{configObject}";
-        var result = await _caller.GetAsync<T>(requestUri);
 
-        return result ?? new T();
+        var requestUri = $"open-api/releasing/{environment}/{cluster}/stack-config";
+        var result = await _caller.GetAsync<Dictionary<string, string>>(requestUri);
+
+        return result ?? new();
+    }
+
+    public async Task<Dictionary<string, string>> GetI18NConfigAsync(string culture, string environment, string cluster)
+    {
+        if (environment.IsNullOrEmpty())
+        {
+            environment = _environmentUserContext.Environment ?? string.Empty;
+        }
+
+        if (environment.IsNullOrEmpty())
+        {
+            environment = _masaStackConfig.Environment;
+        }
+
+        if (cluster.IsNullOrEmpty())
+        {
+            cluster = Configs.DEFAULT_CLUSTER;
+        }
+
+        var requestUri = $"open-api/releasing/{environment}/{cluster}/i18n/{culture}";
+        var result = await _caller.GetAsync<Dictionary<string, string>>(requestUri);
+
+        return result ?? new();
     }
 }
