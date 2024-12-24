@@ -18,20 +18,21 @@ public class LogServiceTests
     public void Initialized()
     {
         IServiceCollection services = new ServiceCollection();
-        services.AddTscClient("http://localhost:18010");
-        //services.AddSingleton(_httpClientFactory.Object);
-        //var httpClient = new HttpClient(_mockHandler.Object)
-        //{
-        //    BaseAddress = new Uri(HOST)
-        //};
-        //httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", new StackSdksBase("tsc").UserAgent);
-        //_httpClientFactory.Setup(factory => factory.CreateClient(HTTP_CLIENT_NAME)).Returns(httpClient);
-        //services.AddCaller(HTTP_CLIENT_NAME, builder =>
-        //{
-        //    builder.UseHttpClient(options => options.BaseAddress = HOST);
-        //});
-        //var factory = services.BuildServiceProvider().GetRequiredService<ICallerFactory>();
-        _client = services.BuildServiceProvider().GetRequiredService<ITscClient>();// new TscClient(factory.Create(HTTP_CLIENT_NAME));
+        //services.AddTscClient(HOST);
+        services.AddSingleton(_httpClientFactory.Object);
+        var httpClient = new HttpClient(_mockHandler.Object)
+        {
+            BaseAddress = new Uri(HOST)
+        };
+        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", new StackSdksBase("tsc").UserAgent);
+        _httpClientFactory.Setup(factory => factory.CreateClient(HTTP_CLIENT_NAME)).Returns(httpClient);
+        services.AddCaller(HTTP_CLIENT_NAME, builder =>
+        {
+            builder.UseHttpClient(options => options.BaseAddress = HOST);
+        });
+        var factory = services.BuildServiceProvider().GetRequiredService<ICallerFactory>();
+        //services.BuildServiceProvider().GetRequiredService<ITscClient>();
+        _client = new TscClient(factory.Create(HTTP_CLIENT_NAME));
     }
 
     [TestMethod]

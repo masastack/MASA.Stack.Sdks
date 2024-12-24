@@ -15,6 +15,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddMcClient(this IServiceCollection services, Func<string> mcServiceBaseAddressFunc)
     {
         MasaArgumentException.ThrowIfNull(mcServiceBaseAddressFunc);
+        var url = mcServiceBaseAddressFunc.Invoke();
+        MasaArgumentException.ThrowIfNullOrEmpty(url);
         var mcSdk = new McStackSdk();
         services.AddSingleton(mcSdk);
         return services.AddMcClient(callerBuilder =>
@@ -22,7 +24,7 @@ public static class ServiceCollectionExtensions
             callerBuilder
                 .UseHttpClient(builder =>
                 {
-                    builder.BaseAddress = mcServiceBaseAddressFunc.Invoke();
+                    builder.BaseAddress = url;
                     builder.Configure = http =>
                     {
                         http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", mcSdk.UserAgent);

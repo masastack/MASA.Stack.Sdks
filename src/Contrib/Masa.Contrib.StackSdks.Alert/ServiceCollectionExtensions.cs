@@ -13,6 +13,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddAlertClient(this IServiceCollection services, Func<string> alertServiceBaseAddressFunc)
     {
         MasaArgumentException.ThrowIfNull(alertServiceBaseAddressFunc);
+        var url = alertServiceBaseAddressFunc.Invoke();
+        MasaArgumentException.ThrowIfNullOrEmpty(url);
         var alertSdk = new AlertStackSdk();
         services.AddSingleton(alertSdk);
         return services.AddAlertClient(callerBuilder =>
@@ -20,7 +22,8 @@ public static class ServiceCollectionExtensions
             callerBuilder
                 .UseHttpClient(builder =>
                 {
-                    builder.BaseAddress = alertServiceBaseAddressFunc.Invoke();
+                    builder.BaseAddress = url;
+                    MasaArgumentException.ThrowIfNull(builder.BaseAddress);
                     builder.Configure = http =>
                     {
                         http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", alertSdk.UserAgent);

@@ -15,13 +15,15 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddPmClient(this IServiceCollection services, Func<string> pmServiceBaseAddressFunc)
     {
         MasaArgumentException.ThrowIfNull(pmServiceBaseAddressFunc);
+        var url = pmServiceBaseAddressFunc.Invoke();
+        MasaArgumentException.ThrowIfNullOrEmpty(url);
         var pmSdk = new PmStackSdk();
         services.AddSingleton(pmSdk);
         return services.AddPmClient(callerBuilder =>
         {
             callerBuilder.UseHttpClient(builder =>
             {
-                builder.BaseAddress = pmServiceBaseAddressFunc.Invoke();
+                builder.BaseAddress = url;
                 builder.Configure = http =>
                 {
                     http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", pmSdk.UserAgent);
