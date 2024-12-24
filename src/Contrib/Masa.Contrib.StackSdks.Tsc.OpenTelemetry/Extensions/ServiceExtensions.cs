@@ -42,7 +42,8 @@ public static partial class ServiceExtensions
         string? otlpUrl = null,
         bool isBlazor = false,
         bool isInterruptSignalRTracing = true,
-        IEnumerable<string>? activitySources = default)
+        IEnumerable<string>? activitySources = default,
+        IEnumerable<Assembly>? blazorRouteAssemblies = default)
     {
         ArgumentNullException.ThrowIfNull(option);
 
@@ -69,7 +70,10 @@ public static partial class ServiceExtensions
             builder.SetResourceBuilder(resources);
             builder.AddOtlpExporter(otlp => otlp.Endpoint = uri!);
         });
-
+        if (blazorRouteAssemblies != null && blazorRouteAssemblies.Any())
+        {
+            BlazorRouteManager.InitRoute(blazorRouteAssemblies.ToArray());
+        }
         return services;
     }
 

@@ -5,15 +5,15 @@ namespace Masa.Contrib.StackSdks.Tsc;
 
 public class MasaObservableOptions
 {
-    public string ProjectName { get; set; }
+    public string ProjectName { get; set; } = default!;
 
-    public string ServiceName { get; set; }
+    public string ServiceName { get; set; } = default!;
 
-    public string ServiceNameSpace { get; set; }
+    public string ServiceNameSpace { get; set; } = default!;
 
-    public string ServiceInstanceId { get; set; }
+    public string ServiceInstanceId { get; set; } = default!;
 
-    public string ServiceVersion { get; set; }
+    public string ServiceVersion { get; set; } = default!;
 
-    public string Layer { get; set; }
+    public string Layer { get; set; } = default!;
 }

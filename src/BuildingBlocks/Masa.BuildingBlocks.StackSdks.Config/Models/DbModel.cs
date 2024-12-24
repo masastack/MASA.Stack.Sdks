@@ -5,15 +5,15 @@ namespace Masa.BuildingBlocks.StackSdks.Config.Models;
 
 public class DbModel
 {
-    public string Server { get; set; }
+    public string Server { get; set; } = default!;
 
     public int Port { get; set; } = 1433;
 
-    public string Database { get; set; }
+    public string Database { get; set; } = default!;
 
-    public string UserId { get; set; }
+    public string UserId { get; set; } = default!;
 
-    public string Password { get; set; }
+    public string Password { get; set; } = default!;
 
     public string? DbType { get; set; }
 

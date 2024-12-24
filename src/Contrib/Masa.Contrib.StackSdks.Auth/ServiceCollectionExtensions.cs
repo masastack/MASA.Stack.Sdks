@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
     {
         var redisOptions = configuration.GetSection("$public.RedisConfig").Get<RedisConfigurationOptions>();
         authServiceBaseAddress ??= configuration.GetValue<string>("$public.AppSettings:AuthClient:Url");
-        services.AddAuthClient(authServiceBaseAddress, redisOptions);
+        services.AddAuthClient(authServiceBaseAddress!, redisOptions!);
 
         return services;
     }

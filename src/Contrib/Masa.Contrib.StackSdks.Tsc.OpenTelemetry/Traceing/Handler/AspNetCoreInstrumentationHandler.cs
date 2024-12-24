@@ -1,6 +1,8 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
+using Microsoft.AspNetCore.Http;
+
 namespace Masa.Contrib.StackSdks.Tsc.OpenTelemetry.Tracing.Handler;
 
 internal class AspNetCoreInstrumentationHandler : ExceptionHandler
@@ -8,12 +10,14 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
     public virtual void OnHttpRequest(Activity activity, HttpRequest httpRequest)
     {
         AddMasaHttpRequest(activity, httpRequest);
+        AddBlazorServerRoute(activity, httpRequest);
         HttpMetricProviders.AddHttpRequestMetric(httpRequest);
     }
 
     public virtual void OnHttpResponse(Activity activity, HttpResponse httpResponse)
     {
         AddMasaHttpResponse(activity, httpResponse);
+
         HttpMetricProviders.AddHttpResponseMetric(httpResponse);
     }
 
@@ -52,5 +56,16 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
             activity.SetTag(OpenTelemetryAttributeName.Http.CLIENT_IP, GetIp(httpResponse.HttpContext.Request.Headers, httpResponse.HttpContext!.Connection.RemoteIpAddress));
         }
         activity.SetStatus(GetStatusResult(httpResponse.StatusCode));
+    }
+
+    public static void AddBlazorServerRoute(Activity activity, HttpRequest httpRequest)
+    {
+        if (!BlazorFilterExtenistion.IsBlazorFilter(httpRequest.HttpContext))
+            return;
+        if (BlazorRouteManager.EnableBlazorRoute && BlazorRouteManager.TryGetUrlRoute(httpRequest.Path, out var route))
+        {
+            activity?.SetTag("http.route", route!.Template);
+            activity?.SetTag("blazor.server.type", route!.Type);
+        }
     }
 }

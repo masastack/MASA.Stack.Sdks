@@ -18,7 +18,7 @@ internal static class MasaConfigurationBuilderExtensions
             configurationApiClient, loggerFactory));
 
         var configurationBuilder = serviceProvider.GetService<IConfiguration>() as IConfigurationBuilder;
-        configurationBuilder.AddConfiguration(builder.Add(source).Build());
+        configurationBuilder!.AddConfiguration(builder.Add(source).Build());
         return builder;
     }
 

@@ -17,7 +17,7 @@ public class OpenTelemetryInstrumentationOptions
     private readonly static AspNetCoreInstrumentationHandler aspNetCoreInstrumentationHandler = new();
     private readonly static HttpClientInstrumentHandler httpClientInstrumentHandler = new();
 
-    internal static ILogger Logger { get; private set; }
+    internal static ILogger? Logger { get; private set; }
     internal static long MaxBodySize { get; private set; } = 200 * 1 << 10;
 
     /// <summary>
@@ -55,14 +55,14 @@ public class OpenTelemetryInstrumentationOptions
         options.ParseAndFormatRequest = true;
     };
 
-    public Func<IConnectionMultiplexer> ConnectionMultiplexerOptions { get; set; }
+    public Func<IConnectionMultiplexer>? ConnectionMultiplexerOptions { get; set; }
 
-    public Action<StackExchangeRedisInstrumentationOptions> StackExchangeRedisInstrumentationOptions { get; set; }
+    public Action<StackExchangeRedisInstrumentationOptions>? StackExchangeRedisInstrumentationOptions { get; set; }
 
     /// <summary>
     /// Build trace callback, allow to supplement the build process
     /// </summary>
-    public Action<TracerProviderBuilder> BuildTraceCallback { get; set; }
+    public Action<TracerProviderBuilder>? BuildTraceCallback { get; set; }
 
     public static void SetMaxBodySize(string maxValue)
     {

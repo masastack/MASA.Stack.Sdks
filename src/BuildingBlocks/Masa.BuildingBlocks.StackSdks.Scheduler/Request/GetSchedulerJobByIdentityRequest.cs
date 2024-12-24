@@ -5,7 +5,7 @@ namespace Masa.BuildingBlocks.StackSdks.Scheduler.Request;
 
 public class GetSchedulerJobByIdentityRequest
 {
-    public string JobIdentity { get; set; }
+    public string JobIdentity { get; set; } = default!;
 
-    public string ProjectIdentity { get; set; }
+    public string ProjectIdentity { get; set; } = default!;
 }

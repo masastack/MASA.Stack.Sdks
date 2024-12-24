@@ -5,19 +5,19 @@ namespace Masa.BuildingBlocks.StackSdks.Auth.Contracts.Model;
 
 public class ThirdPartyIdpModel
 {
-    public string ClientId { get; set; }
+    public string ClientId { get; set; } = default!;
 
-    public string ClientSecret { get; set; }
+    public string ClientSecret { get; set; } = default!;
 
-    public string Url { get; set; }
+    public string Url { get; set; } = default!;
 
     public AuthenticationTypes VerifyType { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
-    public string DisplayName { get; set; }
+    public string DisplayName { get; set; } = default!;
 
-    public string Icon { get; set; }
+    public string Icon { get; set; } = default!;
 
     public ThirdPartyIdpTypes ThirdPartyIdpType { get; set; }
 
