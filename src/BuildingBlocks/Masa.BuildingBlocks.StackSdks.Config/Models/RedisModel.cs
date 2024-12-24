@@ -5,11 +5,11 @@ namespace Masa.BuildingBlocks.StackSdks.Config.Models;
 
 public class RedisModel
 {
-    public string RedisHost { get; set; }
+    public string RedisHost { get; set; } = default!;
 
     public int RedisPort { get; set; }
 
     public int RedisDb { get; set; }
 
-    public string RedisPassword { get; set; }
+    public string RedisPassword { get; set; } = default!;
 }

@@ -36,7 +36,7 @@ internal class MasaConfigurationIsolationProvider : ConfigurationProvider, IRepo
     {
         Data = _data.SelectMany(kv =>
             kv.Value.GetPropertyNames().Select(key =>
-                new KeyValuePair<string, string>($"{kv.Key}{ConfigurationPath.KeyDelimiter}{key}", kv.Value.GetProperty(key)!)
+                new KeyValuePair<string, string?>($"{kv.Key}{ConfigurationPath.KeyDelimiter}{key}", kv.Value.GetProperty(key)!)
             )
         ).ToDictionary(kv => kv.Key, kv => kv.Value, StringComparer.OrdinalIgnoreCase);
     }

@@ -225,3 +225,4 @@ coverage.opencover.xml
 
 # Run Tests
 BenchmarkDotNet.Artifacts/
+TestResults/

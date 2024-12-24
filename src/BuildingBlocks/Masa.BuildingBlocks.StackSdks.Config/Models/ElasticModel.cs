@@ -5,11 +5,11 @@ namespace Masa.BuildingBlocks.StackSdks.Config.Models;
 
 public class ElasticModel
 {
-    public List<string> Nodes { get; set; }
+    public List<string> Nodes { get; set; } = default!;
 
-    public string Index { get; set; }
+    public string Index { get; set; } = default!;
 
-    public string UserName { get; set; }
+    public string UserName { get; set; } = default!;
 
-    public string Password { get; set; }
+    public string Password { get; set; } = default!;
 }

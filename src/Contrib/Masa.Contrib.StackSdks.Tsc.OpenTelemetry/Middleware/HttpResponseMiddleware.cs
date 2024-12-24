@@ -31,7 +31,7 @@ internal class HttpResponseMiddleware
         }
         else
         {
-            OpenTelemetryInstrumentationOptions.Logger.LogInformation("response length: {Length}, context: {Context}", responseResult.Length, responseResult);
+            OpenTelemetryInstrumentationOptions.Logger?.LogInformation("response length: {Length}, context: {Context}", responseResult.Length, responseResult);
         }
     }
 }

@@ -5,5 +5,5 @@ namespace Masa.Contrib.StackSdks.Isolation;
 
 internal class EnvironmentModel : IEnvironmentModel
 {
-    public string Environment { get; set; }
+    public string Environment { get; set; } = default!;
 }
