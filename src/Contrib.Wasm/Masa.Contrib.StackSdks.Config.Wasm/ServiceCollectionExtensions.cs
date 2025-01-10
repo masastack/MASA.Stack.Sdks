@@ -5,9 +5,9 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static async Task<IServiceCollection> AddMasaStackConfigAsync(this IServiceCollection services, IConfiguration configuration, string environment)
+    public static async Task<IServiceCollection> AddMasaStackConfigAsync(this IServiceCollection services, IConfiguration configuration)
     {
-        var configs = GetConfigMap(configuration, environment);
+        var configs = GetConfigMap(configuration);
     
         services.TryAddScoped<MasaComponentsClaimsCache>();
         services.TryAddSingleton<IClientScopeServiceProviderAccessor, ComponentsClientScopeServiceProviderAccessor>();
@@ -36,7 +36,7 @@ public static class ServiceCollectionExtensions
         return services.BuildServiceProvider().GetRequiredService<IMultiEnvironmentMasaStackConfig>();
     }
 
-    private static Dictionary<string, string> GetConfigMap(IConfiguration configuration, string environment)
+    private static Dictionary<string, string> GetConfigMap(IConfiguration configuration)
     {
         var configs = new Dictionary<string, string>()
         {
@@ -47,7 +47,7 @@ public static class ServiceCollectionExtensions
             { MasaStackConfigConstant.CLUSTER, configuration.GetValue<string>(MasaStackConfigConstant.CLUSTER) },
             { MasaStackConfigConstant.OTLP_URL, configuration.GetValue<string>(MasaStackConfigConstant.OTLP_URL) },
             { MasaStackConfigConstant.MASA_STACK, configuration.GetValue<string>(MasaStackConfigConstant.MASA_STACK) },
-            { MasaStackConfigConstant.ENVIRONMENT, environment }
+            { MasaStackConfigConstant.ENVIRONMENT, configuration.GetValue<string>(MasaStackConfigConstant.ENVIRONMENT) }
         };
         return configs;
     }
