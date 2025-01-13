@@ -24,4 +24,6 @@ public class AppDetailModel : ModelBase
     public string SwaggerUrl { get; set; } = "";
 
     public List<EnvironmentClusterModel> EnvironmentClusters { get; set; } = new();
+
+    public List<Guid> ResponsibilityUserIds { get; set; } = new();
 }
