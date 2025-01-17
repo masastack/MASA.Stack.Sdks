@@ -6,12 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Masa.BuildingBlocks.Ddd.Domain" Version="$(MasaFrameworkPackageVersion)" />
+    <PackageReference Include="Masa.Utils.Models.Config" Version="1.2.0-preview.5" />
   </ItemGroup>
 	
-  <ItemGroup>
-    <Compile Remove="Model\Metric\**" />
-    <EmbeddedResource Remove="Model\Metric\**" />
-  </ItemGroup>
-
 </Project>
