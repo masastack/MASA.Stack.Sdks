@@ -41,9 +41,11 @@ public interface IUserService
 
     Task<UserModel?> GetByEmailAsync(string email);
 
-    Task<UserModel?> GetByIdAsync(Guid userId);
+    Task<UserListModel?> GetByIdAsync(Guid userId);
 
     Task<UserModel?> GetCurrentUserAsync();
+
+    Task<UserModel?> GetDetailAsync(Guid userId);
 
     Task<StaffDetailModel?> GetCurrentStaffAsync();
 
@@ -67,7 +69,7 @@ public interface IUserService
 
     Task UpdateStaffBasicInfoAsync(UpdateStaffBasicInfoModel staff);
 
-    Task<List<UserModel>> GetListByIdsAsync(params Guid[] userIds);
+    Task<List<UserListModel>> GetListByIdsAsync(params Guid[] userIds);
 
     Task UpsertSystemDataAsync<T>(Guid userId, string systemId, T data);
 
