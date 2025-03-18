@@ -110,23 +110,30 @@ public class UserService : IUserService
         return await _caller.GetAsync<object, UserModel>(requestUri, new { email });
     }
 
-    public async Task<UserModel?> GetByIdAsync(Guid userId)
+    public async Task<UserListModel?> GetByIdAsync(Guid userId)
     {
         var user = await GetListByIdsAsync(userId);
         return user.FirstOrDefault();
     }
 
-    public async Task<List<UserModel>> GetListByIdsAsync(params Guid[] userIds)
+    public async Task<List<UserListModel>> GetListByIdsAsync(params Guid[] userIds)
     {
         var requestUri = $"api/user/byIds";
-        return await _caller.PostAsync<Guid[], List<UserModel>>(requestUri, userIds) ?? new();
+        return await _caller.PostAsync<Guid[], List<UserListModel>>(requestUri, userIds) ?? new();
     }
 
-    public async Task<UserModel?> GetCurrentUserAsync()
+    public Task<UserModel?> GetCurrentUserAsync()
     {
-        var id = _userContext.GetUserId<Guid>();
-        var requestUri = $"api/user/byId/{id}";
-        return await _caller.GetAsync<object, UserModel>(requestUri, new { id });
+        var userId = _userContext.GetUserId<Guid>();
+        return GetDetailAsync(userId);
+    }
+
+    public async Task<UserModel?> GetDetailAsync(Guid userId)
+    {
+        if (userId == Guid.Empty)
+            return default;
+        var requestUri = $"api/user/byId/{userId}";
+        return await _caller.GetAsync<UserModel>(requestUri);
     }
 
     public async Task<StaffDetailModel?> GetCurrentStaffAsync()
@@ -415,7 +422,7 @@ public class UserService : IUserService
     public async Task<Dictionary<Guid, string>> GetLdapUsersAccountAsync(IEnumerable<Guid> userIds)
     {
         var requestUri = $"api/thirdPartyUser/ldapUsersAccount";
-        return await _caller.PostAsync<Dictionary<Guid, string>>(requestUri, new GetLdapUsersAccountModel { UserIds = userIds.ToList()}) ?? new();
+        return await _caller.PostAsync<Dictionary<Guid, string>>(requestUri, new GetLdapUsersAccountModel { UserIds = userIds.ToList() }) ?? new();
     }
 
     public async Task<Dictionary<Guid, string>> GetThirdPartyUserFieldValueAsync(GetThirdPartyUserFieldValueModel model)

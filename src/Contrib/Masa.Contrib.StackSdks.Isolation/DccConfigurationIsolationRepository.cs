@@ -7,6 +7,8 @@ internal class DccConfigurationIsolationRepository : AbstractConfigurationReposi
 {
     readonly IConfigurationApiClient _client;
 
+    readonly ILogger _logger;
+
     public override SectionTypes SectionType => SectionTypes.ConfigurationApi;
 
     readonly ConcurrentDictionary<string, IDictionary<string, string?>> _dictionaries = new();
@@ -20,7 +22,7 @@ internal class DccConfigurationIsolationRepository : AbstractConfigurationReposi
         : base(loggerFactory)
     {
         _client = client;
-
+        _logger = loggerFactory.CreateLogger<DccConfigurationIsolationRepository>();
         foreach (var sectionOption in sectionOptions)
         {
             Initialize(sectionOption).ConfigureAwait(false).GetAwaiter().GetResult();
@@ -36,33 +38,41 @@ internal class DccConfigurationIsolationRepository : AbstractConfigurationReposi
             {
                 if (_configObjectConfigurationTypeRelations.TryGetValue(key, out var configurationType))
                 {
-                    _dictionaries[key] = FormatRaw(sectionOption.Environment, sectionOption.AppId, configObject, val, configurationType);
+                    _dictionaries[key] = FormatRaw(sectionOption.Environment, sectionOption.AppId, configObject, val, configurationType, _logger);
                     FireRepositoryChange(SectionType, Load());
                 }
             });
 
             _configObjectConfigurationTypeRelations.TryAdd(key, result.ConfigurationType);
-            _dictionaries[key] = FormatRaw(sectionOption.Environment, sectionOption.AppId, configObject, result.Raw, result.ConfigurationType);
+            _dictionaries[key] = FormatRaw(sectionOption.Environment, sectionOption.AppId, configObject, result.Raw, result.ConfigurationType, _logger);
         }
     }
 
-    private static IDictionary<string, string?> FormatRaw(string environment, string appId, string configObject, string? raw, ConfigurationTypes configurationType)
+    private static IDictionary<string, string?> FormatRaw(string environment, string appId, string configObject, string? raw, ConfigurationTypes configurationType, ILogger logger)
     {
         if (raw == null)
             return new Dictionary<string, string?>();
 
-        return configurationType switch
+        try
         {
-            ConfigurationTypes.Json => SecondaryFormat(environment, appId, configObject, JsonConfigurationParser.Parse(raw)),
-            ConfigurationTypes.Properties => SecondaryFormat(environment, appId, configObject, JsonSerializer.Deserialize<Dictionary<string, string>>(raw)!),
-            ConfigurationTypes.Text => new Dictionary<string, string?>
+            return configurationType switch
+            {
+                ConfigurationTypes.Json => SecondaryFormat(environment, appId, configObject, JsonConfigurationParser.Parse(raw)),
+                ConfigurationTypes.Properties => SecondaryFormat(environment, appId, configObject, JsonSerializer.Deserialize<Dictionary<string, string>>(raw)!),
+                ConfigurationTypes.Text => new Dictionary<string, string?>
         {
             { $"{environment}{ConfigurationPath.KeyDelimiter}{appId}{ConfigurationPath.KeyDelimiter}{configObject}" , raw }
         },
-            ConfigurationTypes.Xml => SecondaryFormat(environment, appId, configObject, JsonConfigurationParser.Parse(raw)),
-            ConfigurationTypes.Yaml => SecondaryFormat(environment, appId, configObject, JsonConfigurationParser.Parse(raw)),
-            _ => throw new NotSupportedException(nameof(configurationType)),
-        };
+                ConfigurationTypes.Xml => SecondaryFormat(environment, appId, configObject, JsonConfigurationParser.Parse(raw)),
+                ConfigurationTypes.Yaml => SecondaryFormat(environment, appId, configObject, JsonConfigurationParser.Parse(raw)),
+                _ => throw new NotSupportedException(nameof(configurationType)),
+            };
+        }
+        catch (Exception ex)
+        {
+            logger!.LogError(ex, "rqw:{Raw}", raw);
+            throw;
+        }
     }
 
     private static IDictionary<string, string?> SecondaryFormat(
