@@ -30,6 +30,8 @@ public class AuthClient : IAuthClient
 
     public IThirdPartyIdpService ThirdPartyIdpService { get; }
 
-    public IOssService OssService { get; } = default!;
+    public IOssService OssService { get; }
+
+    public IRoleService RoleService { get; }
 }
 

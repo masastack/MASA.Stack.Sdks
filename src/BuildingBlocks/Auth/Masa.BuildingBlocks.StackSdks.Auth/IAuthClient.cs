@@ -20,5 +20,7 @@ public interface IAuthClient
     IThirdPartyIdpService ThirdPartyIdpService { get; }
 
     IOssService OssService { get; }
+
+    IRoleService RoleService { get; }
 }
 
