@@ -12,8 +12,8 @@
 		<PackageReference Include="Masa.BuildingBlocks.Service.Caller" Version="$(MasaFrameworkPackageVersion)" />
 		<PackageReference Include="Masa.Contrib.Service.Caller.HttpClient" Version="$(MasaFrameworkPackageVersion)" />
 		<PackageReference Include="Masa.Contrib.Isolation.MultiEnvironment" Version="$(MasaFrameworkPackageVersion)" />
-		<PackageReference Include="Masa.Contrib.Service.Caller.HttpClient" Version="$(MasaFrameworkPackageVersion)" />
-		
+		<PackageReference Include="Masa.BuildingBlocks.Authentication.OpenIdConnect.Models" Version="$(MasaFrameworkPackageVersion)" />
+		<PackageReference Include="Masa.BuildingBlocks.Caching" Version="$(MasaFrameworkPackageVersion)" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -45,13 +45,37 @@ public static class ServiceCollectionExtensions
         }
     }
 
-    public static async Task<IServiceCollection> AddMasaStackConfigAsync(this IServiceCollection services, MasaStackProject project, MasaStackApp app, bool init = false, DccOptions? dccOptions = null)
+    public static async Task<IServiceCollection> AddMasaStackConfigAsync(this IServiceCollection services, MasaStackProject project, MasaStackApp app,
+        bool init = false,
+        DccOptions? dccOptions = null,
+        string? clientId = default,
+        string? ssoHost = default,
+        string? multiLevelCacheName = default,
+        params string[] scopes)
     {
+        if (init)
+        {
+            MasaArgumentException.ThrowIfNullOrEmpty(clientId);
+            MasaArgumentException.ThrowIfNullOrEmpty(ssoHost);
+        }
         var configs = GetConfigMap(services);
 
         dccOptions ??= MasaStackConfigUtils.GetDefaultDccOptions(configs, project, app);
         services.AddSingleton(dccOptions);
-        services.AddMasaConfiguration(builder => builder.UseDcc(dccOptions));
+        services.AddMasaConfiguration(builder => builder.UseDcc(dccOptions, action: (CallerBuilder callerBuilder) =>
+        {
+            callerBuilder.UseDccHttpClient(dccOptions.ManageServiceAddress, builder =>
+            {
+                if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(ssoHost))
+                {
+                    builder.UseClientAuthentication(clientId!, ssoHost!, multiLevelCacheName, scopes);
+                }
+                else
+                {
+                    builder.UseAuthentication();
+                }
+            });
+        }));
 
         if (init)
         {
@@ -113,7 +137,20 @@ public static class ServiceCollectionExtensions
             { MasaStackConfigConstant.DCC_SECRET, configuration.GetValue<string>(MasaStackConfigConstant.DCC_SECRET)! },
             { MasaStackConfigConstant.SUFFIX_IDENTITY, configuration.GetValue<string>(MasaStackConfigConstant.SUFFIX_IDENTITY)! }
         };
-
         return configs;
+    }
+
+    private static void UseDccHttpClient(this CallerBuilder callerBuilder, string dccHost, Action<IMasaCallerClientBuilder> callerAction)
+    {
+        var version = Assembly.GetExecutingAssembly().GetName().Version!.ToString();
+        var builder = callerBuilder.UseHttpClient(builder =>
+        {
+            builder.BaseAddress = dccHost;
+            builder.Configure = http =>
+            {
+                http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", $"masastack_sdk/{version} (dcc; http)");
+            };
+        });
+        callerAction?.Invoke(builder);
     }
 }

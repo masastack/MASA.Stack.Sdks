@@ -14,8 +14,30 @@ public static class MasaCallerClientBuilderExtensions
     public static IMasaCallerClientBuilder UseAuthentication(
         this IMasaCallerClientBuilder masaCallerClientBuilder)
     {
+        return masaCallerClientBuilder.UseClientAuthentication<DefaultTokenGenerater>();
+    }
+
+    public static IMasaCallerClientBuilder UseClientAuthentication(
+        this IMasaCallerClientBuilder masaCallerClientBuilder, string clientId, string ssoHost, string? multiLevelCacheName = default, params string[] scopes)
+    {
+        ArgumentNullException.ThrowIfNull(clientId);
+        ArgumentNullException.ThrowIfNull(ssoHost);
+        ClientTokenGenerater.ClientId = clientId;
+        ClientTokenGenerater.SsoDomain = ssoHost;
+        if (!string.IsNullOrEmpty(multiLevelCacheName))
+            ClientTokenGenerater.CacheClientName = multiLevelCacheName;
+        if (scopes != null && scopes.Length > 0 && scopes.Any(s => !string.IsNullOrEmpty(s)))
+            ClientTokenGenerater.Scopes = scopes;
+
+        masaCallerClientBuilder.Services.AddMemoryCache();
+        return masaCallerClientBuilder.UseClientAuthentication<ClientTokenGenerater>();
+    }
+
+    private static IMasaCallerClientBuilder UseClientAuthentication<T>(
+        this IMasaCallerClientBuilder masaCallerClientBuilder) where T : class, ITokenGenerater
+    {
         masaCallerClientBuilder.Services.AddHttpContextAccessor();
-        masaCallerClientBuilder.Services.TryAddScoped<ITokenGenerater, DefaultTokenGenerater>();
+        masaCallerClientBuilder.Services.TryAddScoped<ITokenGenerater, T>();
         masaCallerClientBuilder.Services.TryAddScoped(s => s.GetRequiredService<ITokenGenerater>().Generater());
         masaCallerClientBuilder.Services.TryAddScoped<MultiEnvironmentContext>();
         masaCallerClientBuilder.Services.TryAddScoped(typeof(IMultiEnvironmentContext), s => s.GetRequiredService<MultiEnvironmentContext>());

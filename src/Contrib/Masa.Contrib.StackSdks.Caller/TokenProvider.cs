@@ -10,4 +10,6 @@ public class TokenProvider
     public string? RefreshToken { get; set; }
 
     public string? IdToken { get; set; }
+
+    public int ExpiresIn { get; set; }
 }

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Config\Masa.BuildingBlocks.StackSdks.Config.csproj" />
+    <ProjectReference Include="..\Masa.Contrib.StackSdks.Caller\Masa.Contrib.StackSdks.Caller.csproj" />
   </ItemGroup>
 
 </Project>

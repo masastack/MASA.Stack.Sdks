@@ -5,7 +5,7 @@ namespace Masa.Contrib.StackSdks.Caller;
 
 internal class DefaultTokenGenerater : ITokenGenerater
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    protected readonly IHttpContextAccessor _httpContextAccessor;
     private const string SCHEME = "Bearer ";
 
     public DefaultTokenGenerater(IHttpContextAccessor httpContextAccessor)
@@ -13,7 +13,7 @@ internal class DefaultTokenGenerater : ITokenGenerater
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public TokenProvider Generater()
+    public virtual TokenProvider Generater()
     {
         StringValues authenticationHeaderValue;
 

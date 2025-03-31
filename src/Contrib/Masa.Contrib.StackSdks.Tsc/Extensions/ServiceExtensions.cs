@@ -10,7 +10,7 @@ public static partial class ServiceExtensions
 {
     private const string DEFAULT_CLIENT_NAME = "masa.contrib.stacksdks.tsc";
 
-    public static IServiceCollection AddTscClient(this IServiceCollection services, string tscServiceBaseUrl)
+    public static IServiceCollection AddTscClient(this IServiceCollection services, string tscServiceBaseUrl, Action<IMasaCallerClientBuilder>? callerAction = default)
     {
         ArgumentNullException.ThrowIfNull(tscServiceBaseUrl);
 
@@ -20,14 +20,18 @@ public static partial class ServiceExtensions
         services.AddSingleton(tscSdk);
         services.AddCaller(DEFAULT_CLIENT_NAME, builder =>
         {
-            builder.UseHttpClient(options =>
+            var callBuilder = builder.UseHttpClient(options =>
             {
                 options.BaseAddress = tscServiceBaseUrl;
                 options.Configure = http =>
                 {
                     http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", tscSdk.UserAgent);
                 };
-            }).UseAuthentication();
+            });
+            if (callerAction == null)
+                callBuilder.UseAuthentication();
+            else
+                callerAction.Invoke(callBuilder);
         });
 
         services.AddScoped<ITscClient>(serviceProvider =>

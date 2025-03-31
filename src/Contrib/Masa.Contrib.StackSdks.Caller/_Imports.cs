@@ -3,13 +3,16 @@
 
 global using IdentityModel;
 global using IdentityModel.Client;
+global using Masa.BuildingBlocks.Authentication.OpenIdConnect.Models.Constans;
+global using Masa.BuildingBlocks.Caching;
+global using Masa.BuildingBlocks.Isolation;
 global using Masa.BuildingBlocks.Service.Caller;
 global using Masa.BuildingBlocks.StackSdks.Isolation;
-global using Masa.BuildingBlocks.Isolation;
+global using Masa.Contrib.Isolation.MultiEnvironment;
 global using Masa.Contrib.Service.Caller.HttpClient;
 global using Masa.Contrib.StackSdks.Caller;
-global using Masa.Contrib.Isolation.MultiEnvironment;
 global using Microsoft.AspNetCore.Http;
+global using Microsoft.Extensions.Caching.Memory;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using Microsoft.Extensions.Logging;
