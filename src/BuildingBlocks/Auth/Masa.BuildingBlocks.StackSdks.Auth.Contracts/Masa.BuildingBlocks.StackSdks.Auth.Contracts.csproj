@@ -9,6 +9,7 @@
 		<ProjectReference Include="..\..\Masa.BuildingBlocks.StackSdks.Isolation\Masa.BuildingBlocks.StackSdks.Isolation.csproj" />
 		<PackageReference Include="Masa.BuildingBlocks.Exceptions" Version="$(MasaFrameworkPackageVersion)" />
 		<PackageReference Include="Masa.BuildingBlocks.Authentication.Identity" Version="$(MasaFrameworkPackageVersion)" />
+		<PackageReference Include="Masa.BuildingBlocks.Ddd.Domain" Version="$(MasaFrameworkPackageVersion)" />
 	</ItemGroup>
 
 </Project>

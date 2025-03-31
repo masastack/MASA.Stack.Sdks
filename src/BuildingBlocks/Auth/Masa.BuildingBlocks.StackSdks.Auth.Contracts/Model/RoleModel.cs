@@ -10,4 +10,20 @@ public class RoleModel
     public string Code { get; set; }
 
     public string Name { get; set; }
+
+    public int Limit { get; set; }
+
+    public RoleTypes Type { get; set; }
+
+    public string? Description { get; set; }
+
+    public bool Enabled { get; set; }
+
+    public DateTime CreationTime { get; set; }
+
+    public DateTime? ModificationTime { get; set; }
+
+    public string? Creator { get; set; }
+
+    public string? Modifier { get; set; }
 }
