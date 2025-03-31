@@ -7,12 +7,12 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPmClient(this IServiceCollection services, string pmServiceBaseAddress)
+    public static IServiceCollection AddPmClient(this IServiceCollection services, string pmServiceBaseAddress, Action<IMasaCallerClientBuilder>? callerAction = default)
     {
-        return services.AddPmClient(() => pmServiceBaseAddress);
+        return services.AddPmClient(() => pmServiceBaseAddress, callerAction);
     }
 
-    public static IServiceCollection AddPmClient(this IServiceCollection services, Func<string> pmServiceBaseAddressFunc)
+    public static IServiceCollection AddPmClient(this IServiceCollection services, Func<string> pmServiceBaseAddressFunc, Action<IMasaCallerClientBuilder>? callerAction = default)
     {
         MasaArgumentException.ThrowIfNull(pmServiceBaseAddressFunc);
         var url = pmServiceBaseAddressFunc.Invoke();
@@ -21,14 +21,18 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(pmSdk);
         return services.AddPmClient(callerBuilder =>
         {
-            callerBuilder.UseHttpClient(builder =>
-            {
-                builder.BaseAddress = url;
-                builder.Configure = http =>
-                {
-                    http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", pmSdk.UserAgent);
-                };
-            }).UseAuthentication();
+            var builder = callerBuilder.UseHttpClient(builder =>
+             {
+                 builder.BaseAddress = url;
+                 builder.Configure = http =>
+                 {
+                     http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", pmSdk.UserAgent);
+                 };
+             });
+            if (callerAction != null)
+                callerAction.Invoke(builder);
+            else
+                builder.UseAuthentication();
         });
     }
 

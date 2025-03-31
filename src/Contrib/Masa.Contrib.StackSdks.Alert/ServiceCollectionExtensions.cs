@@ -5,12 +5,12 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddAlertClient(this IServiceCollection services, string alertServiceBaseAddress)
+    public static IServiceCollection AddAlertClient(this IServiceCollection services, string alertServiceBaseAddress, Action<IMasaCallerClientBuilder>? callerAction = default)
     {
-        return services.AddAlertClient(() => alertServiceBaseAddress);
+        return services.AddAlertClient(() => alertServiceBaseAddress, callerAction);
     }
 
-    public static IServiceCollection AddAlertClient(this IServiceCollection services, Func<string> alertServiceBaseAddressFunc)
+    public static IServiceCollection AddAlertClient(this IServiceCollection services, Func<string> alertServiceBaseAddressFunc, Action<IMasaCallerClientBuilder>? callerAction = default)
     {
         MasaArgumentException.ThrowIfNull(alertServiceBaseAddressFunc);
         var url = alertServiceBaseAddressFunc.Invoke();
@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(alertSdk);
         return services.AddAlertClient(callerBuilder =>
         {
-            callerBuilder
+            var builder = callerBuilder
                 .UseHttpClient(builder =>
                 {
                     builder.BaseAddress = url;
@@ -28,8 +28,11 @@ public static class ServiceCollectionExtensions
                     {
                         http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", alertSdk.UserAgent);
                     };
-                })
-                .UseAuthentication();
+                });
+            if (callerAction != null)
+                callerAction.Invoke(builder);
+            else
+                builder.UseAuthentication();
         });
     }
 

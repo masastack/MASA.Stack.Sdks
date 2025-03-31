@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddSchedulerClient(this IServiceCollection services, string schedulerServiceBaseAddress)
+    public static IServiceCollection AddSchedulerClient(this IServiceCollection services, string schedulerServiceBaseAddress, Action<IMasaCallerClientBuilder>? callerAction = default)
     {
         if (string.IsNullOrWhiteSpace(schedulerServiceBaseAddress))
         {
@@ -16,12 +16,15 @@ public static class ServiceCollectionExtensions
 
         return services.AddSchedulerClient(callerBuilder =>
         {
-            callerBuilder
+            var builder = callerBuilder
                 .UseHttpClient(builder =>
                 {
                     builder.Configure = opt => opt.BaseAddress = new Uri(schedulerServiceBaseAddress);
-                })
-                .UseAuthentication();
+                });
+            if (callerAction != null)
+                callerAction.Invoke(builder);
+            else
+                builder.UseAuthentication();
         });
     }
 

@@ -7,12 +7,12 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddMcClient(this IServiceCollection services, string mcServiceBaseAddress)
+    public static IServiceCollection AddMcClient(this IServiceCollection services, string mcServiceBaseAddress, Action<IMasaCallerClientBuilder>? callerAction = default)
     {
-        return services.AddMcClient(() => mcServiceBaseAddress);
+        return services.AddMcClient(() => mcServiceBaseAddress, callerAction);
     }
 
-    public static IServiceCollection AddMcClient(this IServiceCollection services, Func<string> mcServiceBaseAddressFunc)
+    public static IServiceCollection AddMcClient(this IServiceCollection services, Func<string> mcServiceBaseAddressFunc, Action<IMasaCallerClientBuilder>? callerAction = default)
     {
         MasaArgumentException.ThrowIfNull(mcServiceBaseAddressFunc);
         var url = mcServiceBaseAddressFunc.Invoke();
@@ -21,7 +21,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(mcSdk);
         return services.AddMcClient(callerBuilder =>
         {
-            callerBuilder
+            var builder = callerBuilder
                 .UseHttpClient(builder =>
                 {
                     builder.BaseAddress = url;
@@ -29,8 +29,11 @@ public static class ServiceCollectionExtensions
                     {
                         http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", mcSdk.UserAgent);
                     };
-                })
-                .UseAuthentication();
+                });
+            if (callerAction != null)
+                callerAction.Invoke(builder);
+            else
+                builder.UseAuthentication();
         });
     }
 

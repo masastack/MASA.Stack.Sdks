@@ -8,24 +8,24 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAuthClient(this IServiceCollection services, IConfiguration configuration,
-        string? authServiceBaseAddress = null)
+        string? authServiceBaseAddress = null, Action<IMasaCallerClientBuilder>? callerAction = default)
     {
         var redisOptions = configuration.GetSection("$public.RedisConfig").Get<RedisConfigurationOptions>();
         authServiceBaseAddress ??= configuration.GetValue<string>("$public.AppSettings:AuthClient:Url");
-        services.AddAuthClient(authServiceBaseAddress!, redisOptions!);
+        services.AddAuthClient(authServiceBaseAddress!, redisOptions!, callerAction);
 
         return services;
     }
 
     public static IServiceCollection AddAuthClient(this IServiceCollection services, string authServiceBaseAddress,
-        RedisConfigurationOptions redisOptions)
+        RedisConfigurationOptions redisOptions, Action<IMasaCallerClientBuilder>? callerAction = default)
     {
         MasaArgumentException.ThrowIfNullOrEmpty(authServiceBaseAddress);
         var authSdk = new AuthStackSdk();
         services.AddSingleton(authSdk);
         return services.AddAuthClient(callerBuilder =>
         {
-            callerBuilder
+            var builer = callerBuilder
                 .UseHttpClient(builder =>
                 {
                     builder.BaseAddress = authServiceBaseAddress;
@@ -34,8 +34,11 @@ public static class ServiceCollectionExtensions
                         http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", authSdk.UserAgent);
                     };
                 })
-                .AddMiddleware<EnvironmentCallerMiddleware>()
-                .UseAuthentication();
+                .AddMiddleware<EnvironmentCallerMiddleware>();
+            if (callerAction != null)
+                callerAction.Invoke(builer);
+            else
+                builer.UseAuthentication();
         }, redisOptions);
     }
 
