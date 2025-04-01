@@ -47,35 +47,13 @@ public static class ServiceCollectionExtensions
 
     public static async Task<IServiceCollection> AddMasaStackConfigAsync(this IServiceCollection services, MasaStackProject project, MasaStackApp app,
         bool init = false,
-        DccOptions? dccOptions = null,
-        string? clientId = default,
-        string? ssoHost = default,
-        string? multiLevelCacheName = default,
-        params string[] scopes)
+        DccOptions? dccOptions = null)
     {
-        if (init)
-        {
-            MasaArgumentException.ThrowIfNullOrEmpty(clientId);
-            MasaArgumentException.ThrowIfNullOrEmpty(ssoHost);
-        }
         var configs = GetConfigMap(services);
 
         dccOptions ??= MasaStackConfigUtils.GetDefaultDccOptions(configs, project, app);
         services.AddSingleton(dccOptions);
-        services.AddMasaConfiguration(builder => builder.UseDcc(dccOptions, action: (CallerBuilder callerBuilder) =>
-        {
-            callerBuilder.UseDccHttpClient(dccOptions.ManageServiceAddress, builder =>
-            {
-                if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(ssoHost))
-                {
-                    builder.UseClientAuthentication(clientId!, ssoHost!, multiLevelCacheName, scopes);
-                }
-                else
-                {
-                    builder.UseAuthentication();
-                }
-            });
-        }));
+        services.AddMasaConfiguration(builder => builder.UseDcc(dccOptions));
 
         if (init)
         {
@@ -140,7 +118,7 @@ public static class ServiceCollectionExtensions
         return configs;
     }
 
-    private static void UseDccHttpClient(this CallerBuilder callerBuilder, string dccHost, Action<IMasaCallerClientBuilder> callerAction)
+    private static IMasaCallerClientBuilder UseDccHttpClient(this CallerBuilder callerBuilder, string dccHost, Action<IMasaCallerClientBuilder> callerAction)
     {
         var version = Assembly.GetExecutingAssembly().GetName().Version!.ToString();
         var builder = callerBuilder.UseHttpClient(builder =>
@@ -152,5 +130,6 @@ public static class ServiceCollectionExtensions
             };
         });
         callerAction?.Invoke(builder);
+        return builder;
     }
 }
