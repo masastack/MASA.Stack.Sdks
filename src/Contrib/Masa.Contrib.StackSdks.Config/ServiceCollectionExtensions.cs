@@ -47,13 +47,17 @@ public static class ServiceCollectionExtensions
 
     public static async Task<IServiceCollection> AddMasaStackConfigAsync(this IServiceCollection services, MasaStackProject project, MasaStackApp app,
         bool init = false,
-        DccOptions? dccOptions = null)
+        DccOptions? dccOptions = null,
+        Action<IMasaCallerClientBuilder>? callerAction = null)
     {
         var configs = GetConfigMap(services);
 
         dccOptions ??= MasaStackConfigUtils.GetDefaultDccOptions(configs, project, app);
         services.AddSingleton(dccOptions);
-        services.AddMasaConfiguration(builder => builder.UseDcc(dccOptions));
+        services.AddMasaConfiguration(builder => builder.UseDcc(dccOptions, action: (CallerBuilder callerBuilder) =>
+        {
+            callerBuilder.UseDccHttpClient(dccOptions.ManageServiceAddress, callerAction);
+        }));
 
         if (init)
         {
@@ -118,7 +122,7 @@ public static class ServiceCollectionExtensions
         return configs;
     }
 
-    private static IMasaCallerClientBuilder UseDccHttpClient(this CallerBuilder callerBuilder, string dccHost, Action<IMasaCallerClientBuilder> callerAction)
+    private static IMasaCallerClientBuilder UseDccHttpClient(this CallerBuilder callerBuilder, string dccHost, Action<IMasaCallerClientBuilder>? callerAction = null)
     {
         var version = Assembly.GetExecutingAssembly().GetName().Version!.ToString();
         var builder = callerBuilder.UseHttpClient(builder =>
