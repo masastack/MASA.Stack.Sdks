@@ -17,7 +17,7 @@ public class RoleService : IRoleService
     public async Task<AuthPaginationModel<RoleModel>> GetListAsync(GetRolesModel input)
     {
         var requestUri = $"{_party}GetList";
-        return await _caller.GetAsync<AuthPaginationModel<RoleModel>>(requestUri) ?? new();
+        return await _caller.GetAsync<GetRolesModel, AuthPaginationModel<RoleModel>>(requestUri, input) ?? new();
     }
 
     public async Task<RoleDetailModel?> GetDetailAsync(Guid id)
