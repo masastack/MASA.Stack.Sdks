@@ -14,6 +14,8 @@ public class AuthClient : IAuthClient
         PermissionService = new PermissionService(caller, userContext);
         CustomLoginService = new CustomLoginService(caller);
         ThirdPartyIdpService = new ThirdPartyIdpService(caller, multilevelCacheClient);
+        RoleService = new RoleService(caller);
+        ClientService = new ClientService(caller);
     }
 
     public IUserService UserService { get; }
@@ -33,5 +35,7 @@ public class AuthClient : IAuthClient
     public IOssService OssService { get; }
 
     public IRoleService RoleService { get; }
+
+    public IClientService ClientService { get; }
 }
 
