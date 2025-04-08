@@ -17,7 +17,7 @@
 		<CoverletPackageVersion Condition="'$(TargetFramework)' == 'net7.0'">3.0.2</CoverletPackageVersion>
 		<CoverletPackageVersion Condition="'$(TargetFramework)' == 'net8.0'">3.1.2</CoverletPackageVersion>
 
-		<MasaFrameworkPackageVersion>1.2.0-preview.5</MasaFrameworkPackageVersion>
+		<MasaFrameworkPackageVersion>1.2.0-preview.6</MasaFrameworkPackageVersion>
 		<OpenTelemetryVersion>1.9.0</OpenTelemetryVersion>
 		<OpenTelemetryContribVersion>1.9.0</OpenTelemetryContribVersion>
 		<FluentValidationPackageVersion>11.1.0</FluentValidationPackageVersion>
