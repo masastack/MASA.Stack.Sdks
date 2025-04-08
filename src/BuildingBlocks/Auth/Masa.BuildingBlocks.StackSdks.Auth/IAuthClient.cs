@@ -22,5 +22,7 @@ public interface IAuthClient
     IOssService OssService { get; }
 
     IRoleService RoleService { get; }
+
+    IClientService ClientService { get; }
 }
 
