@@ -24,4 +24,23 @@ public class UpdateRoleModel
     public RoleTypes Type { get; set; }
 
     public List<string> Clients { get; set; } = new();
+
+    public UpdateRoleModel(Guid id, string name, string code, string? description, bool enabled, int limit, RoleTypes type, List<SubjectPermissionRelationModel> permissions, List<Guid> childRoles, List<string> clients)
+    {
+        Id = id;
+        Name = name;
+        Code = code;
+        Description = description;
+        Enabled = enabled;
+        Permissions = permissions;
+        ChildrenRoles = childRoles;
+        Limit = limit;
+        Type = type;
+        Clients = clients;
+    }
+
+    public static implicit operator UpdateRoleModel(RoleDetailModel role)
+    {
+        return new UpdateRoleModel(role.Id, role.Name, role.Code, role.Description, role.Enabled, role.Limit, role.Type, role.Permissions, role.ChildrenRoles, role.Clients);
+    }
 }

@@ -18,4 +18,6 @@ public interface IRoleService
     Task<List<RoleSelectModel>> GetSelectForUserAsync(Guid userId);
 
     Task<List<RoleSelectModel>> GetSelectForRoleAsync(Guid roleId);
+
+    Task<RoleOwnerModel> GetRoleOwnerAsync(Guid id);
 }
