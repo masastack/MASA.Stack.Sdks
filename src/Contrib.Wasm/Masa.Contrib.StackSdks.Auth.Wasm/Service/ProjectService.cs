@@ -22,4 +22,10 @@ public class ProjectService : IProjectService
         var requestUri = $"{PARTY}navigations?userId={userId}&clientId={clientId}";
         return await _caller.GetAsync<List<ProjectModel>>(requestUri) ?? new();
     }
+
+    public async Task<List<ProjectModel>> GetUIAndMenusAsync()
+    {
+        var requestUri = $"{PARTY}GetUIAndMenus";
+        return await _caller.GetAsync<List<ProjectModel>>(requestUri) ?? new();
+    }
 }
