@@ -1,7 +1,6 @@
 ﻿// Copyright (c) MASA Stack All rights reserved.
 // Licensed under the Apache License. See LICENSE.txt in the project root for license information.
 
-
 using StackExchange.Redis;
 
 namespace Masa.Contrib.StackSdks.Auth.Service;
@@ -57,5 +56,11 @@ public class RoleService : IRoleService
     {
         var requestUri = $"{_party}GetSelectForRole";
         return await _caller.GetAsync<object, List<RoleSelectModel>>(requestUri, new { roleId }) ?? new();
+    }
+
+    public async Task<RoleOwnerModel> GetRoleOwnerAsync(Guid id)
+    {
+        var requestUri = $"{_party}GetRoleOwner";
+        return await _caller.GetAsync<object, RoleOwnerModel>(requestUri, new { id }) ?? new();
     }
 }
