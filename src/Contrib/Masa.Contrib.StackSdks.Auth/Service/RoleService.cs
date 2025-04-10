@@ -1,6 +1,7 @@
 ﻿// Copyright (c) MASA Stack All rights reserved.
 // Licensed under the Apache License. See LICENSE.txt in the project root for license information.
 
+
 namespace Masa.Contrib.StackSdks.Auth.Service;
 
 public class RoleService : IRoleService
@@ -42,5 +43,11 @@ public class RoleService : IRoleService
     {
         var requestUri = $"{_party}Remove";
         await _caller.DeleteAsync(requestUri, new { id });
+    }
+
+    public async Task<List<RoleSelectModel>> GetSelectForUserAsync(Guid userId)
+    {
+        var requestUri = $"{_party}GetSelectForUser";
+        return await _caller.GetAsync<object, List<RoleSelectModel>>(requestUri, new { userId }) ?? new();
     }
 }
