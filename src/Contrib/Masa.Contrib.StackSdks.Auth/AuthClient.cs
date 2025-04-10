@@ -16,6 +16,7 @@ public class AuthClient : IAuthClient
         ThirdPartyIdpService = new ThirdPartyIdpService(caller, multilevelCacheClient);
         RoleService = new RoleService(caller);
         ClientService = new ClientService(caller);
+        DynamicRoleService = new DynamicRoleService(caller);
     }
 
     public IUserService UserService { get; }
@@ -37,5 +38,7 @@ public class AuthClient : IAuthClient
     public IRoleService RoleService { get; }
 
     public IClientService ClientService { get; }
+
+    public IDynamicRoleService DynamicRoleService { get; }
 }
 
