@@ -3,8 +3,8 @@
 
 namespace Masa.BuildingBlocks.StackSdks.Auth.Contracts.Enum;
 
-public enum DynamicRoleDataType
+public enum TeamMemberTypes
 {
-    UserInfo = 1,
-    UserClaim
+    Member = 1,
+    Admin,
 }

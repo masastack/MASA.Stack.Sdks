@@ -49,4 +49,10 @@ public class RoleService : IRoleService
         var requestUri = $"{_party}GetSelectForUser";
         return await _caller.GetAsync<object, List<RoleSelectModel>>(requestUri, new { userId }) ?? new();
     }
+
+    public async Task<List<RoleSelectModel>> GetSelectForRoleAsync(Guid roleId)
+    {
+        var requestUri = $"{_party}GetSelectForRole";
+        return await _caller.GetAsync<object, List<RoleSelectModel>>(requestUri, new { roleId }) ?? new();
+    }
 }

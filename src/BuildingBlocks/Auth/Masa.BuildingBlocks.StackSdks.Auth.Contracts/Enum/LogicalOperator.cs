@@ -5,5 +5,6 @@ namespace Masa.BuildingBlocks.StackSdks.Auth.Contracts.Enum;
 
 public enum LogicalOperator
 {
-    And, Or
+    And = 1,
+    Or
 }
