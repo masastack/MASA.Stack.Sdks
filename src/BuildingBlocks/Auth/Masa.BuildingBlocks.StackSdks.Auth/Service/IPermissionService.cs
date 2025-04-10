@@ -26,4 +26,10 @@ public interface IPermissionService
     Task<bool> RemoveFavoriteMenuAsync(Guid menuId);
 
     Task<List<CollectMenuModel>> GetFavoriteMenuListAsync();
+
+    Task<List<Guid>> GetPermissionsByRoleAsync(List<Guid> roles);
+
+    Task<List<Guid>> GetPermissionsByTeamAsync(List<TeamSampleModel> teams);
+
+    Task<List<Guid>> GetPermissionsByTeamWithUserAsync(GetPermissionsByTeamWithUserModel model);
 }

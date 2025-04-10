@@ -71,4 +71,22 @@ public class PermissionService : IPermissionService
         var requestUri = $"{PART}menu-favorite-list?userId={userId}";
         return await _caller.GetAsync<List<CollectMenuModel>>(requestUri, default) ?? new();
     }
+
+    public async Task<List<Guid>> GetPermissionsByRoleAsync(List<Guid> roles)
+    {
+        var requestUri = $"{PART}GetPermissionsByRole";
+        return await _caller.GetAsync<object, List<Guid>>(requestUri, new { ids = string.Join(',', roles) }) ?? new();
+    }
+
+    public async Task<List<Guid>> GetPermissionsByTeamAsync(List<TeamSampleModel> teams)
+    {
+        var requestUri = $"{PART}GetPermissionsByTeam";
+        return await _caller.GetAsync<List<TeamSampleModel>, List<Guid>>(requestUri, teams) ?? new();
+    }
+
+    public async Task<List<Guid>> GetPermissionsByTeamWithUserAsync(GetPermissionsByTeamWithUserModel model)
+    {
+        var requestUri = $"{PART}GetPermissionsByTeamWithUser";
+        return await _caller.GetAsync<GetPermissionsByTeamWithUserModel, List<Guid>>(requestUri, model) ?? new();
+    }
 }

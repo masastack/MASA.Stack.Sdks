@@ -16,4 +16,6 @@ public interface IRoleService
     Task RemoveAsync(Guid id);
 
     Task<List<RoleSelectModel>> GetSelectForUserAsync(Guid userId);
+
+    Task<List<RoleSelectModel>> GetSelectForRoleAsync(Guid roleId);
 }

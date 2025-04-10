@@ -5,7 +5,7 @@ namespace Masa.BuildingBlocks.StackSdks.Auth.Contracts.Enum;
 
 public enum OperatorType
 {
-    GreaterThan,
+    GreaterThan = 1,
     GreaterThanOrEqual,
     LessThan,
     LessThanOrEqual,
