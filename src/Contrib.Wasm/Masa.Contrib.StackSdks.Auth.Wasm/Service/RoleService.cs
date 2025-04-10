@@ -43,4 +43,10 @@ public class RoleService : IRoleService
         var requestUri = $"{_party}Remove";
         await _caller.DeleteAsync(requestUri, new { id });
     }
+
+    public async Task<List<RoleSelectModel>> GetSelectForUserAsync(Guid userId)
+    {
+        var requestUri = $"{_party}GetSelectForUser";
+        return await _caller.GetAsync<object, List<RoleSelectModel>>(requestUri, new { userId }) ?? new();
+    }
 }

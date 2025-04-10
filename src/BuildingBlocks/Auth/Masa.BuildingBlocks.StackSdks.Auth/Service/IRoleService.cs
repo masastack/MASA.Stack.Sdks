@@ -14,4 +14,6 @@ public interface IRoleService
     Task UpdateAsync(UpdateRoleModel input);
 
     Task RemoveAsync(Guid id);
+
+    Task<List<RoleSelectModel>> GetSelectForUserAsync(Guid userId);
 }
