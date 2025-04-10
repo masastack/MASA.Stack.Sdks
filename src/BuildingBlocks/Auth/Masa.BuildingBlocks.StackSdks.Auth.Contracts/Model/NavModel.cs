@@ -13,5 +13,7 @@ public class NavModel
 
     public string Url { get; set; } = string.Empty;
 
+    public PermissionTypes PermissionType { get; set; }
+
     public List<NavModel> Children { get; set; } = new();
 }
