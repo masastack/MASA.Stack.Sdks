@@ -9,7 +9,7 @@ public class DynamicRuleConditionModel
 
     public string FieldName { get; set; } = string.Empty;
 
-    public OperatorType OperatorType { get; set; }
+    public OperatorTypes OperatorType { get; set; }
 
     public string Value { get; set; } = string.Empty;
 

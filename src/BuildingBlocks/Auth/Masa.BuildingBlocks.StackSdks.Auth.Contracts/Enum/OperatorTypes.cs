@@ -3,7 +3,7 @@
 
 namespace Masa.BuildingBlocks.StackSdks.Auth.Contracts.Enum;
 
-public enum OperatorType
+public enum OperatorTypes
 {
     GreaterThan = 1,
     GreaterThanOrEqual,
@@ -13,6 +13,7 @@ public enum OperatorType
     EqualIgnoreCase,
     StartsWith,
     NotEndsWith,
+    NotEqual,
     NotEqualIgnoreCase,
     InCollection,
     NotInCollection,
