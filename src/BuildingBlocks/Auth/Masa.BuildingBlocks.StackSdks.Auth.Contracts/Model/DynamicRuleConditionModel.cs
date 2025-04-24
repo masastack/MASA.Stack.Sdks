@@ -13,5 +13,5 @@ public class DynamicRuleConditionModel
 
     public string Value { get; set; } = string.Empty;
 
-    public DynamicRoleDataType DataType { get; set; }
+    public DynamicRoleDataTypes DataType { get; set; }
 }
