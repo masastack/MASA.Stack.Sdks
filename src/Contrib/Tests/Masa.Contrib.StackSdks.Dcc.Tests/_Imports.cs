@@ -6,6 +6,7 @@ global using Masa.BuildingBlocks.Service.Caller;
 global using Masa.BuildingBlocks.StackSdks.Dcc;
 global using Masa.BuildingBlocks.StackSdks.Dcc.Contracts.Model;
 global using Masa.Contrib.Caching.Distributed.StackExchangeRedis;
+global using Masa.Contrib.StackSdks.Dcc.Internal;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
