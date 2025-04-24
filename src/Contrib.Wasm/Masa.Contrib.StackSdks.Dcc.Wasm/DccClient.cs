@@ -1,6 +1,6 @@
 ﻿namespace Masa.Contrib.StackSdks.Dcc;
 
-public class DccClient : IDccClient
+internal class DccClient : IDccClient
 {
     public DccClient(ICaller caller, IMultiEnvironmentUserContext userContext, IMasaStackConfig masaStackConfig)
     {

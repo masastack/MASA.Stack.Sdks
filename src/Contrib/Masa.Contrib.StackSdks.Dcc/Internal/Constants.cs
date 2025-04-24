@@ -6,4 +6,5 @@ namespace Masa.Contrib.StackSdks.Dcc.Internal;
 internal static class Constants
 {
     internal const string DEFAULT_CLIENT_NAME = "masa.contrib.basicability.dcc";
+    internal const string DCC_CONFIGAPI_CLIENT_NAME = "masa.contrib.configuration.configurationapi.dcc";
 }

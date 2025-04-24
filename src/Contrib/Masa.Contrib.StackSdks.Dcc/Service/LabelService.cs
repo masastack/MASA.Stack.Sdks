@@ -3,7 +3,7 @@
 
 namespace Masa.Contrib.StackSdks.Dcc.Service;
 
-public class LabelService : ILabelService
+internal class LabelService : ILabelService
 {
     private readonly IDistributedCacheClient _distributedCacheClient;
 
