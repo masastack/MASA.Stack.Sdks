@@ -10,7 +10,13 @@ public class DccClientTest
     public void TestAddDccClient()
     {
         var services = new ServiceCollection();
-
+        services.AddCaller(Constants.DCC_CONFIGAPI_CLIENT_NAME, options =>
+        {
+            options.UseHttpClient(client =>
+            {
+                client.BaseAddress = "http://localhost:8080";
+            }).UseAuthentication();
+        });
         services.AddDccClient();
 
         var dccClient = services.BuildServiceProvider().GetRequiredService<IDccClient>();
@@ -21,6 +27,7 @@ public class DccClientTest
     public void TestAddDccClient2()
     {
         var builder = WebApplication.CreateBuilder();
+        builder.Services.AddCaller(Constants.DCC_CONFIGAPI_CLIENT_NAME, options => { });
         builder.Services.AddDccClient();
         var serviceProvider = builder.Services.BuildServiceProvider();
         var options = serviceProvider.GetRequiredService<IOptionsMonitor<RedisConfigurationOptions>>();
@@ -38,7 +45,7 @@ public class DccClientTest
     public void TestAddDccClient3()
     {
         var services = new ServiceCollection();
-
+        services.AddCaller(Constants.DCC_CONFIGAPI_CLIENT_NAME, options => { });
         services.AddDccClient(options =>
         {
             options.Servers.Add(new RedisServerOptions("localhost", 8888));
