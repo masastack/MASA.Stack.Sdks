@@ -39,9 +39,7 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton<IDccClient>(serviceProvider =>
         {
-            var client = serviceProvider.GetRequiredService<IDistributedCacheClientFactory>().Create(DEFAULT_CLIENT_NAME);
-
-            return new DccClient(client);
+            return new DccClient(serviceProvider.GetRequiredService<IDistributedCacheClientFactory>().Create(DEFAULT_CLIENT_NAME), serviceProvider.GetRequiredService<ICallerFactory>());
         });
         MasaApp.TrySetServiceCollection(services);
         return services;

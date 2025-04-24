@@ -1,6 +1,6 @@
 ﻿namespace Masa.Contrib.StackSdks.Dcc.Service;
 
-public class OpenApiService : IOpenApiService
+internal class OpenApiService : IOpenApiService
 {
     private readonly ICaller _caller;
     private readonly IMultiEnvironmentUserContext _environmentUserContext;
@@ -57,5 +57,12 @@ public class OpenApiService : IOpenApiService
         var result = await _caller.GetAsync<Dictionary<string, string>>(requestUri);
 
         return result ?? new();
+    }
+
+    public async Task<OssSecurityTokenDto> GetOssSecurityTokenAsync()
+    {
+        var requestUri = $"open-api/oss-token";
+        var result = await _caller.GetAsync<OssSecurityTokenDto>(requestUri);
+        return result!;
     }
 }

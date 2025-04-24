@@ -1,6 +1,6 @@
 ﻿namespace Masa.Contrib.StackSdks.Dcc.Service;
 
-public class LabelService: ILabelService
+internal class LabelService: ILabelService
 {
     private readonly ICaller _caller;
 
