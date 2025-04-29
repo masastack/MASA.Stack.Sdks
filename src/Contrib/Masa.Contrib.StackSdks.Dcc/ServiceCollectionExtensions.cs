@@ -37,7 +37,7 @@ public static class ServiceCollectionExtensions
                 distributedCacheOptions.UseStackExchangeRedisCache();
             });
 
-        services.AddSingleton<IDccClient>(serviceProvider =>
+        services.AddScoped<IDccClient>(serviceProvider =>
         {
             return new DccClient(serviceProvider.GetRequiredService<IDistributedCacheClientFactory>().Create(DEFAULT_CLIENT_NAME), serviceProvider.GetRequiredService<ICallerFactory>());
         });
