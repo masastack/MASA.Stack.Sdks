@@ -17,5 +17,7 @@ public class MenuModel
 
     public string MatchPattern { get; set; }
 
+    public string Legend { get; set; }
+
     public List<MenuModel> Children { get; set; } = new();
 }
