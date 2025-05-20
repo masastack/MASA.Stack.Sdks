@@ -395,10 +395,10 @@ public class UserService : IUserService
         return _caller.PostAsync(requestUri, model);
     }
 
-    public async Task<Dictionary<string, string>> GetClaimValuesAsync(Guid userId)
+    public async Task<List<ClaimValueModel>> GetClaimValuesAsync(Guid userId)
     {
         var requestUri = $"api/user/claim-values/{userId}";
-        return await _caller.GetAsync<Dictionary<string, string>>(requestUri) ?? new();
+        return await _caller.GetAsync<List<ClaimValueModel>>(requestUri) ?? new();
     }
 
     public Task AddClaimValuesAsync(UserClaimValuesModel userClaimValuesModel)
