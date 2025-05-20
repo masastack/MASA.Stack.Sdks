@@ -1,12 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+  <PropertyGroup>    
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Contrib\Masa.Contrib.StackSdks.Tsc.Storage.Clickhouse.Apm\Masa.Contrib.StackSdks.Tsc.Storage.Clickhouse.Apm.csproj" />
     <ProjectReference Include="..\Masa.BuildingBlocks.StackSdks.Tsc.Contracts\Masa.BuildingBlocks.StackSdks.Tsc.Contracts.csproj" />
   </ItemGroup>
 

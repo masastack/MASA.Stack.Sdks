@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>   
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Masa.BuildingBlocks.Data.Contracts" Version="$(MasaFrameworkPackageVersion)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Pm\Masa.BuildingBlocks.StackSdks.Pm.csproj" />
+	</ItemGroup>
+	
+</Project>
