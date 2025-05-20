@@ -10,9 +10,15 @@ internal class TscClient : ITscClient
     {
         LogService = new LogService(caller);
         MetricService = new MetricService(caller);
+        TraceService = new TraceService(caller);
+        ApmService = new ApmService(caller);
     }
 
     public ILogService LogService { get; }
 
     public IMetricService MetricService { get; }
+
+    public ITraceService TraceService { get; }
+
+    public IApmService ApmService { get; }
 }
