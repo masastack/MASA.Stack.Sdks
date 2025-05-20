@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BuildingBlocks\Tsc\Masa.BuildingBlocks.StackSdk.Tsc\Masa.BuildingBlocks.StackSdks.Tsc.csproj" />
+    <ProjectReference Include="..\..\Contrib\Masa.Contrib.StackSdks.Tsc.Storage.Clickhouse.Apm\Masa.Contrib.StackSdks.Tsc.Storage.Clickhouse.Apm.csproj" />
     <ProjectReference Include="..\Masa.Contrib.StackSdks.Caller.Wasm\Masa.Contrib.StackSdks.Caller.Wasm.csproj" />
   </ItemGroup>
 

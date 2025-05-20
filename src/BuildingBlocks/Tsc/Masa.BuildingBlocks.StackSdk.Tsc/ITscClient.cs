@@ -8,4 +8,8 @@ public interface ITscClient
     public ILogService LogService { get; }
 
     public IMetricService MetricService { get; }
+
+    public ITraceService TraceService { get; }
+
+    public IApmService ApmService { get; }
 }
