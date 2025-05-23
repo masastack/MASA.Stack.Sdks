@@ -7,19 +7,19 @@ public class LogResponseDto
 {
     public virtual DateTime Timestamp { get; set; }
 
-    public virtual string TraceId { get; set; }
+    public virtual string TraceId { get; set; } = default!;
 
-    public virtual string SpanId { get; set; }
+    public virtual string SpanId { get; set; } = default!;
 
     public virtual int TraceFlags { get; set; }
 
-    public virtual string SeverityText { get; set; }
+    public virtual string SeverityText { get; set; } = default!;
 
     public virtual int SeverityNumber { get; set; }
 
-    public virtual object Body { get; set; }
+    public virtual object Body { get; set; } = default!;
 
-    public virtual Dictionary<string, object> Resource { get; set; }
+    public virtual Dictionary<string, object> Resource { get; set; } = default!;
 
-    public virtual Dictionary<string, object> Attributes { get; set; }
+    public virtual Dictionary<string, object> Attributes { get; set; } = default!;
 }

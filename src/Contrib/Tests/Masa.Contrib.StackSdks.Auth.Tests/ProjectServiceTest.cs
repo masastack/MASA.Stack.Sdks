@@ -1,11 +1,6 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
-using Masa.BuildingBlocks.StackSdks.Base;
-using Microsoft.Extensions.Hosting;
-using System.Net;
-using System.Net.Http;
-
 namespace Masa.Contrib.StackSdks.Auth.Tests;
 
 [TestClass]
@@ -15,7 +10,7 @@ public class ProjectServiceTest
     private readonly Mock<IHttpClientFactory> _httpClientFactory = new();
     private const string HOST = "http://localhost";
     private const string HTTP_CLIENT_NAME = "masa.contrib.stacksdks.auth";
-    private IAuthClient _client;
+    private IAuthClient _client = default!;
 
     [TestInitialize]
     public void Initialized()

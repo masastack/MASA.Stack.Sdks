@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
 global using Masa.BuildingBlocks.Service.Caller;
+global using Masa.BuildingBlocks.StackSdks.Base;
 global using Masa.BuildingBlocks.StackSdks.Tsc;
 global using Masa.BuildingBlocks.StackSdks.Tsc.Contracts.Model.Aggregate;
 global using Masa.BuildingBlocks.StackSdks.Tsc.Model;

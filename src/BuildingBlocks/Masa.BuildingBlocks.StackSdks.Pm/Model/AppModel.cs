@@ -25,6 +25,11 @@ public class AppModel
 
     public AppModel()
     {
+        Name = default!;
+        Identity=default!;
+        Url = default!;
+        SwaggerUrl = default!;
+        Description = default!;
     }
 
     public AppModel(int id, string name, string identity, int projectId, AppTypes type, string url, ServiceTypes serviceType, string swaggerUrl, string description)

@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
         string? authServiceBaseAddress = null)
     {
         authServiceBaseAddress ??= configuration.GetValue<string>("$public.AppSettings:AuthClient:Url");
-        services.AddAuthClient(authServiceBaseAddress);
+        services.AddAuthClient(authServiceBaseAddress!);
 
         return services;
     }

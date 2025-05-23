@@ -5,9 +5,9 @@ namespace Masa.Contrib.StackSdks.Scheduler;
 
 public abstract class SchedulerJob : ISchedulerJob
 {
-    protected SchedulerLogger<SchedulerJob> Logger { get; set; }
+    protected SchedulerLogger<SchedulerJob> Logger { get; set; } = default!;
 
-    protected IServiceProvider ServiceProvider { get; set; }
+    protected IServiceProvider ServiceProvider { get; set; } = default!;
 
     public Task InitializeAsync(IServiceProvider serviceProvider, Guid jobId, Guid taskId)
     {
