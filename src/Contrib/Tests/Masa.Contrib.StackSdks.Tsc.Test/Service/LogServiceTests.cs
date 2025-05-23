@@ -1,8 +1,6 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
-using Masa.BuildingBlocks.StackSdks.Base;
-
 namespace Masa.Contrib.StackSdks.Tsc.Tests.Service;
 
 [TestClass]
@@ -11,7 +9,7 @@ public class LogServiceTests
     private readonly Mock<HttpMessageHandler> _mockHandler = new();
     private readonly Mock<IHttpClientFactory> _httpClientFactory = new();
     private const string HOST = "http://localhost";
-    private ITscClient _client;
+    private ITscClient _client = default!;
     private const string HTTP_CLIENT_NAME = "masa.contrib.stacksdks.tsc";
 
     [TestInitialize]

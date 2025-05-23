@@ -8,6 +8,7 @@ global using Masa.BuildingBlocks.StackSdks.Auth;
 global using Masa.BuildingBlocks.StackSdks.Auth.Contracts.Consts;
 global using Masa.BuildingBlocks.StackSdks.Auth.Contracts.Enum;
 global using Masa.BuildingBlocks.StackSdks.Auth.Contracts.Model;
+global using Masa.BuildingBlocks.StackSdks.Base;
 global using Masa.BuildingBlocks.StackSdks.Isolation;
 global using Masa.Contrib.StackSdks.Auth.Service;
 global using Microsoft.Extensions.DependencyInjection;

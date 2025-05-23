@@ -5,17 +5,17 @@ namespace Masa.BuildingBlocks.StackSdks.Tsc.Contracts.Model.Trace;
 
 public class TraceRequestAttrDto
 {
-    public string Service { get; set; }
+    public string Service { get; set; } = default!;
 
-    public string Instance { get; set; }
+    public string Instance { get; set; } = default!;
 
-    public string Endpoint { get; set; }
+    public string Endpoint { get; set; } = default!;
 
     public DateTime Start { get; set; }
 
     public DateTime End { get; set; }
 
-    public string Query { get; set; }
+    public string Query { get; set; } = default!;
 
     public int MaxCount { get; set; }
 }

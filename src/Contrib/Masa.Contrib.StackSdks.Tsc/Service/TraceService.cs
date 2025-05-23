@@ -4,6 +4,8 @@ internal class TraceService : ITraceService
 {
     readonly ICaller Caller;
 
+    const string RootPath = "/api/trace";
+
     public TraceService(ICaller caller)
     {
         Caller = caller;
@@ -12,5 +14,10 @@ internal class TraceService : ITraceService
     public async Task<IEnumerable<TraceResponseDto>> GetAsync(string traceId, DateTime start, DateTime end)
     {
         return await Caller.GetAsync<IEnumerable<TraceResponseDto>>($"/api/trace/{traceId}?start={start}&end={end}") ?? Array.Empty<TraceResponseDto>();
+    }
+
+    public async Task<int[]> GetErrorStatusAsync()
+    {
+        return (await Caller.GetAsync<int[]>($"{RootPath}/errorStatus"))!;
     }
 }

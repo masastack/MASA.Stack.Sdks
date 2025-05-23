@@ -9,7 +9,7 @@ public class ProjectDetailModel : ModelBase
 
     public string Identity { get; set; } = "";
 
-    public string LabelCode { get; set; }
+    public string LabelCode { get; set; } = default!;
 
     public string Name { get; set; } = "";
 

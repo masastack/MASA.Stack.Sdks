@@ -47,6 +47,7 @@ public class MessageTemplateModel : AuditEntityModel<Guid, Guid>
 
     public MessageTemplateModel()
     {
+        TemplateTypeDisplayName = default!;
         this.Items = new List<MessageTemplateItemModel>();
     }
 }
