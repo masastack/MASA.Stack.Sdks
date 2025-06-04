@@ -22,20 +22,26 @@ public static class ServiceCollectionExtensions
             });
         });
 
-        var pmClient = services.BuildServiceProvider().GetRequiredService<IPmClient>();
+        var tempServiceProvider = services.BuildServiceProvider();
+
+        var pmClient = tempServiceProvider.GetRequiredService<IPmClient>();
         var environments = (await pmClient.EnvironmentService.GetListAsync()).Select(e => e.Name).ToList();
 
-        services.AddSingleton((sp) => { return new EnvironmentProvider(environments); });
+        services.AddSingleton(new EnvironmentProvider(environments));
+
+        var multiEnvironmentMasaStackConfig = tempServiceProvider.GetRequiredService<IMultiEnvironmentMasaStackConfig>();
+        var masaStackConfig = tempServiceProvider.GetRequiredService<IMasaStackConfig>();
+        var configuration = tempServiceProvider.GetRequiredService<IConfiguration>();
 
         services.AddDccIsolation(builder => builder.UseDccIsolation());
 
         if (!name.IsNullOrEmpty())
         {
-            services.ConfigureConnectionStrings(name);
+            services.ConfigureConnectionStrings(name, environments, multiEnvironmentMasaStackConfig, masaStackConfig);
         }
-        services.ConfigureRedisOptions();
-        services.ConfigureMultilevelCacheOptions();
-        services.ConfigStorageOptions();
+        services.ConfigureRedisOptions(environments, multiEnvironmentMasaStackConfig, masaStackConfig);
+        services.ConfigureMultilevelCacheOptions(environments);
+        services.ConfigStorageOptions(environments, configuration);
 
         services.AddScoped<EsIsolationConfigProvider>();
 
@@ -44,9 +50,13 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    static void ConfigureConnectionStrings(this IServiceCollection services, string name)
+    static void ConfigureConnectionStrings(
+        this IServiceCollection services,
+        string name,
+        List<string> environments,
+        IMultiEnvironmentMasaStackConfig multiEnvironmentMasaStackConfig,
+        IMasaStackConfig masaStackConfig)
     {
-        var (environments, multiEnvironmentMasaStackConfig, masaStackConfig) = services.GetInternal();
         services.Configure<IsolationOptions<ConnectionStrings>>(options =>
         {
             foreach (var environment in environments)
@@ -72,9 +82,12 @@ public static class ServiceCollectionExtensions
         });
     }
 
-    static void ConfigureRedisOptions(this IServiceCollection services)
+    static void ConfigureRedisOptions(
+        this IServiceCollection services,
+        List<string> environments,
+        IMultiEnvironmentMasaStackConfig multiEnvironmentMasaStackConfig,
+        IMasaStackConfig masaStackConfig)
     {
-        var (environments, multiEnvironmentMasaStackConfig, masaStackConfig) = services.GetInternal();
         services.Configure<IsolationOptions<RedisConfigurationOptions>>(options =>
         {
             foreach (var environment in environments)
@@ -115,9 +128,8 @@ public static class ServiceCollectionExtensions
         });
     }
 
-    static void ConfigureMultilevelCacheOptions(this IServiceCollection services)
+    static void ConfigureMultilevelCacheOptions(this IServiceCollection services, List<string> environments)
     {
-        var (environments, _, _) = services.GetInternal();
         string subKeyPrefix = Assembly.GetEntryAssembly()?.GetName().Name ?? "";
         services.Configure<IsolationOptions<MultilevelCacheGlobalOptions>>(options =>
         {
@@ -142,10 +154,11 @@ public static class ServiceCollectionExtensions
         });
     }
 
-    static void ConfigStorageOptions(this IServiceCollection services)
+    static void ConfigStorageOptions(
+        this IServiceCollection services,
+        List<string> environments,
+        IConfiguration configuration)
     {
-        var (environments, _, _) = services.GetInternal();
-        var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
         services.Configure<IsolationOptions<AliyunStorageConfigureOptions>>(options =>
         {
             foreach (var environment in environments)
@@ -217,13 +230,5 @@ public static class ServiceCollectionExtensions
 
         MasaConfigurationBuilder masaConfigurationBuilder = new MasaConfigurationBuilder(services, new ConfigurationBuilder());
         configureDelegate?.Invoke(masaConfigurationBuilder);
-    }
-
-    static (List<string>, IMultiEnvironmentMasaStackConfig, IMasaStackConfig) GetInternal(this IServiceCollection services)
-    {
-        var masaStackConfig = services.BuildServiceProvider().GetRequiredService<IMasaStackConfig>();
-        var multiEnvironmentMasaStackConfig = services.BuildServiceProvider().GetRequiredService<IMultiEnvironmentMasaStackConfig>();
-        var environmentProvider = services.BuildServiceProvider().GetRequiredService<EnvironmentProvider>();
-        return (environmentProvider.GetEnvionments(), multiEnvironmentMasaStackConfig, masaStackConfig);
     }
 }
