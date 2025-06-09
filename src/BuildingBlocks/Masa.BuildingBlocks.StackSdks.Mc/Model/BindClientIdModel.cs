@@ -8,4 +8,6 @@ public class BindClientIdModel
     public string ChannelCode { get; set; } = string.Empty;
 
     public string ClientId { get; set; } = string.Empty;
+
+    public AppDeviceTokenPlatform? Platform { get; set; }
 }
