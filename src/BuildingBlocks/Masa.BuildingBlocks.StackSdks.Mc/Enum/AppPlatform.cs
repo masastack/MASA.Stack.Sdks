@@ -3,10 +3,11 @@
 
 namespace Masa.BuildingBlocks.StackSdks.Mc.Enum;
 
-public enum AppDeviceTokenPlatform
+public enum AppPlatform
 {
     GeTui = 1,
     JPush,
+    iOS,
     Huawei,
     Honor,
     Xiaomi,
