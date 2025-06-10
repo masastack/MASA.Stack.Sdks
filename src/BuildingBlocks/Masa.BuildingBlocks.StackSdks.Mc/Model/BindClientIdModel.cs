@@ -9,5 +9,5 @@ public class BindClientIdModel
 
     public string ClientId { get; set; } = string.Empty;
 
-    public AppDeviceTokenPlatform? Platform { get; set; }
+    public AppPlatform? Platform { get; set; }
 }
