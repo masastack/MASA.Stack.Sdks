@@ -5,7 +5,7 @@ namespace Masa.BuildingBlocks.StackSdks.Auth.Service;
 
 public interface IProjectService
 {
-    Task<List<ProjectModel>> GetGlobalNavigations(string clientId);
+    Task<List<ProjectModel>> GetGlobalNavigations(string clientId, Guid? userId = null);
 
     Task<List<ProjectModel>> GetUIAndMenusAsync();
 }
