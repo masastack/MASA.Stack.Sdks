@@ -16,9 +16,9 @@ public class ProjectService : IProjectService
         _userContext = userContext;
     }
 
-    public async Task<List<ProjectModel>> GetGlobalNavigations(string clientId)
+    public async Task<List<ProjectModel>> GetGlobalNavigations(string clientId, Guid? userId = null)
     {
-        var userId = _userContext.GetUserId<Guid>();
+        userId ??= _userContext.GetUserId<Guid>();
         var requestUri = $"{PARTY}navigations?userId={userId}&clientId={clientId}";
         return await _caller.GetAsync<List<ProjectModel>>(requestUri) ?? new();
     }
