@@ -436,5 +436,10 @@ public class UserService : IUserService
         var requestUri = $"api/user/account/delete";
         await _caller.PostAsync(requestUri, model);
     }
-}
 
+    public Task<bool> HasRolesAsync(params Guid[] roleIds)
+    {
+        var requestUri = $"api/user/has-role";
+        return _caller.PostAsync<bool>(requestUri, roleIds);
+    }
+}
