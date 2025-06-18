@@ -128,5 +128,6 @@ public interface IUserService
     Task<Dictionary<Guid, string>> GetThirdPartyUserFieldValueAsync(GetThirdPartyUserFieldValueModel model);
 
     Task DeleteAccountAsync(DeleteAccountModel model);
-}
 
+    Task<bool> HasRolesAsync(params Guid[] roleIds);
+}

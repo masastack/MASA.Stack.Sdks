@@ -1,6 +1,7 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
+using Masa.BuildingBlocks.Service.Caller;
 using Moq;
 
 namespace Masa.Contrib.StackSdks.Auth.Tests;
@@ -770,6 +771,19 @@ public class UserServiceTest
         userContext ??= new Mock<IUserContext>();
         var multilevelCacheClient = new Mock<IMultilevelCacheClient>();
         return new UserService(caller.Object, userContext.Object, multilevelCacheClient.Object);
+    }
+
+    [TestMethod]
+    public async Task HasRolesAsync()
+    {
+        Guid[] model = new Guid[] { Guid.NewGuid(), Guid.NewGuid() };
+        var requestUri = $"api/user/has-role";
+        var caller = new Mock<ICaller>();
+        caller.Setup(provider => provider.PostAsync<bool>(requestUri, model, default)).ReturnsAsync(true).Verifiable();
+        var userService = GetUserService(caller);
+        var result = await userService.HasRolesAsync(model);
+        caller.Verify(provider => provider.PostAsync<bool>(requestUri, model, default), Times.Once);
+        Assert.IsTrue(result);
     }
 }
 
