@@ -15,7 +15,7 @@ public class ProjectDetailModel : ModelBase
 
     public string Description { get; set; } = "";
 
-    public Guid TeamId { get; set; }
+    public List<EnvironmentProjectTeamDto> EnvironmentProjectTeams { get; set; } = new();
 
     public List<int> EnvironmentClusterIds { get; set; } = new List<int>();
 }

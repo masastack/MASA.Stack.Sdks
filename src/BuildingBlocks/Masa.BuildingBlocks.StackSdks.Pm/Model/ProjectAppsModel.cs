@@ -13,16 +13,16 @@ public class ProjectAppsModel
 
     public string LabelCode { get; set; }
 
-    public Guid TeamId { get; set; }
+    public List<Guid>? TeamIds { get; set; }
 
     public List<AppModel> Apps { get; set; } = new();
 
-    public ProjectAppsModel(int id, string identity, string name, string labelCode, Guid teamId)
+    public ProjectAppsModel(int id, string identity, string name, string labelCode, List<Guid>? teamIds)
     {
         Id = id;
         Identity = identity;
         Name = name;
         LabelCode = labelCode;
-        TeamId = teamId;
+        TeamIds = teamIds;
     }
 }

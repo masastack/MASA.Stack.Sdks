@@ -11,7 +11,7 @@ public class ProjectModel
 
     public string Name { get; set; } = "";
 
-    public Guid TeamId { get; set; }
+    public List<EnvironmentProjectTeamDto> EnvironmentProjectTeams { get; set; } = new();
 
     public string Description { get; set; } = "";
 
@@ -20,6 +20,8 @@ public class ProjectModel
     public string LabelName { get; set; } = "";
 
     public Guid Modifier { get; set; }
+
+    public string? ModifierName { get; set; }
 
     public DateTime ModificationTime { get; set; }
 }
