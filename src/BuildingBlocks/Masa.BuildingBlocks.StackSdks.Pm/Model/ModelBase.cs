@@ -3,11 +3,6 @@
 
 namespace Masa.BuildingBlocks.StackSdks.Pm.Model;
 
-[Obsolete("BaseModel has expired, please use ModelBase")]
-public class BaseModel : ModelBase
-{
-}
-
 public class ModelBase
 {
     public Guid Creator { get; set; }
