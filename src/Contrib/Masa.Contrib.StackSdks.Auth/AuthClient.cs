@@ -18,6 +18,7 @@ public class AuthClient : IAuthClient
         ClientService = new ClientService(caller);
         DynamicRoleService = new DynamicRoleService(caller);
         UserClaimService = new UserClaimService(caller);
+        OperationLogService = new OperationLogService(caller);
     }
 
     public IUserService UserService { get; }
@@ -43,5 +44,7 @@ public class AuthClient : IAuthClient
     public IDynamicRoleService DynamicRoleService { get; }
 
     public IUserClaimService UserClaimService { get; }
+
+    public IOperationLogService OperationLogService { get; }
 }
 

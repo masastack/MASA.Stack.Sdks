@@ -28,5 +28,7 @@ public interface IAuthClient
     IDynamicRoleService DynamicRoleService { get; }
 
     IUserClaimService UserClaimService { get; }
+
+    IOperationLogService OperationLogService { get; }
 }
 
