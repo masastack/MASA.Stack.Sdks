@@ -11,7 +11,7 @@ public class ProjectServiceTest
     {
         var data = new List<ProjectAppsModel>()
         {
-            new ProjectAppsModel(1, "", "", "", Guid.NewGuid())
+            new ProjectAppsModel(1, "", "", "", new List<Guid>{ Guid.NewGuid()})
         };
         string env = "development";
         var requestUri = $"open-api/projectwithapps/{env}";
