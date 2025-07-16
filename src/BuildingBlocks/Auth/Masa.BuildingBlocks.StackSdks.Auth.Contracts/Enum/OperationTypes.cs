@@ -2,7 +2,6 @@
 
 public enum OperationTypes
 {
-    RegisterUser = 53,
     AddUser = 1,
     EditUser = 2,
     EditUserAuthorization = 3,
@@ -55,4 +54,5 @@ public enum OperationTypes
     EditPosition = 50,
     RemovePosition = 51,
     UpsertAppTag = 52,
+    RegisterUser = 53
 }
