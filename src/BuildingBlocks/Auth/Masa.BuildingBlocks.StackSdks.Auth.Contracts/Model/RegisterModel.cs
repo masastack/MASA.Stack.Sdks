@@ -18,4 +18,6 @@ public abstract class RegisterModel : IEnvironmentModel
     public string? IdCard { get; set; }
 
     public string Environment { get; set; }
+
+    public string? ClientId { get; set; }
 }
