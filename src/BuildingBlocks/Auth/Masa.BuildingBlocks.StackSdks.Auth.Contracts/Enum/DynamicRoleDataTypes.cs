@@ -7,5 +7,6 @@ public enum DynamicRoleDataTypes
 {
     UserInfo = 1,
     UserClaim,
-    DynamicRole
+    DynamicRole,
+    Role,
 }
