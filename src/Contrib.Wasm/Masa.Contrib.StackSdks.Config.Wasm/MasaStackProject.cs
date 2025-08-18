@@ -12,7 +12,7 @@ public class MasaStackProject : Enumeration
     public static readonly MasaStackProject Alert = new(5, nameof(Alert).ToLowerInvariant());
     public static readonly MasaStackProject Scheduler = new(6, nameof(Scheduler).ToLowerInvariant());
     public static readonly MasaStackProject TSC = new(7, nameof(TSC).ToLowerInvariant());
-    public static readonly MasaStackProject SuperApp = new(8, nameof(SuperApp).ToLowerInvariant());
+    public static readonly MasaStackProject Sapp = new(8, nameof(Sapp).ToLowerInvariant());
 
     public MasaStackProject(int id, string name)
         : base(id, name)
