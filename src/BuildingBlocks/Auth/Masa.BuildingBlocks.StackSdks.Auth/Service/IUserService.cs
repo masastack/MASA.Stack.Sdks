@@ -129,5 +129,5 @@ public interface IUserService
 
     Task DeleteAccountAsync(DeleteAccountModel model);
 
-    Task<bool> HasRolesAsync(params Guid[] roleIds);
+    Task<bool> HasRolesAsync(Guid? userId, params Guid[] roleIds);
 }

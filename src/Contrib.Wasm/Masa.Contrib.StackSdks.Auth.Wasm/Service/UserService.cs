@@ -437,9 +437,9 @@ public class UserService : IUserService
         await _caller.PostAsync(requestUri, model);
     }
 
-    public Task<bool> HasRolesAsync(params Guid[] roleIds)
+    public Task<bool> HasRolesAsync(Guid? userId, params Guid[] roleIds)
     {
-        var requestUri = $"api/user/has-role";
+        var requestUri = $"api/user/has-role{(userId.HasValue && userId != Guid.Empty ? $"?userId={userId}" : "")}";
         return _caller.PostAsync<bool>(requestUri, roleIds);
     }
 }
