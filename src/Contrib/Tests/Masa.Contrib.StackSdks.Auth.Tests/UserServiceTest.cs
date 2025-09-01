@@ -781,7 +781,7 @@ public class UserServiceTest
         var caller = new Mock<ICaller>();
         caller.Setup(provider => provider.PostAsync<bool>(requestUri, model, default)).ReturnsAsync(true).Verifiable();
         var userService = GetUserService(caller);
-        var result = await userService.HasRolesAsync(model);
+        var result = await userService.HasRolesAsync(Guid.Empty, model);
         caller.Verify(provider => provider.PostAsync<bool>(requestUri, model, default), Times.Once);
         Assert.IsTrue(result);
     }
