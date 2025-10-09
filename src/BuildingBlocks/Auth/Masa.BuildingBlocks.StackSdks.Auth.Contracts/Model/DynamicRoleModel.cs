@@ -26,4 +26,6 @@ public class DynamicRoleModel
     public string? Modifier { get; set; }
 
     public List<DynamicRuleConditionModel> Conditions { get; set; } = new();
+
+    public List<ControlPolicyModel> ControlPolicies { get; set; } = new();
 }
