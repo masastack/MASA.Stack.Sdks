@@ -20,4 +20,6 @@ public class DynamicRoleUpsertModel
     public DateTime ModificationTime { get; set; }
 
     public List<DynamicRuleConditionModel> Conditions { get; set; } = new();
+
+    public List<ControlPolicyModel> ControlPolicies { get; set; } = new();
 }

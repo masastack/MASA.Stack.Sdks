@@ -442,4 +442,10 @@ public class UserService : IUserService
         var requestUri = $"api/user/has-role{(userId.HasValue && userId != Guid.Empty ? $"?userId={userId}" : "")}";
         return _caller.PostAsync<bool>(requestUri, roleIds);
     }
+
+    public Task<List<Guid>> RolesAsync(Guid? userId, params Guid[] roleIds)
+    {
+        var requestUri = $"api/user/roles{(userId.HasValue && userId != Guid.Empty ? $"?userId={userId}" : "")}";
+        return _caller.PostAsync<List<Guid>>(requestUri, roleIds);
+    }
 }
