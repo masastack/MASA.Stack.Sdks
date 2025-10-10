@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace Masa.BuildingBlocks.StackSdks.Auth.Contracts.Model;
+﻿namespace Masa.BuildingBlocks.StackSdks.Auth.Contracts.Model;
 
 public enum StatementEffect
 {
@@ -19,7 +17,8 @@ public class ControlPolicyModel
 
     /// <summary>
     /// 策略效果：Allow 或 Deny
-    /// </summary>   
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public StatementEffect Effect { get; set; } = StatementEffect.Deny;
 
     /// <summary>
@@ -69,6 +68,8 @@ public class ActionIdentifierModel
         if (parts.Length >= 3 && !string.IsNullOrEmpty(parts[2]))
             Operation = parts[2];
     }
+
+    public ActionIdentifierModel() { }
 
     public override string ToString()
     {
@@ -141,6 +142,8 @@ public class ResourceIdentifierModel
         if (parts.Length >= 3 && !string.IsNullOrEmpty(parts[2]))
             Identifier = parts[2];
     }
+
+    public ResourceIdentifierModel() { }
 
     public override string ToString()
     {
