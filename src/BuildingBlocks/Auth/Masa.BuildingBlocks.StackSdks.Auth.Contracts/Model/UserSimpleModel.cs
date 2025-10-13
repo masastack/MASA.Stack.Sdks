@@ -11,6 +11,10 @@ public class UserSimpleModel
 
     public string? DisplayName { get; set; }
 
+    public string Avatar { get; set; } = "";
+
+    public string PhoneNumber { get; set; } = "";
+
     public UserSimpleModel(Guid id, string account, string? displayName)
     {
         Id = id;
