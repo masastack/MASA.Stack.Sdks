@@ -7,4 +7,5 @@ global using Masa.BuildingBlocks.Ddd.Domain.Repositories;
 global using Masa.BuildingBlocks.StackSdks.Auth.Contracts.Enum;
 global using Masa.BuildingBlocks.StackSdks.Isolation.Models;
 global using System.ComponentModel;
+global using System.Text.Json;
 global using System.Text.Json.Serialization;

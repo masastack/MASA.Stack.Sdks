@@ -43,4 +43,10 @@ public class DynamicRoleService : IDynamicRoleService
         var requestUri = $"{_party}/{id}";
         await _caller.DeleteAsync(requestUri, null);
     }
+
+    public Task<List<DynamicRoleModel>> HasAsync(params Guid[] roleIds)
+    {
+        var requestUri = $"{_party}/has";
+        return _caller.PostAsync<List<DynamicRoleModel>>(requestUri, new { roleIds });
+    }
 }

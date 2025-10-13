@@ -96,7 +96,7 @@ public static class MasaStackConfigExtensions
 
     public static string GetSuperAppServiceDomain(this IMasaStackConfig masaStackConfig)
     {
-        return GetDomain(masaStackConfig, MasaStackProject.SuperApp, MasaStackApp.Service);
+        return GetDomain(masaStackConfig, MasaStackProject.Sapp, MasaStackApp.Service);
     }
 
     public static string GetSchedulerWorkerDomain(this IMasaStackConfig masaStackConfig)

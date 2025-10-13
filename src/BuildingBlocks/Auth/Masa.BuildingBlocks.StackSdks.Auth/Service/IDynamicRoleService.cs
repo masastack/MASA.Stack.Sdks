@@ -14,4 +14,6 @@ public interface IDynamicRoleService
     Task UpdateAsync(Guid id, DynamicRoleUpsertModel input);
 
     Task DeleteAsync(Guid id);
+
+    Task<List<DynamicRoleModel>> HasAsync(params Guid[] roleIds);
 }
