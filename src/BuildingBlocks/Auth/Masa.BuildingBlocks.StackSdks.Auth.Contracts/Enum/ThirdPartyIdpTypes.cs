@@ -6,9 +6,12 @@ namespace Masa.BuildingBlocks.StackSdks.Auth.Contracts.Enum;
 public enum ThirdPartyIdpTypes
 {
     Customize = 1,
+    [Obsolete("use Weixin replace")]
     WeChat = 2,
     GitHub = 3,
     Ldap = 4,
     Apple = 5,
-    Alipay = 6
+    Alipay = 6,
+    Weixin = 7,
+    WorkWeixin = 8
 }
