@@ -43,7 +43,11 @@ public static partial class ServiceExtensions
         bool isBlazor = false,
         bool isInterruptSignalRTracing = true,
         IEnumerable<string>? activitySources = default,
-        IEnumerable<Assembly>? blazorRouteAssemblies = default)
+        IEnumerable<Assembly>? blazorRouteAssemblies = default,
+        Action<TracerProviderBuilder>? traceInstrumentConfig = default,
+        Action<MeterProviderBuilder>? metricInstrumentConfig = default,
+        Action<LoggerProviderBuilder>? logInstrumentConfig = default
+        )
     {
         ArgumentNullException.ThrowIfNull(option);
 
@@ -52,7 +56,11 @@ public static partial class ServiceExtensions
             throw new UriFormatException($"{nameof(otlpUrl)}:{otlpUrl} is invalid url");
         services.AddOpenTelemetry()
             .ConfigureResource(resource => resource.AddMasaService(option))
-            .AddMasaTracing(services, builder => AddTraceOtlpExporter(builder, uri!, activitySources?.ToArray()),
+            .AddMasaTracing(services, builder =>
+            {
+                traceInstrumentConfig?.Invoke(builder);
+                AddTraceOtlpExporter(builder, uri!, activitySources?.ToArray());
+            },
             builder =>
             {
                 if (isBlazor)
@@ -62,7 +70,11 @@ public static partial class ServiceExtensions
 
                 builder.HttpClientInstrumentationOptions.AddHttpClientFilter(builder, isInterruptSignalRTracing);
             })
-            .AddMasaMetrics(builder => AddMetricOtlpExporter(builder, uri!, activitySources?.ToArray()));
+            .AddMasaMetrics(builder =>
+            {
+                metricInstrumentConfig?.Invoke(builder);
+                AddMetricOtlpExporter(builder, uri!, activitySources?.ToArray());
+            });
 
         var resources = ResourceBuilder.CreateDefault().AddMasaService(option);
         loggingBuilder.AddMasaOpenTelemetry(builder =>
@@ -79,15 +91,15 @@ public static partial class ServiceExtensions
 
     private static void AddTraceOtlpExporter(TracerProviderBuilder builder, Uri uri, string[]? activitySources = default)
     {
-        if (activitySources != null && activitySources.Any())
-            builder.AddSource(activitySources.ToArray());
+        if (activitySources != null && activitySources.Length > 0)
+            builder.AddSource(activitySources);
         builder.AddOtlpExporter(options => options.Endpoint = uri);
     }
 
     private static void AddMetricOtlpExporter(MeterProviderBuilder builder, Uri uri, string[]? activitySources = default)
     {
-        if (activitySources != null && activitySources.Any())
-            builder.AddMeter(activitySources.ToArray());
+        if (activitySources != null && activitySources.Length > 0)
+            builder.AddMeter(activitySources);
         builder.AddOtlpExporter(options => options.Endpoint = uri);
     }
 

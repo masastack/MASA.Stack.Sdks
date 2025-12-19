@@ -13,7 +13,7 @@ public static partial class ServiceExtensions
         return services;
     }
 
-    internal static OpenTelemetryBuilder AddMasaTracing(this OpenTelemetryBuilder builder,
+    public static OpenTelemetryBuilder AddMasaTracing(this OpenTelemetryBuilder builder,
         IServiceCollection services,
         Action<TracerProviderBuilder> builderConfigure,
         Action<OpenTelemetryInstrumentationOptions>? openTelemetryInstrumentationOptions = null)
