@@ -25,6 +25,7 @@ internal class HttpClientInstrumentHandler : ExceptionHandler
         {
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_AUTHORIZATION, httpRequest.Headers.Authorization);
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_USER_AGENT, httpRequest.Headers.UserAgent);
+            SetMasaCustomerHeaderTags(activity, httpRequest.Headers);
         }
         if (httpRequest.Content != null)
         {
@@ -48,5 +49,20 @@ internal class HttpClientInstrumentHandler : ExceptionHandler
     public virtual void OnHttpWebResponse(Activity activity, HttpWebResponse httpWebResponse)
     {
 
+    }
+
+    private static void SetMasaCustomerHeaderTags(Activity activity, HttpRequestHeaders headers)
+    {
+        if (OpenTelemetryInstrumentationOptions.MasaCustomerHeaders == null || OpenTelemetryInstrumentationOptions.MasaCustomerHeaders.Length == 0 || headers == null || !headers.Any())
+            return;
+
+        foreach (var header in OpenTelemetryInstrumentationOptions.MasaCustomerHeaders)
+        {
+            if (string.IsNullOrEmpty(header)) continue;
+            if (headers.TryGetValues(header, out var headerValue) && headerValue != null)
+            {
+                activity.SetTag($"{header.ToLower().Replace('-', '.')}", headerValue?.ToString());
+            }
+        }
     }
 }

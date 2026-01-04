@@ -12,8 +12,15 @@ public class OpenTelemetryInstrumentationOptions
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
             Logger = loggerFactory.CreateLogger("Masa.Contrib.StackSdks.Tsc.OpenTelemetry");
         }
+        var str = serviceProvider.GetRequiredService<IConfiguration>().GetValue<string>("MASA_OTEL_CUSTOMER_HEADERS");
+        if (!string.IsNullOrEmpty(str) && str.Length > 0)
+        {
+            MasaCustomerHeaders = str.Split(',', StringSplitOptions.RemoveEmptyEntries).Where(header => !string.IsNullOrWhiteSpace(header)).ToArray();
+            Debug.WriteLine($"MasaCustomerHeaders: {string.Join(",", MasaCustomerHeaders)}");
+        }
     }
 
+    internal static string[]? MasaCustomerHeaders = null;
     private readonly static AspNetCoreInstrumentationHandler aspNetCoreInstrumentationHandler = new();
     private readonly static HttpClientInstrumentHandler httpClientInstrumentHandler = new();
 
