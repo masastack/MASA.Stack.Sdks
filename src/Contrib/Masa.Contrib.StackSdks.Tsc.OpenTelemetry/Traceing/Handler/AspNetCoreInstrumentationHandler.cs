@@ -1,8 +1,6 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
-using Microsoft.AspNetCore.Http;
-
 namespace Masa.Contrib.StackSdks.Tsc.OpenTelemetry.Tracing.Handler;
 
 internal class AspNetCoreInstrumentationHandler : ExceptionHandler
@@ -32,6 +30,7 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_AUTHORIZATION, httpRequest.Headers.Authorization);
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_USER_AGENT, httpRequest.Headers.UserAgent);
             activity.SetTag(OpenTelemetryAttributeName.Http.CLIENT_IP, GetIp(httpRequest.Headers, httpRequest.HttpContext!.Connection.RemoteIpAddress));
+            SetMasaCustomerHeaderTags(activity, httpRequest.Headers);
         }
 
         SetUserInfo(activity, httpRequest.HttpContext.User);
@@ -67,5 +66,25 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
             activity?.SetTag("http.route", route!.Template);
             activity?.SetTag("blazor.server.type", route!.Type);
         }
+    }
+
+    private static void SetMasaCustomerHeaderTags(Activity activity, IHeaderDictionary headers)
+    {
+        if (OpenTelemetryInstrumentationOptions.MasaCustomerHeaders == null || OpenTelemetryInstrumentationOptions.MasaCustomerHeaders.Length == 0 || headers == null || headers.Count == 0)
+            return;
+        foreach (var header in OpenTelemetryInstrumentationOptions.MasaCustomerHeaders)
+        {
+            if (string.IsNullOrEmpty(header)) continue;
+            var headerValue = GetHeaderValue(headers, header);
+            if (headerValue != null)
+            {
+                activity.SetTag($"{header.ToLower().Replace('-', '.')}", headerValue?.ToString());
+            }
+        }
+    }
+
+    private static object GetHeaderValue(IHeaderDictionary headers, string key)
+    {
+        return headers.TryGetValue(key, out StringValues value) ? value : default;
     }
 }
