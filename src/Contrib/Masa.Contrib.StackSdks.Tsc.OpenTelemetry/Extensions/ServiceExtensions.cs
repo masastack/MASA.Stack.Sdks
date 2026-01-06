@@ -58,7 +58,6 @@ public static partial class ServiceExtensions
             .ConfigureResource(resource => resource.AddMasaService(option))
             .AddMasaTracing(services, builder =>
             {
-                traceInstrumentConfig?.Invoke(builder);
                 AddTraceOtlpExporter(builder, uri!, activitySources?.ToArray());
             },
             builder =>
@@ -86,6 +85,12 @@ public static partial class ServiceExtensions
         {
             BlazorRouteManager.InitRoute(blazorRouteAssemblies.ToArray());
         }
+
+        if (traceInstrumentConfig != null)
+            AddTraceProvider(option, traceInstrumentConfig, uri!);
+
+        if (metricInstrumentConfig != null)
+            AddMeterProvider(option, metricInstrumentConfig, uri!);
         return services;
     }
 
@@ -101,6 +106,24 @@ public static partial class ServiceExtensions
         if (activitySources != null && activitySources.Length > 0)
             builder.AddMeter(activitySources);
         builder.AddOtlpExporter(options => options.Endpoint = uri);
+    }
+
+    private static void AddTraceProvider(MasaObservableOptions option, Action<TracerProviderBuilder> instrumentConfig, Uri uri)
+    {
+        var builder = Sdk.CreateTracerProviderBuilder()
+                    .ConfigureResource(builder => builder.AddMasaService(option))
+                    .AddOtlpExporter(otlp => otlp.Endpoint = uri!);
+        instrumentConfig?.Invoke(builder);
+        builder.Build();
+    }
+
+    private static void AddMeterProvider(MasaObservableOptions option, Action<MeterProviderBuilder> instrumentConfig, Uri uri)
+    {
+        var builder = Sdk.CreateMeterProviderBuilder()
+                    .ConfigureResource(builder => builder.AddMasaService(option))
+                    .AddOtlpExporter(otlp => otlp.Endpoint = uri!);
+        instrumentConfig?.Invoke(builder);
+        builder.Build();
     }
 
     public static IApplicationBuilder UseMASAHttpReponseLog(this IApplicationBuilder app)
