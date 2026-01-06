@@ -3,22 +3,28 @@
 
 // ReSharper disable once CheckNamespace
 
+using StackExchange.Redis;
+
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAuthClient(this IServiceCollection services, IConfiguration configuration,
-        string? authServiceBaseAddress = null, Action<IMasaCallerClientBuilder>? callerAction = default)
+        string? authServiceBaseAddress = null,
+        Action<IMasaCallerClientBuilder>? callerAction = default,
+        Action<IConnectionMultiplexer>? connectConfig = null)
     {
         var redisOptions = configuration.GetSection("$public.RedisConfig").Get<RedisConfigurationOptions>();
         authServiceBaseAddress ??= configuration.GetValue<string>("$public.AppSettings:AuthClient:Url");
-        services.AddAuthClient(authServiceBaseAddress!, redisOptions!, callerAction);
+        services.AddAuthClient(authServiceBaseAddress!, redisOptions!, callerAction, connectConfig);
 
         return services;
     }
 
     public static IServiceCollection AddAuthClient(this IServiceCollection services, string authServiceBaseAddress,
-        RedisConfigurationOptions redisOptions, Action<IMasaCallerClientBuilder>? callerAction = default)
+        RedisConfigurationOptions redisOptions,
+        Action<IMasaCallerClientBuilder>? callerAction = default,
+        Action<IConnectionMultiplexer>? connectConfig = null)
     {
         MasaArgumentException.ThrowIfNullOrEmpty(authServiceBaseAddress);
         var authSdk = new AuthStackSdk();
@@ -39,11 +45,12 @@ public static class ServiceCollectionExtensions
                 callerAction.Invoke(builer);
             else
                 builer.UseAuthentication();
-        }, redisOptions);
+        }, redisOptions, connectConfig);
     }
 
     private static IServiceCollection AddAuthClient(this IServiceCollection services, Action<CallerBuilder> callerBuilder,
-        RedisConfigurationOptions redisOptions)
+        RedisConfigurationOptions redisOptions,
+        Action<IConnectionMultiplexer>? connectConfig = null)
     {
         MasaArgumentException.ThrowIfNull(callerBuilder);
         if (services.All(service => service.ServiceType != typeof(IMultiEnvironmentUserContext)))
@@ -51,7 +58,7 @@ public static class ServiceCollectionExtensions
 
         services.AddCaller(DEFAULT_CLIENT_NAME, callerBuilder);
 
-        services.AddAuthClientMultilevelCache(redisOptions);
+        services.AddAuthClientMultilevelCache(redisOptions, connectConfig);
         services.AddScoped<IAuthClient>(serviceProvider =>
         {
             var userContext = serviceProvider.GetRequiredService<IMultiEnvironmentUserContext>();
@@ -84,11 +91,11 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddAuthClientMultilevelCache(this IServiceCollection services, RedisConfigurationOptions redisOptions)
+    public static IServiceCollection AddAuthClientMultilevelCache(this IServiceCollection services, RedisConfigurationOptions redisOptions, Action<IConnectionMultiplexer>? connectConfig = null)
     {
         services.AddMultilevelCache(
             DEFAULT_CLIENT_NAME,
-            distributedCacheOptions => distributedCacheOptions.UseStackExchangeRedisCache(redisOptions),
+            distributedCacheOptions => distributedCacheOptions.UseStackExchangeRedisCache(redisOptions, connectConfig: connectConfig),
             multilevelCacheOptions =>
             {
                 multilevelCacheOptions.SubscribeKeyType = SubscribeKeyType.SpecificPrefix;
