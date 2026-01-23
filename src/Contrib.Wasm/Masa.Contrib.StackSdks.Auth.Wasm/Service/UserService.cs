@@ -437,15 +437,21 @@ public class UserService : IUserService
         await _caller.PostAsync(requestUri, model);
     }
 
-    public Task<bool> HasRolesAsync(Guid? userId, params Guid[] roleIds)
+    public async Task<bool> HasRolesAsync(Guid? userId, params Guid[] roleIds)
     {
         var requestUri = $"api/user/has-role{(userId.HasValue && userId != Guid.Empty ? $"?userId={userId}" : "")}";
-        return _caller.PostAsync<bool>(requestUri, roleIds);
+        return await _caller.PostAsync<bool>(requestUri, roleIds);
     }
 
-    public Task<List<Guid>> RolesAsync(Guid? userId, params Guid[] roleIds)
+    public async Task<List<Guid>> RolesAsync(Guid? userId, params Guid[] roleIds)
     {
         var requestUri = $"api/user/roles{(userId.HasValue && userId != Guid.Empty ? $"?userId={userId}" : "")}";
-        return _caller.PostAsync<List<Guid>>(requestUri, roleIds);
+        return await _caller.PostAsync<List<Guid>>(requestUri, roleIds) ?? new();
+    }
+
+    public async Task<List<UserRoleModel>> GetRolesAsync(Guid userId)
+    {
+        var requestUri = $"api/user/{userId}/roles";
+        return await _caller.GetAsync<List<UserRoleModel>>(requestUri) ?? new();
     }
 }

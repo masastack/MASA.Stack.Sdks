@@ -132,4 +132,6 @@ public interface IUserService
     Task<bool> HasRolesAsync(Guid? userId, params Guid[] roleIds);
 
     Task<List<Guid>> RolesAsync(Guid? userId, params Guid[] roleIds);
+
+    Task<List<UserRoleModel>> GetRolesAsync(Guid userId);
 }
