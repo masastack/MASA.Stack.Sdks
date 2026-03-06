@@ -6,9 +6,9 @@ namespace Masa.Contrib.StackSdks.Tsc.Service;
 internal class MetricService : IMetricService
 {
     private readonly ICaller _caller;
-    internal const string RANGEVALUES_URL = "/api/metric/range-values";
-    internal const string NAMES_URI = "/api/metric/names";
-    internal const string LABELVALUES_URI = "/api/metric/label-values";
+    internal const string RANGEVALUES_URL = "api/metric/range-values";
+    internal const string NAMES_URI = "api/metric/names";
+    internal const string LABELVALUES_URI = "api/metric/label-values";
 
     public MetricService(ICaller caller)
     {
