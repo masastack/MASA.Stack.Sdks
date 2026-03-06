@@ -4,7 +4,7 @@ internal class TraceService : ITraceService
 {
     readonly ICaller Caller;
 
-    const string RootPath = "/api/trace";
+    const string RootPath = "api/trace";
 
     public TraceService(ICaller caller)
     {
