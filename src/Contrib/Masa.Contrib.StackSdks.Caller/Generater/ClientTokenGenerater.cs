@@ -2,8 +2,10 @@
 
 internal class ClientTokenGenerater : DefaultTokenGenerater
 {
-    internal static string SsoDomain { get; set; }
-    internal static string ClientId { get; set; }
+    internal static string SsoDomain { get; set; } = default!;
+
+    internal static string ClientId { get; set; } = default!;
+
     internal static string[] Scopes { get; set; } = new string[] { "MasaStack" };
 
     internal static string CacheClientName { get; set; } = "masa.contrib.configuration.configurationapi.dcc";
@@ -51,7 +53,7 @@ internal class ClientTokenGenerater : DefaultTokenGenerater
     {
         var request = new ClientCredentialsTokenRequest
         {
-            Address = SsoDomain + "/connect/token",
+            Address = $"{SsoDomain}{(SsoDomain.EndsWith('/') ? "" : "/")}connect/token",
             GrantType = GrantType.CLIENT_CREDENTIALS,
             ClientId = ClientId,
             Scope = string.Join(" ", Scopes)
