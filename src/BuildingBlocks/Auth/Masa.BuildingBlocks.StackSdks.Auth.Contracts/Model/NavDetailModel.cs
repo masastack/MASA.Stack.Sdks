@@ -3,7 +3,7 @@
 
 namespace Masa.BuildingBlocks.StackSdks.Auth.Contracts.Model;
 
-public class NavModel
+public class NavDetailModel
 {
     public Guid Id { get; set; }
 
@@ -18,6 +18,4 @@ public class NavModel
     public string MatchPattern { get; set; } = string.Empty;
 
     public PermissionTypes PermissionType { get; set; }
-
-    public List<NavModel> Children { get; set; } = new();
 }

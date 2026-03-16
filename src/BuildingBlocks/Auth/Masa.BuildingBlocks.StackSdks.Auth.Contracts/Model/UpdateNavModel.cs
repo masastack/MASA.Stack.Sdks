@@ -3,21 +3,11 @@
 
 namespace Masa.BuildingBlocks.StackSdks.Auth.Contracts.Model;
 
-public class NavModel
+public class UpdateNavModel
 {
     public Guid Id { get; set; }
 
-    public string Code { get; set; } = string.Empty;
-
-    public string Name { get; set; } = string.Empty;
-
     public string Icon { get; set; } = string.Empty;
 
-    public string Url { get; set; } = string.Empty;
-
     public string MatchPattern { get; set; } = string.Empty;
-
-    public PermissionTypes PermissionType { get; set; }
-
-    public List<NavModel> Children { get; set; } = new();
 }
