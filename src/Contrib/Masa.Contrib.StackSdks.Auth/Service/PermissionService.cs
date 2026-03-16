@@ -1,10 +1,6 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the MIT License. See LICENSE.txt in the project root for license information.
 
-using System.Data;
-using Aliyun.OSS;
-using StackExchange.Redis;
-
 namespace Masa.Contrib.StackSdks.Auth.Service;
 
 public class PermissionService : IPermissionService
@@ -39,6 +35,15 @@ public class PermissionService : IPermissionService
         var userId = _userContext.GetUserId<Guid>();
         var requestUri = $"{PART}element-permissions?appId={appId}&userId={userId}";
         return await _caller.GetAsync<List<string>>(requestUri, default) ?? new();
+    }
+
+    public async Task<Dictionary<string, string>> GetI18nDisplayNameAsync(string name, params string[] cultureNames)
+    {
+        var validCultureNames = Array.FindAll(cultureNames ?? Array.Empty<string>(), culture => !string.IsNullOrWhiteSpace(culture));
+        var cultureNameQuery = Uri.EscapeDataString(string.Join(',', validCultureNames));
+        var nameQuery = Uri.EscapeDataString(name);
+        var requestUri = $"{PART}i18n-display-name?cultureName={cultureNameQuery}&name={nameQuery}";
+        return await _caller.GetAsync<Dictionary<string, string>>(requestUri, default) ?? new();
     }
 
     public async Task<bool> AddFavoriteMenuAsync(Guid menuId)
