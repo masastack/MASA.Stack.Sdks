@@ -6,51 +6,93 @@ namespace Masa.Contrib.StackSdks.Auth.Tests;
 [TestClass]
 public class ProjectServiceTest
 {
-    private readonly Mock<HttpMessageHandler> _mockHandler = new();
-    private readonly Mock<IHttpClientFactory> _httpClientFactory = new();
-    private const string HOST = "http://localhost";
-    private const string HTTP_CLIENT_NAME = "masa.contrib.stacksdks.auth";
-    private IAuthClient _client = default!;
-
-    [TestInitialize]
-    public void Initialized()
-    {
-        IServiceCollection services = new ServiceCollection();
-        services.AddSingleton(_httpClientFactory.Object);
-        var httpClient = new HttpClient(_mockHandler.Object)
-        {
-            BaseAddress = new Uri(HOST)
-        };
-        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", new StackSdksBase("auth").UserAgent);
-        _httpClientFactory.Setup(factory => factory.CreateClient(HTTP_CLIENT_NAME)).Returns(httpClient);
-        services.AddCaller(HTTP_CLIENT_NAME, builder =>
-        {
-            builder.UseHttpClient(options => options.BaseAddress = HOST);
-        });
-        var factory = services.BuildServiceProvider().GetRequiredService<ICallerFactory>();
-        _client = new AuthClient(factory.Create(HTTP_CLIENT_NAME), new Mock<IMultiEnvironmentUserContext>().Object!, new Mock<IMultilevelCacheClient>().Object!);
-    }
-
     [TestMethod]
     public async Task TestGetGlobalNavigationsAsync()
     {
-        var data = new List<ProjectModel>()
-        {
-            new ProjectModel()
-        };
         var userId = Guid.Parse("A9C8E0DD-1E9C-474D-8FE7-8BA9672D53D1");
-        _mockHandler.Protected()
-           .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-           .ReturnsAsync(new HttpResponseMessage()
-           {
-               StatusCode = HttpStatusCode.OK,
-               Content = new StringContent(JsonSerializer.Serialize(data))
-           }).Verifiable();
-        var userContext = new Mock<IMultiEnvironmentUserContext>();
+        var data = new List<ProjectModel> { new() };
+        var requestUri = $"api/project/navigations?userId={userId}&clientId=auth-web-dev";
+        var caller = new Mock<ICaller>();
+        caller.Setup(provider => provider.GetAsync<List<ProjectModel>>(requestUri, default)).ReturnsAsync(data).Verifiable();
+        var userContext = new Mock<IUserContext>();
         userContext.Setup(user => user.GetUserId<Guid>()).Returns(userId).Verifiable();
-        userContext.SetupGet(user => user.Environment).Returns("development");
-        var clientId = "auth-web-dev";
-        var result = await _client.ProjectService.GetGlobalNavigations(clientId);
+        var service = GetProjectService(caller, userContext);
+
+        var result = await service.GetGlobalNavigations("auth-web-dev");
+
+        caller.Verify(provider => provider.GetAsync<List<ProjectModel>>(requestUri, default), Times.Once);
+        userContext.Verify(user => user.GetUserId<Guid>(), Times.Once);
         Assert.IsTrue(result.Count == 1);
+    }
+
+    [TestMethod]
+    public async Task TestGetGlobalNavigationsByMultiAppIdsAsync()
+    {
+        var data = new List<ProjectModel> { new() };
+        var requestUri = "api/project/byAppIds?appIds=app1%2Capp2";
+        var caller = new Mock<ICaller>();
+        caller.Setup(provider => provider.GetAsync<List<ProjectModel>>(requestUri, default)).ReturnsAsync(data).Verifiable();
+        var service = GetProjectService(caller);
+
+        var result = await service.GetNavigationsByAppId("app1", "app2");
+
+        caller.Verify(provider => provider.GetAsync<List<ProjectModel>>(requestUri, default), Times.Once);
+        Assert.IsTrue(result.Count == 1);
+    }
+
+    [TestMethod]
+    public async Task TestGetGlobalNavigationsBySingleAppIdAsync()
+    {
+        var data = new List<ProjectModel> { new() };
+        var requestUri = "api/project/byAppIds?appIds=auth-web-dev";
+        var caller = new Mock<ICaller>();
+        caller.Setup(provider => provider.GetAsync<List<ProjectModel>>(requestUri, default)).ReturnsAsync(data).Verifiable();
+        var service = GetProjectService(caller);
+
+        var result = await service.GetNavigationsByAppId("auth-web-dev");
+
+        caller.Verify(provider => provider.GetAsync<List<ProjectModel>>(requestUri, default), Times.Once);
+        Assert.IsTrue(result.Count == 1);
+    }
+
+    [TestMethod]
+    public async Task TestGetMenuDetailAsync()
+    {
+        var menuId = Guid.Parse("225082D3-CC88-48D2-3C27-08DA3ED8F4B7");
+        var data = new NavDetailModel { Id = menuId };
+        var requestUri = "api/project/menus/detail";
+        var caller = new Mock<ICaller>();
+        caller.Setup(provider => provider.GetAsync<object, NavDetailModel>(requestUri, It.IsAny<object>(), default)).ReturnsAsync(data).Verifiable();
+        var service = GetProjectService(caller);
+
+        var result = await service.GetMenuDetailAsync(menuId);
+
+        caller.Verify(provider => provider.GetAsync<object, NavDetailModel>(requestUri, It.IsAny<object>(), default), Times.Once);
+        Assert.IsNotNull(result);
+        Assert.AreEqual(menuId, result.Id);
+    }
+
+    [TestMethod]
+    public async Task TestUpdateMenuAsync()
+    {
+        var input = new UpdateNavModel
+        {
+            Id = Guid.Parse("225082D3-CC88-48D2-3C27-08DA3ED8F4B7"),
+            Icon = "mdi-home",
+            MatchPattern = "/home.*"
+        };
+        var requestUri = "api/project/menus/meta";
+        var caller = new Mock<ICaller>();
+        caller.Setup(provider => provider.PutAsync(requestUri, input, true, default)).Verifiable();
+        var service = GetProjectService(caller);
+
+        await service.UpdateMenuAsync(input);
+
+        caller.Verify(provider => provider.PutAsync(requestUri, input, true, default), Times.Once);
+    }
+
+    private static ProjectService GetProjectService(Mock<ICaller> caller, Mock<IUserContext>? userContext = null)
+    {
+        return new ProjectService(caller.Object, userContext?.Object ?? new Mock<IUserContext>().Object);
     }
 }

@@ -7,5 +7,11 @@ public interface IProjectService
 {
     Task<List<ProjectModel>> GetGlobalNavigations(string clientId, Guid? userId = null);
 
+    Task<List<ProjectModel>> GetNavigationsByAppId(params string[] appIds);
+
+    Task<NavDetailModel?> GetMenuDetailAsync(Guid menuId);
+
+    Task UpdateMenuAsync(UpdateNavModel input);
+
     Task<List<ProjectModel>> GetUIAndMenusAsync();
 }
