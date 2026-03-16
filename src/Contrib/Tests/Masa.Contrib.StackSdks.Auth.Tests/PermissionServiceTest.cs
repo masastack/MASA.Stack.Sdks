@@ -24,6 +24,28 @@ public class PermissionServiceTest
     }
 
     [TestMethod]
+    public async Task TestGetI18nDisplayNameAsync()
+    {
+        var name = "User";
+        var cultureNames = new[] { "en-us", "zh-cn", "ru-ru", "ja-jp" };
+        var data = new Dictionary<string, string>
+        {
+            ["en-us"] = "User"
+        };
+        var cultureName = string.Join(',', cultureNames);
+        var requestUri = $"api/permission/i18n-display-name?cultureName={Uri.EscapeDataString(cultureName)}&name={Uri.EscapeDataString(name)}";
+        var caller = new Mock<ICaller>();
+        caller.Setup(provider => provider.GetAsync<Dictionary<string, string>>(requestUri, default)).ReturnsAsync(data).Verifiable();
+        var userContext = new Mock<IUserContext>();
+        var permissionService = new PermissionService(caller.Object, userContext.Object);
+
+        var result = await permissionService.GetI18nDisplayNameAsync(name, cultureNames);
+
+        caller.Verify(provider => provider.GetAsync<Dictionary<string, string>>(requestUri, default), Times.Once);
+        Assert.IsTrue(result.Count == 1);
+    }
+
+    [TestMethod]
     [DataRow("app1", "code")]
     public async Task TestAuthorizedAsync(string appId, string code)
     {

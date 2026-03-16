@@ -32,4 +32,6 @@ public interface IPermissionService
     Task<List<Guid>> GetPermissionsByTeamAsync(List<TeamSampleModel> teams);
 
     Task<List<Guid>> GetPermissionsByTeamWithUserAsync(GetPermissionsByTeamWithUserModel model);
+
+    Task<Dictionary<string, string>> GetI18nDisplayNameAsync(string name, params string[] cultureNames);
 }
