@@ -47,7 +47,7 @@ public static class ServiceCollectionExtensions
 
     public static async Task<IServiceCollection> AddMasaStackConfigAsync(this IServiceCollection services, MasaStackProject project, MasaStackApp app,
         bool init = false,
-        DccOptions? dccOptions = null,
+        DccDaprOptions? dccOptions = null,
         Action<IMasaCallerClientBuilder>? callerAction = null)
     {
         var configs = GetConfigMap(services);
@@ -84,9 +84,9 @@ public static class ServiceCollectionExtensions
         return services.BuildServiceProvider().GetRequiredService<IMasaStackConfig>();
     }
 
-    public static DccOptions? GetDccOptions(this IServiceCollection services)
+    public static DccDaprOptions? GetDccOptions(this IServiceCollection services)
     {
-        return services.BuildServiceProvider().GetService<DccOptions>();
+        return services.BuildServiceProvider().GetService<DccDaprOptions>();
     }
 
     public static IMultiEnvironmentMasaStackConfig GetMultiEnvironmentMasaStackConfig(this IServiceCollection services)

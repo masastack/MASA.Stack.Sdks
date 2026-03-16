@@ -6,7 +6,7 @@ namespace Masa.Contrib.StackSdks.Config;
 
 internal static class MasaStackConfigUtils
 {
-    public static DccOptions GetDefaultDccOptions(Dictionary<string, string> configMap, MasaStackProject project, MasaStackApp app)
+    public static DccDaprOptions GetDefaultDccOptions(Dictionary<string, string> configMap, MasaStackProject project, MasaStackApp app)
     {
         var data = GetMasaStackJsonArray(configMap);
         var dccServerAddress = data.FirstOrDefault(i => i?["id"]?.ToString() == MasaStackProject.DCC.Name)?[MasaStackApp.Service.Name]?["domain"]?.ToString() ?? "";
@@ -14,20 +14,21 @@ internal static class MasaStackConfigUtils
         var redis = JsonSerializer.Deserialize<RedisModel>(redisStr) ?? throw new JsonException();
         var secret = configMap.GetValueOrDefault(MasaStackConfigConstant.DCC_SECRET);
 
-        var options = new DccOptions
+        var options = new DccDaprOptions
         {
             Environment = configMap.GetValueOrDefault(MasaStackConfigConstant.ENVIRONMENT)!,
             ManageServiceAddress = dccServerAddress,
-            RedisOptions = new Caching.Distributed.StackExchangeRedis.RedisConfigurationOptions
-            {
-                Servers = new List<Caching.Distributed.StackExchangeRedis.RedisServerOptions>
-            {
-                new Caching.Distributed.StackExchangeRedis.RedisServerOptions(redis.RedisHost,redis.RedisPort)
-            },
-                DefaultDatabase = redis.RedisDb,
-                Password = redis.RedisPassword
-            },
-            PublicSecret = secret,
+            //RedisOptions = new Caching.Distributed.StackExchangeRedis.RedisConfigurationOptions
+            //{
+            //    Servers = new List<Caching.Distributed.StackExchangeRedis.RedisServerOptions>
+            //{
+            //    new Caching.Distributed.StackExchangeRedis.RedisServerOptions(redis.RedisHost,redis.RedisPort)
+            //},
+            //    DefaultDatabase = redis.RedisDb,
+            //    Password = redis.RedisPassword
+            //},
+            //PublicSecret = secret,
+            StoreName= "masastack-configstore",
             ConfigObjectSecret = secret,
             AppId = GetAppId(configMap, project, app)
         };
