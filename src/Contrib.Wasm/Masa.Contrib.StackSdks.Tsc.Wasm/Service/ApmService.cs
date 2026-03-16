@@ -3,7 +3,7 @@
 internal class ApmService : IApmService
 {
     readonly ICaller Caller;
-    const string RootPath = "/api/apm";
+    const string RootPath = "api/apm";
 
     public ApmService(ICaller caller)
     {
