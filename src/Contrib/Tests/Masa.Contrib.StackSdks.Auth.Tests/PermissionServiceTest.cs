@@ -24,11 +24,11 @@ public class PermissionServiceTest
     }
 
     [TestMethod]
-    public async Task TestGetI18nDisplayNameAsync_V2()
+    public async Task TestGetI18nDisplayNameAsync()
     {
         var name = "User";
         var cultureNames = new[] { "en-us", "zh-cn", "ru-ru", "ja-jp" };
-        var data = new List<KeyValueModel>
+        var data = new List<KeyValuePair<string, string>>
         {
             new("en-us", "User"),
             new("zh-cn", "用户"),
@@ -38,13 +38,13 @@ public class PermissionServiceTest
         var cultureName = string.Join(',', cultureNames);
         var requestUri = $"api/permission/i18n-display-name?cultureName={Uri.EscapeDataString(cultureName)}&name={Uri.EscapeDataString(name)}";
         var caller = new Mock<ICaller>();
-        caller.Setup(provider => provider.GetAsync<List<KeyValueModel>>(requestUri, default)).ReturnsAsync(data).Verifiable();
+        caller.Setup(provider => provider.GetAsync<List<KeyValuePair<string, string>>>(requestUri, default)).ReturnsAsync(data).Verifiable();
         var userContext = new Mock<IUserContext>();
         var permissionService = new PermissionService(caller.Object, userContext.Object);
 
         var result = await permissionService.GetI18nDisplayNameAsync(name, cultureNames);
 
-        caller.Verify(provider => provider.GetAsync<List<KeyValueModel>>(requestUri, default), Times.Once);
+        caller.Verify(provider => provider.GetAsync<List<KeyValuePair<string, string>>>(requestUri, default), Times.Once);
         Assert.IsTrue(result.Count == 4);
     }
 
