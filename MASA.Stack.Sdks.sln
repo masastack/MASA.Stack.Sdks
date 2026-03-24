@@ -117,6 +117,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masa.Contrib.StackSdks.Tsc.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masa.Contrib.StackSdks.Tsc.Storage.Clickhouse.Apm", "src\Contrib\Masa.Contrib.StackSdks.Tsc.Storage.Clickhouse.Apm\Masa.Contrib.StackSdks.Tsc.Storage.Clickhouse.Apm.csproj", "{CBEF9862-4B90-4A49-8244-97AFDE180B63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masa.BuildingBlocks.StackSdks.Sapp", "src\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Sapp\Masa.BuildingBlocks.StackSdks.Sapp.csproj", "{FF10ECEB-2772-4CA0-BD12-C36C2BD8FF04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masa.Contrib.StackSdks.Sapp", "src\Contrib\Masa.Contrib.StackSdks.Sapp\Masa.Contrib.StackSdks.Sapp.csproj", "{60029C31-3483-4041-AB2A-1416E8661708}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masa.Contrib.StackSdks.Sapp.Wasm", "src\Contrib.Wasm\Masa.Contrib.StackSdks.Sapp.Wasm\Masa.Contrib.StackSdks.Sapp.Wasm.csproj", "{CA09DB4E-98BD-4328-AD5E-3FE26D32C5CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masa.Contrib.StackSdks.Sapp.Tests", "src\Contrib\Tests\Masa.Contrib.StackSdks.Sapp.Tests\Masa.Contrib.StackSdks.Sapp.Tests.csproj", "{2012137C-4265-4B9F-909A-F46ABC9510A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -315,6 +323,22 @@ Global
 		{CBEF9862-4B90-4A49-8244-97AFDE180B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBEF9862-4B90-4A49-8244-97AFDE180B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBEF9862-4B90-4A49-8244-97AFDE180B63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF10ECEB-2772-4CA0-BD12-C36C2BD8FF04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF10ECEB-2772-4CA0-BD12-C36C2BD8FF04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF10ECEB-2772-4CA0-BD12-C36C2BD8FF04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF10ECEB-2772-4CA0-BD12-C36C2BD8FF04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60029C31-3483-4041-AB2A-1416E8661708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60029C31-3483-4041-AB2A-1416E8661708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60029C31-3483-4041-AB2A-1416E8661708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60029C31-3483-4041-AB2A-1416E8661708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA09DB4E-98BD-4328-AD5E-3FE26D32C5CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA09DB4E-98BD-4328-AD5E-3FE26D32C5CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA09DB4E-98BD-4328-AD5E-3FE26D32C5CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA09DB4E-98BD-4328-AD5E-3FE26D32C5CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2012137C-4265-4B9F-909A-F46ABC9510A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2012137C-4265-4B9F-909A-F46ABC9510A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2012137C-4265-4B9F-909A-F46ABC9510A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2012137C-4265-4B9F-909A-F46ABC9510A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -376,6 +400,10 @@ Global
 		{AFB27BAF-4D34-46BC-B580-1A6F20E9E79B} = {D0B4748D-C710-4311-A491-45C03136F375}
 		{A4AFE0CA-B7F6-44D7-BA16-DC570352AE48} = {AFB27BAF-4D34-46BC-B580-1A6F20E9E79B}
 		{CBEF9862-4B90-4A49-8244-97AFDE180B63} = {AFB27BAF-4D34-46BC-B580-1A6F20E9E79B}
+		{FF10ECEB-2772-4CA0-BD12-C36C2BD8FF04} = {CF02987E-1244-4597-9B0D-0971BF9833B2}
+		{60029C31-3483-4041-AB2A-1416E8661708} = {D0B4748D-C710-4311-A491-45C03136F375}
+		{CA09DB4E-98BD-4328-AD5E-3FE26D32C5CF} = {5D651272-A474-467B-8FAD-FD92FE1295B8}
+		{2012137C-4265-4B9F-909A-F46ABC9510A5} = {E9F8566C-353D-4B97-98AE-ED0A0D3D00DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1862131E-457D-4C94-A57A-7396FF26EF9D}
