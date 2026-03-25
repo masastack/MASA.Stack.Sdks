@@ -15,5 +15,7 @@ public class ClientSelectModel
 
     public string ClientId { get; set; } = string.Empty;
 
+    public string ClientUri { get; set; } = string.Empty;
+
     public ClientTypes ClientType { get; set; }
 }
