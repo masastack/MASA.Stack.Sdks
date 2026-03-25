@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -8,6 +8,7 @@
 	<ItemGroup>
 		<PackageReference Include="IdentityModel" Version="$(IdentityModelPackageVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="$(MicrosoftPackageVersion)" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftPackageVersion)" />
 		<PackageReference Include="Masa.BuildingBlocks.Authentication.OpenIdConnect.Models" Version="$(MasaFrameworkPackageVersion)" />
 		<PackageReference Include="Masa.BuildingBlocks.Authentication.Identity" Version="$(MasaFrameworkPackageVersion)" />
 		<PackageReference Include="Masa.Contrib.Caching.Distributed.StackExchangeRedis" Version="$(MasaFrameworkPackageVersion)" />

@@ -12,7 +12,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Pm\Masa.BuildingBlocks.StackSdks.Pm.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Sapp\Masa.BuildingBlocks.StackSdks.Sapp.csproj" />
     <ProjectReference Include="..\Masa.Contrib.StackSdks.Caller.Wasm\Masa.Contrib.StackSdks.Caller.Wasm.csproj" />
   </ItemGroup>
 
