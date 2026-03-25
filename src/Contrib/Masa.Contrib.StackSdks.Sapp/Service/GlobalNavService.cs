@@ -34,4 +34,11 @@ public class GlobalNavService : IGlobalNavService
         var result = await _caller.GetAsync<List<AppEntryDto>>(requestUri);
         return result ?? new();
     }
+
+    public async Task<Dictionary<string, string>> GetI18NConfigByClientIdAsync(string clientId, string culture)
+    {
+        var requestUri = $"{GLOBAL_NAV_ROUTE_PREFIX}/i18n-config/by-client-id/{clientId}?culture={culture}";
+        var result = await _caller.GetAsync<Dictionary<string, string>>(requestUri);
+        return result ?? new();
+    }
 }

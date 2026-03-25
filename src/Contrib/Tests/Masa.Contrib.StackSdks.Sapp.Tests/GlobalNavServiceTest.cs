@@ -107,4 +107,38 @@ public class GlobalNavServiceTest
 
         Assert.AreEqual(0, result.Count);
     }
+
+    [TestMethod]
+    [DataRow("MASA_STACK", "zh-CN")]
+    public async Task TestGetI18NConfigByClientIdAsync(string clientId, string culture)
+    {
+        var data = new Dictionary<string, string> { { "key", "value" } };
+
+        var requestUri = $"api/global-nav/i18n-config/by-client-id/{clientId}?culture={culture}";
+        var caller = new Mock<ICaller>();
+        caller.Setup(provider => provider.GetAsync<Dictionary<string, string>>(requestUri, default)).ReturnsAsync(data).Verifiable();
+        var sappClient = new SappClient(caller.Object);
+
+        var result = await sappClient.GlobalNavService.GetI18NConfigByClientIdAsync(clientId, culture);
+        caller.Verify(provider => provider.GetAsync<Dictionary<string, string>>(requestUri, default), Times.Once);
+
+        Assert.AreEqual(1, result.Count);
+    }
+
+    [TestMethod]
+    [DataRow("MASA_STACK", "zh-CN")]
+    public async Task TestGetI18NConfigByClientIdWhenNullAsync(string clientId, string culture)
+    {
+        Dictionary<string, string>? data = null;
+
+        var requestUri = $"api/global-nav/i18n-config/by-client-id/{clientId}?culture={culture}";
+        var caller = new Mock<ICaller>();
+        caller.Setup(provider => provider.GetAsync<Dictionary<string, string>>(It.IsAny<string>(), default)).ReturnsAsync(data).Verifiable();
+        var sappClient = new SappClient(caller.Object);
+
+        var result = await sappClient.GlobalNavService.GetI18NConfigByClientIdAsync(clientId, culture);
+        caller.Verify(provider => provider.GetAsync<Dictionary<string, string>>(requestUri, default), Times.Once);
+
+        Assert.AreEqual(0, result.Count);
+    }
 }

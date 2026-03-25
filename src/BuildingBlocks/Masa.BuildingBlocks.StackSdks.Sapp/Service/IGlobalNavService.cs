@@ -10,4 +10,6 @@ public interface IGlobalNavService
     Task<List<GlobalNavigationNodeDto>> GetMenusByPmIdentityAsync(string pmIdentity);
 
     Task<List<AppEntryDto>> GetVisibleAppEntriesByClientIdAsync(string clientId);
+
+    Task<Dictionary<string, string>> GetI18NConfigByClientIdAsync(string clientId, string culture);
 }
