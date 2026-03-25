@@ -7,5 +7,7 @@ public interface IGlobalNavService
 {
     Task<List<GlobalNavigationAppDto>> GetGlobalNavigationsByClientIdAsync(string clientId);
 
+    Task<List<GlobalNavigationNodeDto>> GetMenusByPmIdentityAsync(string pmIdentity);
+
     Task<List<AppEntryDto>> GetVisibleAppEntriesByClientIdAsync(string clientId);
 }
