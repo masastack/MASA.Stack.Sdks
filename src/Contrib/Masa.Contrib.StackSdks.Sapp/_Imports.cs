@@ -4,6 +4,7 @@
 global using Masa.BuildingBlocks.Data;
 global using Masa.BuildingBlocks.Service.Caller;
 global using Masa.BuildingBlocks.StackSdks.Base;
+global using Masa.BuildingBlocks.StackSdks.Sapp.Enum;
 global using Masa.BuildingBlocks.StackSdks.Sapp;
 global using Masa.BuildingBlocks.StackSdks.Sapp.Model;
 global using Masa.BuildingBlocks.StackSdks.Sapp.Service;

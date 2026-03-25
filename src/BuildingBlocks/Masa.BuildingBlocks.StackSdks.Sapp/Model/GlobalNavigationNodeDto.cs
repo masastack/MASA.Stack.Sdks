@@ -11,9 +11,9 @@ public class GlobalNavigationNodeDto
 
     public string Code { get; set; } = string.Empty;
 
-    public int NavigationType { get; set; }
+    public GlobalNavigationTypes NavigationType { get; set; }
 
-    public int OpenType { get; set; }
+    public GlobalNavigationOpenTypes OpenType { get; set; }
 
     public string Name { get; set; } = string.Empty;
 
