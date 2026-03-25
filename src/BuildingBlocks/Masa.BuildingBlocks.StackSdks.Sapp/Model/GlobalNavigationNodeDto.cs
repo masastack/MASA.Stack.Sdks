@@ -19,6 +19,8 @@ public class GlobalNavigationNodeDto
 
     public string Url { get; set; } = string.Empty;
 
+    public string MatchPattern { get; set; } = string.Empty;
+
     public string Icon { get; set; } = string.Empty;
 
     public bool IsHidden { get; set; }

@@ -73,4 +73,38 @@ public class GlobalNavServiceTest
 
         Assert.AreEqual(0, result.Count);
     }
+
+    [TestMethod]
+    [DataRow("pm.identity")]
+    public async Task TestGetMenusByPmIdentityAsync(string pmIdentity)
+    {
+        var data = new List<GlobalNavigationNodeDto> { new() };
+
+        var requestUri = $"api/global-nav/menus/by-pm-identity/{pmIdentity}";
+        var caller = new Mock<ICaller>();
+        caller.Setup(provider => provider.GetAsync<List<GlobalNavigationNodeDto>>(requestUri, default)).ReturnsAsync(data).Verifiable();
+        var sappClient = new SappClient(caller.Object);
+
+        var result = await sappClient.GlobalNavService.GetMenusByPmIdentityAsync(pmIdentity);
+        caller.Verify(provider => provider.GetAsync<List<GlobalNavigationNodeDto>>(requestUri, default), Times.Once);
+
+        Assert.AreEqual(1, result.Count);
+    }
+
+    [TestMethod]
+    [DataRow("pm.identity")]
+    public async Task TestGetMenusByPmIdentityWhenNullAsync(string pmIdentity)
+    {
+        List<GlobalNavigationNodeDto>? data = null;
+
+        var requestUri = $"api/global-nav/menus/by-pm-identity/{pmIdentity}";
+        var caller = new Mock<ICaller>();
+        caller.Setup(provider => provider.GetAsync<List<GlobalNavigationNodeDto>>(It.IsAny<string>(), default)).ReturnsAsync(data).Verifiable();
+        var sappClient = new SappClient(caller.Object);
+
+        var result = await sappClient.GlobalNavService.GetMenusByPmIdentityAsync(pmIdentity);
+        caller.Verify(provider => provider.GetAsync<List<GlobalNavigationNodeDto>>(requestUri, default), Times.Once);
+
+        Assert.AreEqual(0, result.Count);
+    }
 }

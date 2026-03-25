@@ -21,6 +21,13 @@ public class GlobalNavService : IGlobalNavService
         return result ?? new();
     }
 
+    public async Task<List<GlobalNavigationNodeDto>> GetMenusByPmIdentityAsync(string pmIdentity)
+    {
+        var requestUri = $"{GLOBAL_NAV_ROUTE_PREFIX}/menus/by-pm-identity/{pmIdentity}";
+        var result = await _caller.GetAsync<List<GlobalNavigationNodeDto>>(requestUri);
+        return result ?? new();
+    }
+
     public async Task<List<AppEntryDto>> GetVisibleAppEntriesByClientIdAsync(string clientId)
     {
         var requestUri = $"{GLOBAL_NAV_ROUTE_PREFIX}/app-entries/by-client-id/{clientId}";
