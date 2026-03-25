@@ -15,7 +15,7 @@ public class GlobalNavigationAppDto
 
     public string Icon { get; set; } = string.Empty;
 
-    public int Status { get; set; }
+    public StatusTypes Status { get; set; }
 
     public List<GlobalNavigationNodeDto> Navs { get; set; } = new();
 }
