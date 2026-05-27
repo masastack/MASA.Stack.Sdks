@@ -152,7 +152,7 @@ public class SchedulerJobServiceTest
         var caller = new Mock<ICaller>();
         caller.Setup(provider => provider.PostAsync<UpsertSchedulerJobRequest, Guid>(requestUri, requestData, default)).ReturnsAsync(Guid.NewGuid()).Verifiable();
         var schedulerClient = new SchedulerClient(caller.Object);
-        await Assert.ThrowsExceptionAsync<MasaArgumentException>(async () => await schedulerClient.SchedulerJobService.AddAsync(requestData));
+        await Assert.ThrowsAsync<MasaArgumentException>(async () => await schedulerClient.SchedulerJobService.AddAsync(requestData));
     }
 
     [TestMethod]
@@ -170,7 +170,7 @@ public class SchedulerJobServiceTest
         var caller = new Mock<ICaller>();
         caller.Setup(provider => provider.PostAsync<UpsertSchedulerJobRequest, Guid>(requestUri, requestData, default)).ReturnsAsync(Guid.NewGuid()).Verifiable();
         var schedulerClient = new SchedulerClient(caller.Object);
-        await Assert.ThrowsExceptionAsync<MasaArgumentException>(async () => await schedulerClient.SchedulerJobService.AddAsync(requestData));
+        await Assert.ThrowsAsync<MasaArgumentException>(async () => await schedulerClient.SchedulerJobService.AddAsync(requestData));
     }
 
     [TestMethod]
@@ -188,7 +188,7 @@ public class SchedulerJobServiceTest
         var caller = new Mock<ICaller>();
         caller.Setup(provider => provider.PostAsync<UpsertSchedulerJobRequest, Guid>(requestUri, requestData, default)).ReturnsAsync(Guid.NewGuid()).Verifiable();
         var schedulerClient = new SchedulerClient(caller.Object);
-        await Assert.ThrowsExceptionAsync<MasaArgumentException>(async () => await schedulerClient.SchedulerJobService.AddAsync(requestData));
+        await Assert.ThrowsAsync<MasaArgumentException>(async () => await schedulerClient.SchedulerJobService.AddAsync(requestData));
     }
 
     [TestMethod]
@@ -206,7 +206,7 @@ public class SchedulerJobServiceTest
         var caller = new Mock<ICaller>();
         caller.Setup(provider => provider.PostAsync<UpsertSchedulerJobRequest, Guid>(requestUri, requestData, default)).ReturnsAsync(Guid.NewGuid()).Verifiable();
         var schedulerClient = new SchedulerClient(caller.Object);
-        await Assert.ThrowsExceptionAsync<MasaArgumentException>(async () => await schedulerClient.SchedulerJobService.AddAsync(requestData));
+        await Assert.ThrowsAsync<MasaArgumentException>(async () => await schedulerClient.SchedulerJobService.AddAsync(requestData));
     }
 
     [TestMethod]

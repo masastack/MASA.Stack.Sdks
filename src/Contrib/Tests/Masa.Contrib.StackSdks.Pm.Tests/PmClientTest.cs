@@ -39,7 +39,7 @@ public class PmClientTest
     {
         var services = new ServiceCollection();
 
-        Assert.ThrowsException<MasaArgumentException>(() => services.AddPmClient(""));
+        Assert.Throws<MasaArgumentException>(() => services.AddPmClient(""));
     }
 
     [TestMethod]

@@ -68,15 +68,15 @@ public class RequestMiddlewareTest
     }
 
     [TestMethod]
-    public void TestDisabledRequestMiddleware()
+    public async Task TestDisabledRequestMiddleware()
     {
         DefaultHttpContext defaultContext = new DefaultHttpContext();
         defaultContext.SetEndpoint(new Endpoint(c => Task.CompletedTask, new EndpointMetadataCollection(new DisabledRouteAttribute()), "myapp"));
 
         var requestMiddleware = _serviceProvider.GetRequiredService<DisabledRequestMiddleware>();
 
-        Assert.ThrowsExceptionAsync<UserFriendlyException>(async () =>
-        await requestMiddleware.InvokeAsync(defaultContext, (innerHttpContext) =>
+        await Assert.ThrowsAsync<UserFriendlyException>(async () =>
+            await requestMiddleware.InvokeAsync(defaultContext, (innerHttpContext) =>
         {
             return Task.CompletedTask;
         }));

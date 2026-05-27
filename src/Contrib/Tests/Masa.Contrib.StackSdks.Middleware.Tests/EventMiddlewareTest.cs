@@ -67,10 +67,10 @@ public class EventMiddlewareTest
     }
 
     [TestMethod]
-    public void TestCommand()
+    public async Task TestCommand()
     {
         var command = new TestCommand();
-        Assert.ThrowsExceptionAsync<UserFriendlyException>(async () => await _eventBus.PublishAsync(command), "DISABLED_OPERATE");
+        await Assert.ThrowsAsync<UserFriendlyException>(async () => await _eventBus.PublishAsync(command), "DISABLED_OPERATE");
     }
 
     [TestMethod]

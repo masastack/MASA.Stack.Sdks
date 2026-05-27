@@ -39,7 +39,7 @@ public class SappClientTest
     {
         var services = new ServiceCollection();
 
-        Assert.ThrowsException<MasaArgumentException>(() => services.AddSappClient(""));
+        Assert.Throws<MasaArgumentException>(() => services.AddSappClient(""));
     }
 
     [TestMethod]

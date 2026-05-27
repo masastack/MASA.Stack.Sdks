@@ -21,7 +21,7 @@ public class AuthClientTest
     public void TestAddAuthClientNoAddMasaIdentity()
     {
         var services = new ServiceCollection();
-        Assert.ThrowsException<Exception>(() => services.AddAuthClient("https://localhost:18102", new()),
+        Assert.Throws<Exception>(() => services.AddAuthClient("https://localhost:18102", new()),
             "Please add IMultiEnvironmentUserContext first.");
     }
 
@@ -29,7 +29,7 @@ public class AuthClientTest
     public void TestAddAuthClientShouldThrowArgumentNullException()
     {
         var services = new ServiceCollection();
-        Assert.ThrowsException<MasaArgumentException>(() => services.AddAuthClient(authServiceBaseAddress: null!, new()));
+        Assert.Throws<MasaArgumentException>(() => services.AddAuthClient(authServiceBaseAddress: null!, new()));
     }
 }
 
