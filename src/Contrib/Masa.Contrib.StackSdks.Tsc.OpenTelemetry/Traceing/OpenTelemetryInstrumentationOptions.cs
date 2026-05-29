@@ -54,7 +54,7 @@ public class OpenTelemetryInstrumentationOptions
     /// </summary>
     public Action<EntityFrameworkInstrumentationOptions> EntityFrameworkInstrumentationOptions { get; set; } = options =>
     {
-        options.SetDbStatementForText = true;
+        //options.en = true;
     };
 
     public Action<ElasticsearchClientInstrumentationOptions> ElasticsearchClientInstrumentationOptions { get; set; } = options =>

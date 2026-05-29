@@ -37,7 +37,7 @@ public class SchedulerClientTest
     {
         var services = new ServiceCollection();
 
-        Assert.ThrowsException<ArgumentNullException>(() => services.AddSchedulerClient(""));
+        Assert.Throws<ArgumentNullException>(() => services.AddSchedulerClient(""));
     }
 
     [TestMethod]
@@ -45,7 +45,7 @@ public class SchedulerClientTest
     {
         var services = new ServiceCollection();
 
-        Assert.ThrowsException<ArgumentNullException>(() => services.AddSchedulerClient(callerBuilder: null!));
+        Assert.Throws<ArgumentNullException>(() => services.AddSchedulerClient(callerBuilder: null!));
     }
 
 }

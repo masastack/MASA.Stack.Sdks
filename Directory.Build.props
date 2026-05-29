@@ -1,25 +1,19 @@
 <Project>
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net7.0;net8.0;</TargetFrameworks>
-		<MicrosoftPackageVersion Condition="'$(TargetFramework)' == 'net6.0'">6.*</MicrosoftPackageVersion>
-		<MicrosoftPackageVersion Condition="'$(TargetFramework)' == 'net7.0'">7.*</MicrosoftPackageVersion>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
 		<MicrosoftPackageVersion Condition="'$(TargetFramework)' == 'net8.0'">8.*</MicrosoftPackageVersion>
+		<MicrosoftPackageVersion Condition="'$(TargetFramework)' == 'net10.0'">10.*</MicrosoftPackageVersion>
 
-		<MSTestPackageVersion Condition="'$(TargetFramework)' == 'net6.0'">2.2.3</MSTestPackageVersion>
-		<MSTestPackageVersion Condition="'$(TargetFramework)' == 'net7.0'">2.2.3</MSTestPackageVersion>
-		<MSTestPackageVersion Condition="'$(TargetFramework)' == 'net8.0'">3.6.2</MSTestPackageVersion>
+		<MSTestPackageVersion Condition="'$(TargetFramework)' == 'net8.0'">4.2.3</MSTestPackageVersion>
+		<MSTestPackageVersion Condition="'$(TargetFramework)' == 'net10.0'">4.2.3</MSTestPackageVersion>
 
-		<MicrosoftTeskSdkPackageVersion Condition="'$(TargetFramework)' == 'net6.0'">16.9.4</MicrosoftTeskSdkPackageVersion>
-		<MicrosoftTeskSdkPackageVersion Condition="'$(TargetFramework)' == 'net7.0'">16.9.4</MicrosoftTeskSdkPackageVersion>
-		<MicrosoftTeskSdkPackageVersion Condition="'$(TargetFramework)' == 'net8.0'">17.12.0</MicrosoftTeskSdkPackageVersion>
+		<MicrosoftTeskSdkPackageVersion Condition="'$(TargetFramework)' == 'net8.0'">18.5.1</MicrosoftTeskSdkPackageVersion>
+		<MicrosoftTeskSdkPackageVersion Condition="'$(TargetFramework)' == 'net10.0'">18.5.1</MicrosoftTeskSdkPackageVersion>
 
-		<CoverletPackageVersion Condition="'$(TargetFramework)' == 'net6.0'">3.0.2</CoverletPackageVersion>
-		<CoverletPackageVersion Condition="'$(TargetFramework)' == 'net7.0'">3.0.2</CoverletPackageVersion>
-		<CoverletPackageVersion Condition="'$(TargetFramework)' == 'net8.0'">3.1.2</CoverletPackageVersion>
+		<CoverletPackageVersion Condition="'$(TargetFramework)' == 'net8.0'">10.0.1</CoverletPackageVersion>
+		<CoverletPackageVersion Condition="'$(TargetFramework)' == 'net10.0'">10.0.1</CoverletPackageVersion>
 
 		<MasaFrameworkPackageVersion>1.2.0-preview.*</MasaFrameworkPackageVersion>
-		<OpenTelemetryVersion>1.9.0</OpenTelemetryVersion>
-		<OpenTelemetryContribVersion>1.9.0</OpenTelemetryContribVersion>
 		<FluentValidationPackageVersion>11.1.0</FluentValidationPackageVersion>
 		<IdentityModelPackageVersion>6.0.0</IdentityModelPackageVersion>
 		<NESTPackageVersion>7.17.4</NESTPackageVersion>
