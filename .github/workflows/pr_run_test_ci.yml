@@ -2,7 +2,7 @@ name: PR_Run_Test_CI
 on:
   pull_request:
     branches:
-      - 'main'
+      - "main"
   workflow_dispatch:
 
 jobs:
@@ -24,87 +24,86 @@ jobs:
           # Maps port 6379 on service container to the host
           - 6379:6379
 
-#     strategy:
-#       matrix:
-#         redis-version: [5]
+    #     strategy:
+    #       matrix:
+    #         redis-version: [5]
     steps:
-    - name: git pull
-      uses: actions/checkout@v2
+      - name: git pull
+        uses: actions/checkout@v2
 
-    - name: run a one-line script
-      run: env
+      - name: run a one-line script
+        run: env
 
-    - name: setting dotnet version
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: |
-          8.0.x
-          7.0.x
-          6.0.x
-          
-        include-prerelease: true
+      - name: setting dotnet version
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: |
+            10.0.x
+            8.0.x
 
-#     - name: Start Redis
-#       uses: supercharge/redis-github-action@1.4.0
-#       with:
-#         redis-version: ${{ matrix.redis-version }}
+          include-prerelease: true
 
-    - name: Configure sysctl limits
-      run: |
-        sudo swapoff -a
-        sudo sysctl -w vm.swappiness=1
-        sudo sysctl -w fs.file-max=262144
-        sudo sysctl -w vm.max_map_count=262144
-    - name: Set up JDK 11
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.17
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-    - name: Cache SonarCloud packages
-      uses: actions/cache@v3
-      with:
-        path: ~\sonar\cache
-        key: ${{ runner.os }}-sonar
-        restore-keys: ${{ runner.os }}-sonar
-    - name: Cache SonarCloud scanner
-      id: cache-sonar-scanner
-      uses: actions/cache@v3
-      with:
-        path: .\.sonar\scanner
-        key: ${{ runner.os }}-sonar-scanner
-        restore-keys: ${{ runner.os }}-sonar-scanner
-    - name: Install SonarCloud scanner
-      run: |
-        dotnet tool install --global dotnet-sonarscanner
-    - name: Start Elasticsearch
-      uses: everpcpc/elasticsearch-action@v2
-      with:
-        version: 7.6.1
-        plugins: |
-          https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-7.6.1.zip
-          https://release.infinilabs.com/analysis-pinyin/stable/elasticsearch-analysis-pinyin-7.6.1.zip
-          analysis-icu
-          analysis-smartcn
-          analysis-kuromoji
+      #     - name: Start Redis
+      #       uses: supercharge/redis-github-action@1.4.0
+      #       with:
+      #         redis-version: ${{ matrix.redis-version }}
 
-    # sonar 单元测试覆盖率和其它验证，暂时关闭
-    #- name: Build and analyze for internal
-    #  env:
-    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-    #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    #  if: ${{ env.SONAR_TOKEN != '' }}
-    #  run: |
-    #    dotnet-sonarscanner begin /k:"masastack_MASA.Stack.Sdks" /o:"masastack" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-    #    dotnet build /p:ContinuousIntegrationBuild=true
-    #    dotnet test --filter FullyQualifiedName!~Masa.Utils --no-build --verbosity normal --collect "Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.Tests]*"
-    #    dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-    - name: Build and analyze for outside
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      if: ${{ env.SONAR_TOKEN == '' }}
-      run: |
-        dotnet build /p:ContinuousIntegrationBuild=true
-        dotnet test --filter FullyQualifiedName!~Masa.Utils --no-build --verbosity normal --collect "Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.Tests]*"
+      - name: Configure sysctl limits
+        run: |
+          sudo swapoff -a
+          sudo sysctl -w vm.swappiness=1
+          sudo sysctl -w fs.file-max=262144
+          sudo sysctl -w vm.max_map_count=262144
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.17
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache SonarCloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v3
+        with:
+          path: .\.sonar\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Install SonarCloud scanner
+        run: |
+          dotnet tool install --global dotnet-sonarscanner
+      - name: Start Elasticsearch
+        uses: everpcpc/elasticsearch-action@v2
+        with:
+          version: 7.6.1
+          plugins: |
+            https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-7.6.1.zip
+            https://release.infinilabs.com/analysis-pinyin/stable/elasticsearch-analysis-pinyin-7.6.1.zip
+            analysis-icu
+            analysis-smartcn
+            analysis-kuromoji
+
+      # sonar 单元测试覆盖率和其它验证，暂时关闭
+      #- name: Build and analyze for internal
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #  if: ${{ env.SONAR_TOKEN != '' }}
+      #  run: |
+      #    dotnet-sonarscanner begin /k:"masastack_MASA.Stack.Sdks" /o:"masastack" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+      #    dotnet build /p:ContinuousIntegrationBuild=true
+      #    dotnet test --filter FullyQualifiedName!~Masa.Utils --no-build --verbosity normal --collect "Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.Tests]*"
+      #    dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      - name: Build and analyze for outside
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: ${{ env.SONAR_TOKEN == '' }}
+        run: |
+          dotnet build /p:ContinuousIntegrationBuild=true
+          dotnet test --filter FullyQualifiedName!~Masa.Utils --no-build --verbosity normal --collect "Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.Tests]*"
