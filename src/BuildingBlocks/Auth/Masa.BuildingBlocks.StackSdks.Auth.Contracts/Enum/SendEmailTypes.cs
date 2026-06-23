@@ -12,4 +12,5 @@ public enum SendEmailTypes
     Register = 4,
     Bind = 5,
     ForgotPassword = 6,
+    DeleteAccount = 7
 }
