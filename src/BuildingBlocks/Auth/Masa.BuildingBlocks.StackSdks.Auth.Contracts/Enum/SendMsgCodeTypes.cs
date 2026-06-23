@@ -12,5 +12,4 @@ public enum SendMsgCodeTypes
     Bind = 5,
     ForgotPassword = 6,
     DeleteAccount = 7
-
 }
