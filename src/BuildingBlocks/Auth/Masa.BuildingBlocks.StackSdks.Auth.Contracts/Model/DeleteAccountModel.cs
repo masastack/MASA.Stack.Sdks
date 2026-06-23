@@ -3,4 +3,6 @@
 public class DeleteAccountModel
 {
     public string? SmsCode { get; set; }
+
+    public string? EmailCode { get; set; }
 }
