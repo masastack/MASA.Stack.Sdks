@@ -6,6 +6,8 @@ public class ModuleDetailDto
 
     public string Name { get; set; } = default!;
 
+    public string? Icon { get; set; }
+
     public string PmIdentity { get; set; } = default!;
 
     public bool Enable { get; set; } = default!;
