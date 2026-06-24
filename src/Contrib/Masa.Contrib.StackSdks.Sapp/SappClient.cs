@@ -8,7 +8,10 @@ public class SappClient : ISappClient
     public SappClient(ICaller caller)
     {
         GlobalNavService = new GlobalNavService(caller);
+        ModuleService = new ModuleService(caller);
     }
 
     public IGlobalNavService GlobalNavService { get; init; }
+
+    public IModuleService ModuleService { get; init; }
 }

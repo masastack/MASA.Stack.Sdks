@@ -6,4 +6,6 @@ namespace Masa.BuildingBlocks.StackSdks.Sapp;
 public interface ISappClient
 {
     public IGlobalNavService GlobalNavService { get; init; }
+
+    public IModuleService ModuleService { get; init; }
 }
