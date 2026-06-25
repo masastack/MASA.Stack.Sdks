@@ -16,5 +16,5 @@ public class ModuleDetailDto
 
     public StatusTypes Status { get; set; }
 
-    public MaintainceDto? Maintaince { get; set; }
+    public MaintainceDto? Maintenance { get; set; }
 }
