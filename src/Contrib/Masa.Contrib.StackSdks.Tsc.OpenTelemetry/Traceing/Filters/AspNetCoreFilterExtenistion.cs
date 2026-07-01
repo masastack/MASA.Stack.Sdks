@@ -18,12 +18,10 @@ internal static class AspNetCoreFilterExtenistion
 
     internal static bool IsWebsocket(HttpContext httpContext)
     {
-        if (httpContext.Request.Headers.ContainsKey("Connection") && httpContext.Request.Headers.ContainsKey(httpContext.Request.Headers["Connection"]!))
-        {
-            Activity.Current = null;
-            return true;
-        }
-        return false;
+        var connection = httpContext.Request.Headers.Connection.ToString();
+        var upgrade = httpContext.Request.Headers.Upgrade.ToString();
+        return connection.Contains("upgrade", StringComparison.OrdinalIgnoreCase)
+               && upgrade.Contains("websocket", StringComparison.OrdinalIgnoreCase);
     }
 
     internal static bool IsReuqestPathMatchHttpRequestSuffix(HttpContext httpContext, List<string> suffix)

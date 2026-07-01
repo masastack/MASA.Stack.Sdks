@@ -1,18 +1,25 @@
 // Copyright (c) MASA Stack All rights reserved.
 // Licensed under the Apache License. See LICENSE.txt in the project root for license information.
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Masa.Contrib.StackSdks.Tsc.OpenTelemetry;
 
 public class OpenTelemetryInstrumentationOptions
 {
-    public OpenTelemetryInstrumentationOptions(IServiceProvider serviceProvider)
+    public OpenTelemetryInstrumentationOptions(ILoggerFactory? loggerFactory = null, IConfiguration? configuration = null)
     {
-        if (Logger == null)
-        {
-            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        InitializeLogger(loggerFactory);
+        InitializeHeaders(configuration);
+    }    
+
+    private static void InitializeLogger(ILoggerFactory? loggerFactory)
+    {
+        if (Logger == null && loggerFactory != null)
             Logger = loggerFactory.CreateLogger("Masa.Contrib.StackSdks.Tsc.OpenTelemetry");
-        }
-        var str = serviceProvider.GetRequiredService<IConfiguration>().GetValue<string>("MASA_OTEL_CUSTOMER_HEADERS");
+    }
+
+    private static void InitializeHeaders(IConfiguration? configuration)
+    {
+        var str = configuration?.GetValue<string>("MASA_OTEL_CUSTOMER_HEADERS");
         if (!string.IsNullOrEmpty(str) && str.Length > 0)
         {
             MasaCustomerHeaders = str.Split(',', StringSplitOptions.RemoveEmptyEntries).Where(header => !string.IsNullOrWhiteSpace(header)).ToArray();
@@ -54,7 +61,7 @@ public class OpenTelemetryInstrumentationOptions
     /// </summary>
     public Action<EntityFrameworkInstrumentationOptions> EntityFrameworkInstrumentationOptions { get; set; } = options =>
     {
-        //options.en = true;
+
     };
 
     public Action<ElasticsearchClientInstrumentationOptions> ElasticsearchClientInstrumentationOptions { get; set; } = options =>

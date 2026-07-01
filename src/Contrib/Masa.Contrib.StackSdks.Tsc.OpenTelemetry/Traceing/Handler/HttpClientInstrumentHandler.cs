@@ -29,9 +29,11 @@ internal class HttpClientInstrumentHandler : ExceptionHandler
         }
         if (httpRequest.Content != null)
         {
-            SetActivityBody(activity,
-                httpRequest.Content.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult(),
-                GetHttpRequestMessageEncoding(httpRequest)).ConfigureAwait(false).GetAwaiter().GetResult();
+            if (TrySetMultipartFormBody(activity, httpRequest))
+                return;
+
+            var stream = httpRequest.Content.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            SetActivityBody(activity, stream, GetHttpRequestMessageEncoding(httpRequest));
         }
     }
 
@@ -64,5 +66,90 @@ internal class HttpClientInstrumentHandler : ExceptionHandler
                 activity.SetTag($"{header.ToLower().Replace('-', '.')}", headerValue?.ToString());
             }
         }
+    }
+
+    private static bool TrySetMultipartFormBody(Activity activity, HttpRequestMessage httpRequest)
+    {
+        if (!IsMultipartFormData(httpRequest.Content?.Headers?.ContentType?.MediaType) || httpRequest.Content is not MultipartFormDataContent formDataContent)
+            return false;
+
+        var formItems = new List<string>();
+        foreach (var item in formDataContent)
+        {
+            var key = TrimQuotes(item.Headers.ContentDisposition?.Name);
+            if (string.IsNullOrWhiteSpace(key))
+                continue;
+
+            var fileName = TrimQuotes(item.Headers.ContentDisposition?.FileNameStar ?? item.Headers.ContentDisposition?.FileName);
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                var fileStream = item.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                LogFormFileContent("HttpClient", key, fileName, fileStream);
+                formItems.Add(GetFileFormValue(key, fileName, item.Headers.ContentType?.MediaType, GetStreamLength(fileStream)));
+                continue;
+            }
+
+            var contentStream = item.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            (_, var value) = contentStream.ReadAsString(GetHttpRequestMessageEncoding(httpRequest));
+            formItems.Add($"{key}={value ?? string.Empty}");
+        }
+
+        if (formItems.Count > 0)
+            activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_CONTENT_BODY, string.Join("&", formItems));
+
+        return true;
+    }
+
+    private static string GetFileFormValue(string key, string fileName, string? contentType, long? fileLength)
+    {
+        var fileInfo = $"[file:{fileName}";
+        if (!string.IsNullOrWhiteSpace(contentType))
+            fileInfo += $",contentType:{contentType}";
+        if (fileLength.HasValue && fileLength > 0)
+            fileInfo += $",length:{fileLength.Value}";
+        fileInfo += "]";
+        return $"{key}={fileInfo}";
+    }
+
+    private static void LogFormFileContent(string source, string key, string fileName, Stream fileStream)
+    {
+        var logger = OpenTelemetryInstrumentationOptions.Logger;
+        (long length, string? content) = fileStream.ReadAsBase64();
+        if (length <= 0)
+            return;
+
+        using var scope = logger?.BeginScope(new Dictionary<string, object?>
+        {
+            ["source"] = source,
+            ["form.key"] = key,
+            ["file.name"] = fileName,
+            ["file.length"] = length
+        });
+
+        if (length - OpenTelemetryInstrumentationOptions.MaxBodySize > 0)
+        {
+            logger?.LogInformation("file content exceeded max limit. max: {MaxBodySize}", OpenTelemetryInstrumentationOptions.MaxBodySize);
+            return;
+        }
+
+        logger?.LogInformation("file content(base64): {Content}", content ?? string.Empty);
+    }
+
+    private static long? GetStreamLength(Stream stream)
+    {
+        return stream.CanSeek ? stream.Length : null;
+    }
+
+    private static bool IsMultipartFormData(string? mediaType)
+    {
+        return !string.IsNullOrWhiteSpace(mediaType) && mediaType.StartsWith("multipart/form-data", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string? TrimQuotes(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return value;
+
+        return value.Trim().Trim('"');
     }
 }
