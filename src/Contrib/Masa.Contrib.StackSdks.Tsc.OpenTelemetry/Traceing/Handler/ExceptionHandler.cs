@@ -50,15 +50,15 @@ internal class ExceptionHandler
         return null;
     }
 
-    public static async Task SetActivityBody(Activity activity, Stream inputSteam, Encoding? encoding = null)
+    public static void SetActivityBody(Activity activity, Stream inputSteam, Encoding? encoding = null)
     {
-        (long length, string? body) = await inputSteam.ReadAsStringAsync(encoding);
+        (long length, string? body) = inputSteam.ReadAsString(encoding);
 
         if (length <= 0)
             return;
         if (length - OpenTelemetryInstrumentationOptions.MaxBodySize > 0)
         {
-            OpenTelemetryInstrumentationOptions.Logger?.LogInformation("Request body in base64 encode: {Body}", body);
+            OpenTelemetryInstrumentationOptions.Logger?.LogInformation("Request body size exceeded max limit, length: {Length}, max: {MaxBodySize}", length, OpenTelemetryInstrumentationOptions.MaxBodySize);
         }
         else
         {
@@ -67,7 +67,7 @@ internal class ExceptionHandler
     }
 
     /// <summary>
-    /// ´æÔÚ¿Ó£¬masaauthÉùÃ÷²»¹æ·¶µ¼ÖÂ£¬Ö®ºóÓÐµ÷ÕûÁËÔÙµ÷Õû´Ë´¦
+    /// ï¿½ï¿½ï¿½Ú¿Ó£ï¿½masaauthï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·¶ï¿½ï¿½ï¿½Â£ï¿½Ö®ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ùµï¿½ï¿½ï¿½ï¿½Ë´ï¿½
     /// </summary>
     /// <param name="activity"></param>
     /// <param name="claims"></param>

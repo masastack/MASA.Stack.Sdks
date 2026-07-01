@@ -43,6 +43,29 @@ public class ActivityTest
     }
 
     [TestMethod]
+    public void HttpRequestMessageAddMultipartFormTagsTest()
+    {
+        HttpRequestMessage request = new()
+        {
+            Method = HttpMethod.Post
+        };
+
+        var multipartContent = new MultipartFormDataContent("----masa-boundary");
+        multipartContent.Add(new StringContent("demo-name"), "name");
+        multipartContent.Add(new ByteArrayContent(Encoding.UTF8.GetBytes("file-content")), "uploadFile", "demo.txt");
+        request.Content = multipartContent;
+        request.RequestUri = new Uri("http://localhost");
+
+        var activity = new Activity("tets");
+        HttpClientInstrumentHandler.AddMasaHttpRequestMessage(activity, request);
+        var body = activity.GetTagItem(OpenTelemetryAttributeName.Http.REQUEST_CONTENT_BODY) as string;
+
+        Assert.IsNotNull(body);
+        Assert.IsTrue(body.Contains("name=demo-name"));
+        Assert.IsTrue(body.Contains("uploadFile=[file:demo.txt"));
+    }
+
+    [TestMethod]
     public void HttpRequestAddTagsTest()
     {
         Mock<HttpRequest> mock = new();
@@ -90,5 +113,40 @@ public class ActivityTest
         var activity = new Activity("tets");
         AspNetCoreInstrumentationHandler.AddMasaHttpResponse(activity, mock.Object);
         Assert.IsNotNull(activity.GetTagItem(OpenTelemetryAttributeName.Http.RESPONSE_CONTENT_TYPE) as string);
+    }
+
+    [TestMethod]
+    public void HttpRequestAddMultipartFormTagsTest()
+    {
+        var fileStream = new MemoryStream(Encoding.UTF8.GetBytes("file-content"));
+        var formFile = new FormFile(fileStream, 0, fileStream.Length, "uploadFile", "demo.txt")
+        {
+            Headers = new HeaderDictionary(),
+            ContentType = "text/plain"
+        };
+
+        var formCollection = new FormCollection(
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues> { { "name", "demo-name" } },
+            new FormFileCollection { formFile });
+
+        var httpContext = new Mock<HttpContext>();
+        httpContext.Setup(context => context.User).Returns(new ClaimsPrincipal());
+
+        var request = new Mock<HttpRequest>();
+        request.Setup(r => r.Protocol).Returns("HTTP/1.1");
+        request.Setup(r => r.Scheme).Returns("http");
+        request.Setup(r => r.ContentLength).Returns(0);
+        request.Setup(r => r.ContentType).Returns("multipart/form-data; boundary=----masa-boundary");
+        request.Setup(r => r.HttpContext).Returns(httpContext.Object);
+        request.Setup(r => r.Body).Returns(new MemoryStream(Encoding.UTF8.GetBytes("unused")));
+        request.Setup(r => r.ReadFormAsync(It.IsAny<System.Threading.CancellationToken>())).ReturnsAsync(formCollection);
+
+        var activity = new Activity("tets");
+        AspNetCoreInstrumentationHandler.AddMasaHttpRequest(activity, request.Object);
+        var body = activity.GetTagItem(OpenTelemetryAttributeName.Http.REQUEST_CONTENT_BODY) as string;
+
+        Assert.IsNotNull(body);
+        Assert.IsTrue(body.Contains("name=demo-name"));
+        Assert.IsTrue(body.Contains("uploadFile=[file:demo.txt"));
     }
 }

@@ -50,47 +50,48 @@ public static partial class ServiceExtensions
         )
     {
         ArgumentNullException.ThrowIfNull(option);
-
-        Uri? uri = null;
-        if (!string.IsNullOrEmpty(otlpUrl) && !Uri.TryCreate(otlpUrl, UriKind.Absolute, out uri))
+        otlpUrl ??= "http://localhost:4317";        
+        if (!Uri.TryCreate(otlpUrl, UriKind.Absolute, out var uri))
             throw new UriFormatException($"{nameof(otlpUrl)}:{otlpUrl} is invalid url");
-        services.AddOpenTelemetry()
-            .ConfigureResource(resource => resource.AddMasaService(option))
-            .AddMasaTracing(services, builder =>
-            {
-                AddTraceOtlpExporter(builder, uri!, activitySources?.ToArray());
-            },
-            builder =>
-            {
-                if (isBlazor)
-                    builder.AspNetCoreInstrumentationOptions.AddBlazorFilter(builder, isInterruptSignalRTracing);
-                else
-                    builder.AspNetCoreInstrumentationOptions.AddAspNetCoreFilter(builder, isInterruptSignalRTracing);
-
-                builder.HttpClientInstrumentationOptions.AddHttpClientFilter(builder, isInterruptSignalRTracing);
-            })
-            .AddMasaMetrics(builder =>
-            {
-                metricInstrumentConfig?.Invoke(builder);
-                AddMetricOtlpExporter(builder, uri!, activitySources?.ToArray());
-            });
 
         var resources = ResourceBuilder.CreateDefault().AddMasaService(option);
         loggingBuilder.AddMasaOpenTelemetry(builder =>
         {
             builder.SetResourceBuilder(resources);
-            builder.AddOtlpExporter(otlp => otlp.Endpoint = uri!);
+            builder.AddOtlpExporter(otlp => otlp.Endpoint = uri);
         });
+
+        services.AddOpenTelemetry()
+            .ConfigureResource(resource => resource.AddMasaService(option))
+            .AddMasaTracing(services, tracingBuilder =>
+            {
+                AddTraceOtlpExporter(tracingBuilder, uri, activitySources?.ToArray());
+            },
+            instrumentationOptions =>
+            {
+                if (isBlazor)
+                    instrumentationOptions.AspNetCoreInstrumentationOptions.AddBlazorFilter(instrumentationOptions, isInterruptSignalRTracing);
+                else
+                    instrumentationOptions.AspNetCoreInstrumentationOptions.AddAspNetCoreFilter(instrumentationOptions, isInterruptSignalRTracing);
+
+                instrumentationOptions.HttpClientInstrumentationOptions.AddHttpClientFilter(instrumentationOptions, isInterruptSignalRTracing);
+            })
+            .AddMasaMetrics(builder =>
+            {
+                metricInstrumentConfig?.Invoke(builder);
+                AddMetricOtlpExporter(builder, uri, activitySources?.ToArray());
+            });
+
         if (blazorRouteAssemblies != null && blazorRouteAssemblies.Any())
         {
-            BlazorRouteManager.InitRoute(blazorRouteAssemblies.ToArray());
+            BlazorRouteManager.InitRoute([.. blazorRouteAssemblies]);
         }
 
         if (traceInstrumentConfig != null)
-            AddTraceProvider(option, traceInstrumentConfig, uri!);
+            AddTraceProvider(option, traceInstrumentConfig, uri);
 
         if (metricInstrumentConfig != null)
-            AddMeterProvider(option, metricInstrumentConfig, uri!);
+            AddMeterProvider(option, metricInstrumentConfig, uri);
         return services;
     }
 
@@ -98,6 +99,7 @@ public static partial class ServiceExtensions
     {
         if (activitySources != null && activitySources.Length > 0)
             builder.AddSource(activitySources);
+       
         builder.AddOtlpExporter(options => options.Endpoint = uri);
     }
 
@@ -105,23 +107,22 @@ public static partial class ServiceExtensions
     {
         if (activitySources != null && activitySources.Length > 0)
             builder.AddMeter(activitySources);
+        
         builder.AddOtlpExporter(options => options.Endpoint = uri);
     }
 
     private static void AddTraceProvider(MasaObservableOptions option, Action<TracerProviderBuilder> instrumentConfig, Uri uri)
     {
-        var builder = Sdk.CreateTracerProviderBuilder()
-                    .ConfigureResource(builder => builder.AddMasaService(option))
-                    .AddOtlpExporter(otlp => otlp.Endpoint = uri!);
+        var builder = Sdk.CreateTracerProviderBuilder().ConfigureResource(builder => builder.AddMasaService(option));        
+        builder.AddOtlpExporter(otlp => otlp.Endpoint = uri);
         instrumentConfig?.Invoke(builder);
         builder.Build();
     }
 
     private static void AddMeterProvider(MasaObservableOptions option, Action<MeterProviderBuilder> instrumentConfig, Uri uri)
     {
-        var builder = Sdk.CreateMeterProviderBuilder()
-                    .ConfigureResource(builder => builder.AddMasaService(option))
-                    .AddOtlpExporter(otlp => otlp.Endpoint = uri!);
+        var builder = Sdk.CreateMeterProviderBuilder().ConfigureResource(builder => builder.AddMasaService(option));      
+        builder.AddOtlpExporter(otlp => otlp.Endpoint = uri);
         instrumentConfig?.Invoke(builder);
         builder.Build();
     }

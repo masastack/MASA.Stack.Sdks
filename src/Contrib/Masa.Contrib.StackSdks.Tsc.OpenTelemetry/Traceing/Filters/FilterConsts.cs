@@ -35,8 +35,11 @@ internal static class FilterConsts
 
     public static bool IsInterruptSignalrTracing { get; set; } = false;
 
-    public static void InitTraceFilter(IConfiguration configuration)
+    public static void InitTraceFilter(IConfiguration? configuration)
     {
+        if (configuration == null)
+            return;
+
         var prefixes = GetValues(configuration, MASASTACK_TRACE_IGNORE_PATH_PREFIX);
         if (prefixes != null && prefixes.Length > 0) SetValues(CommonIgnorePrefix, prefixes!);
 
@@ -61,6 +64,13 @@ internal static class FilterConsts
 
     private static void SetValues(List<string> targets, string[] values)
     {
-        targets.AddRange(values.Where(value => !targets.Contains(value.ToLower())));
+        foreach (var value in values)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                continue;
+            var normalized = value.ToLower();
+            if (!targets.Contains(normalized))
+                targets.Add(normalized);
+        }
     }
 }
