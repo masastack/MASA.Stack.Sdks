@@ -8,4 +8,6 @@ public abstract class ResetPasswordModel
     public string Password { get; set; }
 
     public string ConfirmPassword { get; set; }
+
+    public string? ClientId { get; set; }
 }
