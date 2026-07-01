@@ -143,15 +143,25 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
 
     private static void LogFormFileContent(string source, string key, string fileName, Stream fileStream)
     {
+        var logger = OpenTelemetryInstrumentationOptions.Logger;
         (long length, string? content) = fileStream.ReadAsBase64();
         if (length <= 0)
             return;
+
+        using var scope = logger?.BeginScope(new Dictionary<string, object?>
+        {
+            ["source"] = source,
+            ["form.key"] = key,
+            ["file.name"] = fileName,
+            ["file.length"] = length
+        });
+
         if (length - OpenTelemetryInstrumentationOptions.MaxBodySize > 0)
         {
-            OpenTelemetryInstrumentationOptions.Logger?.LogInformation("[{Source}] keyName: {Key}, fileName: {FileName}, length: {Length}, max: {MaxBodySize}", source, key, fileName, length, OpenTelemetryInstrumentationOptions.MaxBodySize);
+            logger?.LogInformation("file content exceeded max limit. max: {MaxBodySize}", OpenTelemetryInstrumentationOptions.MaxBodySize);
             return;
         }
 
-        OpenTelemetryInstrumentationOptions.Logger?.LogInformation("[{Source}] keyName: {Key}, fileName: {FileName}, base64 content: {Content}", source, key, fileName, content ?? string.Empty);
+        logger?.LogInformation("file content(base64): {Content}", content ?? string.Empty);
     }
 }
