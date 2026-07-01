@@ -113,26 +113,16 @@ internal class HttpClientInstrumentHandler : ExceptionHandler
 
     private static void LogFormFileContent(string source, string key, string fileName, Stream fileStream)
     {
-        var logger = OpenTelemetryInstrumentationOptions.Logger;
         (long length, string? content) = fileStream.ReadAsBase64();
         if (length <= 0)
             return;
-
-        using var scope = logger?.BeginScope(new Dictionary<string, object?>
-        {
-            ["source"] = source,
-            ["form.key"] = key,
-            ["file.name"] = fileName,
-            ["file.length"] = length
-        });
-
         if (length - OpenTelemetryInstrumentationOptions.MaxBodySize > 0)
         {
-            logger?.LogInformation("file content exceeded max limit. max: {MaxBodySize}", OpenTelemetryInstrumentationOptions.MaxBodySize);
+            OpenTelemetryInstrumentationOptions.Logger?.LogInformation("[{Source}] Multipart form file content exceeded max limit. key: {Key}, fileName: {FileName}, length: {Length}, max: {MaxBodySize}", source, key, fileName, length, OpenTelemetryInstrumentationOptions.MaxBodySize);
             return;
         }
 
-        logger?.LogInformation("file content(base64): {Content}", content ?? string.Empty);
+        OpenTelemetryInstrumentationOptions.Logger?.LogInformation("[{Source}] Multipart form file content(base64). key: {Key}, fileName: {FileName}, content: {Content}", source, key, fileName, content ?? string.Empty);
     }
 
     private static long? GetStreamLength(Stream stream)
