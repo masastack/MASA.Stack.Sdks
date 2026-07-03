@@ -11,6 +11,8 @@ public class SendEmailModel : IEnvironmentModel
 
     public string Environment { get; set; }
 
+    public string? ClientId { get; set; }
+
     public SendEmailModel()
     {
     }
