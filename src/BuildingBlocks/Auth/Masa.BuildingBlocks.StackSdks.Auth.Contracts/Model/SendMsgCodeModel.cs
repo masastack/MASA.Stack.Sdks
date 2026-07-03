@@ -13,6 +13,8 @@ public class SendMsgCodeModel : IEnvironmentModel
 
     public string Environment { get; set; }
 
+    public string? ClientId { get; set; }
+
     public SendMsgCodeModel()
     {
     }
