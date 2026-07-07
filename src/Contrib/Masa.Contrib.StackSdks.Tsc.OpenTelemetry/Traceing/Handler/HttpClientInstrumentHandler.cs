@@ -90,7 +90,7 @@ internal class HttpClientInstrumentHandler : ExceptionHandler
             }
 
             var contentStream = item.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-            (_, var value) = contentStream.ReadAsString(GetHttpRequestMessageEncoding(httpRequest));
+            (_, var value) = contentStream.ReadAsStringAsync(GetHttpRequestMessageEncoding(httpRequest)).ConfigureAwait(false).GetAwaiter().GetResult();
             formItems.Add($"{key}={value ?? string.Empty}");
         }
 

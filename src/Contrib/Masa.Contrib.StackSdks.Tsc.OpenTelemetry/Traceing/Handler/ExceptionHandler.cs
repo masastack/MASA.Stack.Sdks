@@ -52,7 +52,7 @@ internal class ExceptionHandler
 
     public static void SetActivityBody(Activity activity, Stream inputSteam, Encoding? encoding = null)
     {
-        (long length, string? body) = inputSteam.ReadAsString(encoding);
+        (long length, string? body) = inputSteam.ReadAsStringAsync(encoding).ConfigureAwait(false).GetAwaiter().GetResult();
 
         if (length <= 0)
             return;
@@ -65,12 +65,7 @@ internal class ExceptionHandler
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_CONTENT_BODY, body);
         }
     }
-
-    /// <summary>
-    /// ���ڿӣ�masaauth�������淶���£�֮���е������ٵ����˴�
-    /// </summary>
-    /// <param name="activity"></param>
-    /// <param name="claims"></param>
+    
     public static void SetUserInfo(Activity activity, ClaimsPrincipal? claims)
     {
         if (claims == null || !claims.Claims.Any()) return;
