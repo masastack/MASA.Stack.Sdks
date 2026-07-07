@@ -69,8 +69,12 @@ internal class ExceptionHandler
     public static void SetUserInfo(Activity activity, ClaimsPrincipal? claims)
     {
         if (claims == null || !claims.Claims.Any()) return;
-        string userId = claims.FindFirstValue(IdentityClaimConsts.USER_ID) ?? claims.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
-        string userName = claims.FindFirstValue(IdentityClaimConsts.USER_NAME) ?? claims.FindFirstValue(ClaimTypes.Name) ?? string.Empty;
+        string userId = claims.FindFirst(IdentityClaimConsts.USER_ID)?.Value
+                        ?? claims.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                        ?? string.Empty;
+        string userName = claims.FindFirst(IdentityClaimConsts.USER_NAME)?.Value
+                          ?? claims.FindFirst(ClaimTypes.Name)?.Value
+                          ?? string.Empty;
 
         activity.AddTag(OpenTelemetryAttributeName.EndUser.ID, userId);
         activity.AddTag(OpenTelemetryAttributeName.EndUser.USER_NICK_NAME, userName);
