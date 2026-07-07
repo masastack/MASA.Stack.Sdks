@@ -18,8 +18,8 @@ internal static class AspNetCoreFilterExtenistion
 
     internal static bool IsWebsocket(HttpContext httpContext)
     {
-        var connection = httpContext.Request.Headers.Connection.ToString();
-        var upgrade = httpContext.Request.Headers.Upgrade.ToString();
+        var connection = httpContext.Request.Headers["Connection"].ToString();
+        var upgrade = httpContext.Request.Headers["Upgrade"].ToString();
         return connection.Contains("upgrade", StringComparison.OrdinalIgnoreCase)
                && upgrade.Contains("websocket", StringComparison.OrdinalIgnoreCase);
     }

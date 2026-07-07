@@ -27,8 +27,8 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
         activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_CONTENT_TYPE, httpRequest.ContentType);
         if (httpRequest.Headers != null)
         {
-            activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_AUTHORIZATION, httpRequest.Headers.Authorization);
-            activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_USER_AGENT, httpRequest.Headers.UserAgent);
+            activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_AUTHORIZATION, httpRequest.Headers["Authorization"].ToString());
+            activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_USER_AGENT, httpRequest.Headers["User-Agent"].ToString());
             activity.SetTag(OpenTelemetryAttributeName.Http.CLIENT_IP, GetIp(httpRequest.Headers, httpRequest.HttpContext!.Connection.RemoteIpAddress));
             SetMasaCustomerHeaderTags(activity, httpRequest.Headers);
         }
@@ -43,7 +43,7 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
             }
 
             if (!httpRequest.Body.CanSeek)
-                httpRequest.EnableBuffering();
+                return;
             SetActivityBody(activity, httpRequest.Body, GetHttpRequestEncoding(httpRequest));
         }
         activity.SetTag(OpenTelemetryAttributeName.Host.NAME, Dns.GetHostName());
@@ -100,7 +100,7 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
             return false;
 
         if (!httpRequest.Body.CanSeek)
-            httpRequest.EnableBuffering();
+            return false;
 
         var form = httpRequest.ReadFormAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         var formItems = new List<string>();

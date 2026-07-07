@@ -84,7 +84,7 @@ public static partial class ServiceExtensions
 
         if (blazorRouteAssemblies != null && blazorRouteAssemblies.Any())
         {
-            BlazorRouteManager.InitRoute([.. blazorRouteAssemblies]);
+            BlazorRouteManager.InitRoute(blazorRouteAssemblies.ToArray());
         }
 
         if (traceInstrumentConfig != null)
