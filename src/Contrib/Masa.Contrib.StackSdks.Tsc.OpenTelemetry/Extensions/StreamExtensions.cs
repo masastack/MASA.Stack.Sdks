@@ -57,43 +57,15 @@ internal static class StreamExtensions
 
     public static (long, string?) ReadAsString(this Stream stream, Encoding? encoding = null, int bufferSize = 4096)
     {
-        if (stream == null || !stream.CanRead || !stream.CanSeek)
-            return (-1, null);
-
-        var start = stream.Position;
         try
         {
-            var maxBodySize = OpenTelemetryInstrumentationOptions.MaxBodySize;
-            if (maxBodySize > 0 && stream.Length > maxBodySize)
-                return (stream.Length, null);
-
-            using var dataStream = new MemoryStream();
-            var buffer = new byte[bufferSize];
-            stream.Seek(0, SeekOrigin.Begin);
-            while (true)
-            {
-                var count = stream.Read(buffer, 0, bufferSize);
-                if (count <= 0)
-                    break;
-
-                dataStream.Write(buffer, 0, count);
-            }
-
-            if (dataStream.Length <= 0)
-                return (-1, null);
-
-            return (dataStream.Length, (encoding ?? _defaultEncoding).GetString(dataStream.ToArray()));
+            return ReadAsStringAsync(stream, encoding, bufferSize).ConfigureAwait(false).GetAwaiter().GetResult();
         }
         catch (Exception ex)
         {
             OpenTelemetryInstrumentationOptions.Logger?.LogError(ex, "ReadAsString Error");
+            return (-1, null);
         }
-        finally
-        {
-            stream.Seek(start, SeekOrigin.Begin);
-        }
-
-        return (-1, null);
     }
 
     public static (long, string?) ReadAsBase64(this Stream stream, int bufferSize = 4096)
