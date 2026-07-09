@@ -10,5 +10,6 @@ public enum ChannelTypes
     WebsiteMessage,
     App,
     WeixinWork,
-    WeixinWorkWebhook
+    WeixinWorkWebhook,
+    WeixinMiniProgram,
 }
