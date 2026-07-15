@@ -36,14 +36,15 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
         SetUserInfo(activity, httpRequest.HttpContext.User);
         if (httpRequest.Body != null)
         {
+            if (!httpRequest.Body.CanSeek)
+                httpRequest.EnableBuffering();
+
             if (TrySetMultipartFormBody(activity, httpRequest))
             {
                 activity.SetTag(OpenTelemetryAttributeName.Host.NAME, Dns.GetHostName());
                 return;
             }
 
-            if (!httpRequest.Body.CanSeek)
-                return;
             SetActivityBody(activity, httpRequest.Body, GetHttpRequestEncoding(httpRequest));
         }
         activity.SetTag(OpenTelemetryAttributeName.Host.NAME, Dns.GetHostName());
