@@ -22,5 +22,8 @@ public enum OperatorTypes
     MatchesRegex,
     NotMatchRegex,
     Contains,
-    NotContains
+    NotContains,
+    EndsWith,
+    IsTrue,
+    IsFalse
 }
