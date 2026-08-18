@@ -61,7 +61,9 @@ public class OpenTelemetryInstrumentationOptions
     /// </summary>
     public Action<EntityFrameworkInstrumentationOptions> EntityFrameworkInstrumentationOptions { get; set; } = options =>
     {
-
+#if OTEL_LEGACY
+        options.SetDbStatementForText = true;
+#endif
     };
 
     public Action<ElasticsearchClientInstrumentationOptions> ElasticsearchClientInstrumentationOptions { get; set; } = options =>

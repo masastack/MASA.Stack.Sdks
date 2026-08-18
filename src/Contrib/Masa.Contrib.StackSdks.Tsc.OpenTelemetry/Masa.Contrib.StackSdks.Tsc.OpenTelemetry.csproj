@@ -6,7 +6,25 @@
 		<RunApiCompat>false</RunApiCompat>
 	</PropertyGroup>
 
-	<ItemGroup>
+	<!-- net6/net7: OpenTelemetry 1.9.x still ships a real net6 TFM + Grpc.Net.Client.
+	     net8+: use 1.15.3 (1.10+ dropped net6 and breaks cleartext OTLP/gRPC on older runtimes). -->
+	<PropertyGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+		<DefineConstants>$(DefineConstants);OTEL_LEGACY</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+		<PackageReference Include="OpenTelemetry" Version="1.9.0" />
+		<PackageReference Include="OpenTelemetry.Instrumentation.ElasticsearchClient" Version="1.0.0-beta.5" />
+		<PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.12" />
+		<PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
+		<PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0" />
+		<PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
+		<PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
+		<PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.9.0" />
+		<PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" Version="1.9.0-beta.1" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
 		<PackageReference Include="OpenTelemetry" Version="1.15.3" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.ElasticsearchClient" Version="1.15.1-beta.1" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.15.1-beta.1" />
@@ -26,4 +44,3 @@
 		<ProjectReference Include="..\..\BuildingBlocks\Masa.BuildingBlocks.StackSdks.Config\Masa.BuildingBlocks.StackSdks.Config.csproj" />
 	</ItemGroup>
 </Project>
-
