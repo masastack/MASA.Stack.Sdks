@@ -45,8 +45,10 @@ public static partial class ServiceExtensions
         IEnumerable<string>? activitySources = default,
         IEnumerable<Assembly>? blazorRouteAssemblies = default,
         Action<TracerProviderBuilder>? traceInstrumentConfig = default,
-        Action<MeterProviderBuilder>? metricInstrumentConfig = default,
-        Action<LoggerProviderBuilder>? logInstrumentConfig = default
+        Action<MeterProviderBuilder>? metricInstrumentConfig = default
+#if !OTEL_LEGACY
+        , Action<LoggerProviderBuilder>? logInstrumentConfig = default
+#endif
         )
     {
         ArgumentNullException.ThrowIfNull(option);
