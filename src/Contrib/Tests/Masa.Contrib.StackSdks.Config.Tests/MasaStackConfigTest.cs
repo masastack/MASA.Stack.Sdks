@@ -32,6 +32,7 @@ public class MasaStackConfigTest
             { MasaStackConfigConstant.ENVIRONMENT, configuration.GetValue<string>(MasaStackConfigConstant.ENVIRONMENT) },
             { MasaStackConfigConstant.ADMIN_PWD, configuration.GetValue<string>(MasaStackConfigConstant.ADMIN_PWD) },
             { MasaStackConfigConstant.DCC_SECRET, configuration.GetValue<string>(MasaStackConfigConstant.DCC_SECRET) },
+            { MasaStackConfigConstant.DCC_STORE_NAME, configuration.GetValue<string>(MasaStackConfigConstant.DCC_STORE_NAME) },
             { MasaStackConfigConstant.SUFFIX_IDENTITY, configuration.GetValue<string>(MasaStackConfigConstant.SUFFIX_IDENTITY) }
         };
 
@@ -61,6 +62,58 @@ public class MasaStackConfigTest
         var dccOptions = MasaStackConfigUtils.GetDefaultDccOptions(_config, MasaStackProject.Auth, MasaStackApp.WEB);
 
         Assert.IsNotNull(dccOptions?.RedisOptions);
+    }
+
+    [TestMethod]
+    public void TestGetDefaultDccDaprOptions()
+    {
+        var dccOptions = MasaStackConfigUtils.GetDefaultDccDaprOptions(_config, MasaStackProject.Auth, MasaStackApp.WEB);
+
+        Assert.IsNotNull(dccOptions);
+        Assert.AreEqual("Development", dccOptions.Environment);
+        Assert.AreEqual("Default", dccOptions.Cluster);
+        Assert.AreEqual("auth-web", dccOptions.AppId);
+        Assert.AreEqual("dcc-staging.masastack", dccOptions.ManageServiceAddress);
+        Assert.AreEqual("dcc_secret", dccOptions.PublicSecret);
+        Assert.AreEqual("dcc_secret", dccOptions.ConfigObjectSecret);
+        Assert.AreEqual("dcc_secret", dccOptions.Secret);
+        Assert.AreEqual("masa-stack-dcc", dccOptions.StoreName);
+    }
+
+    [TestMethod]
+    public void TestGetDefaultDccDaprOptions_WithoutLocalMasaStack()
+    {
+        var bootstrap = new Dictionary<string, string>
+        {
+            { MasaStackConfigConstant.ENVIRONMENT, "Development" },
+            { MasaStackConfigConstant.CLUSTER, "Default" },
+            { MasaStackConfigConstant.MASA_STACK, "" },
+            { MasaStackConfigConstant.DCC_SECRET, "" }
+        };
+
+        var dccOptions = MasaStackConfigUtils.GetDefaultDccDaprOptions(bootstrap, MasaStackProject.DCC, MasaStackApp.Service);
+
+        Assert.IsNotNull(dccOptions);
+        Assert.AreEqual("Development", dccOptions.Environment);
+        Assert.AreEqual("Default", dccOptions.Cluster);
+        Assert.AreEqual("dcc-service", dccOptions.AppId);
+        Assert.AreEqual("masa-stack-dcc", dccOptions.StoreName);
+        Assert.AreEqual(string.Empty, dccOptions.ManageServiceAddress);
+    }
+
+    [TestMethod]
+    public void TestGetDefaultDccDaprOptions_StoreNameFromConfig()
+    {
+        var bootstrap = new Dictionary<string, string>
+        {
+            { MasaStackConfigConstant.ENVIRONMENT, "Development" },
+            { MasaStackConfigConstant.CLUSTER, "Default" },
+            { MasaStackConfigConstant.DCC_STORE_NAME, "custom-configstore" }
+        };
+
+        var dccOptions = MasaStackConfigUtils.GetDefaultDccDaprOptions(bootstrap, MasaStackProject.DCC, MasaStackApp.Service);
+
+        Assert.AreEqual("custom-configstore", dccOptions.StoreName);
     }
 
     [TestMethod]

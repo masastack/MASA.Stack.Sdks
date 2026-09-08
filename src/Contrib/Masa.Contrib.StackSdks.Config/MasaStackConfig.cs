@@ -60,7 +60,10 @@ public class MasaStackConfig : IMasaStackConfig
     public string GetValue(string key)
     {
         GetValues().TryGetValue(key, out var value);
-        return value ?? ConfigMap[key];
+        if (!string.IsNullOrEmpty(value))
+            return value;
+
+        return ConfigMap.TryGetValue(key, out var local) ? local ?? string.Empty : string.Empty;
     }
 
     public virtual Dictionary<string, string> GetValues()
@@ -72,11 +75,11 @@ public class MasaStackConfig : IMasaStackConfig
                ConfigMap[MasaStackConfigConstant.CLUSTER],
                DEFAULT_PUBLIC_ID,
                DEFAULT_CONFIG_NAME).ConfigureAwait(false).GetAwaiter().GetResult();
-            return remoteConfigs;
+            return remoteConfigs ?? new Dictionary<string, string>(ConfigMap, StringComparer.OrdinalIgnoreCase);
         }
         catch
         {
-            return new(ConfigMap);
+            return new Dictionary<string, string>(ConfigMap, StringComparer.OrdinalIgnoreCase);
         }
     }
 }

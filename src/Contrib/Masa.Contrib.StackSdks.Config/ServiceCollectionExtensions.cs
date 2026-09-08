@@ -64,19 +64,36 @@ public static class ServiceCollectionExtensions
             await InitializeMasaStackConfiguration(services, configs).ConfigureAwait(false);
         }
 
-        services.TryAddScoped<IMasaStackConfig>(serviceProvider =>
-        {
-            var configurationApiClient = serviceProvider.GetRequiredService<IConfigurationApiClient>();
-            return new MasaStackConfig(configurationApiClient, configs);
-        });
-
-        services.TryAddScoped<IMultiEnvironmentMasaStackConfig>(serviceProvider =>
-        {
-            var configurationApiClient = serviceProvider.GetRequiredService<IConfigurationApiClient>();
-            return new MultiEnvironmentMasaStackConfig(configurationApiClient, configs);
-        });
-
+        RegisterMasaStackConfig(services, configs);
         return services;
+    }
+
+    public static async Task<IServiceCollection> AddMasaStackConfigDaprAsync(this IServiceCollection services, MasaStackProject project, MasaStackApp app,
+        bool init = false,
+        DccDaprOptions? dccOptions = null,
+        Action<IMasaCallerClientBuilder>? callerAction = null)
+    {
+        var configs = GetConfigMap(services);
+
+        dccOptions ??= MasaStackConfigUtils.GetDefaultDccDaprOptions(configs, project, app);
+        services.AddSingleton(dccOptions);
+        services.AddMasaConfiguration(builder => builder.UseDcc(dccOptions, action: (CallerBuilder callerBuilder) =>
+        {
+            callerBuilder.UseDccHttpClient(dccOptions.ManageServiceAddress, callerAction);
+        }));
+
+        if (init)
+        {
+            await InitializeMasaStackConfiguration(services, configs).ConfigureAwait(false);
+        }
+
+        RegisterMasaStackConfig(services, configs);
+        return services;
+    }
+
+    public static DccDaprOptions? GetDccDaprOptions(this IServiceCollection services)
+    {
+        return services.BuildServiceProvider().GetService<DccDaprOptions>();
     }
 
     public static IMasaStackConfig GetMasaStackConfig(this IServiceCollection services)
@@ -94,30 +111,50 @@ public static class ServiceCollectionExtensions
         return services.BuildServiceProvider().GetRequiredService<IMultiEnvironmentMasaStackConfig>();
     }
 
+    private static void RegisterMasaStackConfig(IServiceCollection services, Dictionary<string, string> configs)
+    {
+        services.TryAddScoped<IMasaStackConfig>(serviceProvider =>
+        {
+            var configurationApiClient = serviceProvider.GetRequiredService<IConfigurationApiClient>();
+            return new MasaStackConfig(configurationApiClient, configs);
+        });
+
+        services.TryAddScoped<IMultiEnvironmentMasaStackConfig>(serviceProvider =>
+        {
+            var configurationApiClient = serviceProvider.GetRequiredService<IConfigurationApiClient>();
+            return new MultiEnvironmentMasaStackConfig(configurationApiClient, configs);
+        });
+    }
+
     private static Dictionary<string, string> GetConfigMap(IServiceCollection services)
     {
         var serviceProvider = services.BuildServiceProvider();
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
 
-        string environment = configuration.GetValue<string>(MasaStackConfigConstant.ENVIRONMENT)!;
-        environment = string.IsNullOrWhiteSpace(environment) ? configuration["ASPNETCORE_ENVIRONMENT"]! : environment;
+        string environment = configuration.GetValue<string>(MasaStackConfigConstant.ENVIRONMENT) ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(environment))
+            environment = configuration["ASPNETCORE_ENVIRONMENT"] ?? string.Empty;
 
-        var configs = new Dictionary<string, string>()
+        // Missing local keys are empty; Dapr path fills them from $public.DefaultConfig via MasaStackConfig.GetValues().
+        string Get(string key) => configuration.GetValue<string>(key) ?? string.Empty;
+
+        var configs = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            { MasaStackConfigConstant.VERSION, configuration.GetValue<string>(MasaStackConfigConstant.VERSION)! },
+            { MasaStackConfigConstant.VERSION, Get(MasaStackConfigConstant.VERSION) },
             { MasaStackConfigConstant.IS_DEMO, configuration.GetValue<bool>(MasaStackConfigConstant.IS_DEMO).ToString() },
-            { MasaStackConfigConstant.DOMAIN_NAME, configuration.GetValue<string>(MasaStackConfigConstant.DOMAIN_NAME)! },
-            { MasaStackConfigConstant.NAMESPACE, configuration.GetValue<string>(MasaStackConfigConstant.NAMESPACE)! },
-            { MasaStackConfigConstant.CLUSTER, configuration.GetValue<string>(MasaStackConfigConstant.CLUSTER)! },
-            { MasaStackConfigConstant.OTLP_URL, configuration.GetValue < string >(MasaStackConfigConstant.OTLP_URL)! },
-            { MasaStackConfigConstant.REDIS, configuration.GetValue<string>(MasaStackConfigConstant.REDIS)! },
-            { MasaStackConfigConstant.CONNECTIONSTRING, configuration.GetValue<string>(MasaStackConfigConstant.CONNECTIONSTRING)! },
-            { MasaStackConfigConstant.MASA_STACK, configuration.GetValue<string>(MasaStackConfigConstant.MASA_STACK)! },
-            { MasaStackConfigConstant.ELASTIC, configuration.GetValue<string>(MasaStackConfigConstant.ELASTIC)! },
+            { MasaStackConfigConstant.DOMAIN_NAME, Get(MasaStackConfigConstant.DOMAIN_NAME) },
+            { MasaStackConfigConstant.NAMESPACE, Get(MasaStackConfigConstant.NAMESPACE) },
+            { MasaStackConfigConstant.CLUSTER, Get(MasaStackConfigConstant.CLUSTER) },
+            { MasaStackConfigConstant.OTLP_URL, Get(MasaStackConfigConstant.OTLP_URL) },
+            { MasaStackConfigConstant.REDIS, Get(MasaStackConfigConstant.REDIS) },
+            { MasaStackConfigConstant.CONNECTIONSTRING, Get(MasaStackConfigConstant.CONNECTIONSTRING) },
+            { MasaStackConfigConstant.MASA_STACK, Get(MasaStackConfigConstant.MASA_STACK) },
+            { MasaStackConfigConstant.ELASTIC, Get(MasaStackConfigConstant.ELASTIC) },
             { MasaStackConfigConstant.ENVIRONMENT, environment },
-            { MasaStackConfigConstant.ADMIN_PWD, configuration.GetValue<string>(MasaStackConfigConstant.ADMIN_PWD)! },
-            { MasaStackConfigConstant.DCC_SECRET, configuration.GetValue<string>(MasaStackConfigConstant.DCC_SECRET)! },
-            { MasaStackConfigConstant.SUFFIX_IDENTITY, configuration.GetValue<string>(MasaStackConfigConstant.SUFFIX_IDENTITY)! }
+            { MasaStackConfigConstant.ADMIN_PWD, Get(MasaStackConfigConstant.ADMIN_PWD) },
+            { MasaStackConfigConstant.DCC_SECRET, Get(MasaStackConfigConstant.DCC_SECRET) },
+            { MasaStackConfigConstant.SUFFIX_IDENTITY, Get(MasaStackConfigConstant.SUFFIX_IDENTITY) },
+            { MasaStackConfigConstant.DCC_STORE_NAME, Get(MasaStackConfigConstant.DCC_STORE_NAME) }
         };
         return configs;
     }
