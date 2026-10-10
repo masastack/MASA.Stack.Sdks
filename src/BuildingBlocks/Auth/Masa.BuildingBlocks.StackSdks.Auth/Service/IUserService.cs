@@ -87,6 +87,8 @@ public interface IUserService
 
     Task<UserModel?> LoginByPhoneNumberAsync(LoginByPhoneNumberModel login);
 
+    Task<UserModel?> LoginByEmailAsync(LoginByEmailModel login);
+
     Task RemoveUserRolesAsync(RemoveUserRolesModel user);
 
     Task SetCurrentTeamAsync(Guid teamId);

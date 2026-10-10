@@ -262,6 +262,12 @@ public class UserService : IUserService
         return await _caller.PostAsync<UserModel>(requestUri, login);
     }
 
+    public async Task<UserModel?> LoginByEmailAsync(LoginByEmailModel login)
+    {
+        var requestUri = $"api/user/loginByEmail";
+        return await _caller.PostAsync<UserModel>(requestUri, login);
+    }
+
     public async Task RemoveUserRolesAsync(RemoveUserRolesModel user)
     {
         var requestUri = $"api/user/userRoles";
