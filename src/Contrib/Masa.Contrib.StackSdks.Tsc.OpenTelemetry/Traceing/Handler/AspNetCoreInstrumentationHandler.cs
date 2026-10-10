@@ -27,8 +27,8 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
         activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_CONTENT_TYPE, httpRequest.ContentType);
         if (httpRequest.Headers != null)
         {
-            activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_AUTHORIZATION, httpRequest.Headers.Authorization);
-            activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_USER_AGENT, httpRequest.Headers.UserAgent);
+            activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_AUTHORIZATION, httpRequest.Headers["Authorization"].ToString());
+            activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_USER_AGENT, httpRequest.Headers["User-Agent"].ToString());
             activity.SetTag(OpenTelemetryAttributeName.Http.CLIENT_IP, GetIp(httpRequest.Headers, httpRequest.HttpContext!.Connection.RemoteIpAddress));
             SetMasaCustomerHeaderTags(activity, httpRequest.Headers);
         }
@@ -38,7 +38,14 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
         {
             if (!httpRequest.Body.CanSeek)
                 httpRequest.EnableBuffering();
-            SetActivityBody(activity, httpRequest.Body, GetHttpRequestEncoding(httpRequest)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            if (TrySetMultipartFormBody(activity, httpRequest))
+            {
+                activity.SetTag(OpenTelemetryAttributeName.Host.NAME, Dns.GetHostName());
+                return;
+            }
+
+            SetActivityBody(activity, httpRequest.Body, GetHttpRequestEncoding(httpRequest));
         }
         activity.SetTag(OpenTelemetryAttributeName.Host.NAME, Dns.GetHostName());
     }
@@ -86,5 +93,76 @@ internal class AspNetCoreInstrumentationHandler : ExceptionHandler
     private static object GetHeaderValue(IHeaderDictionary headers, string key)
     {
         return headers.TryGetValue(key, out StringValues value) ? value : default;
+    }
+
+    private static bool TrySetMultipartFormBody(Activity activity, HttpRequest httpRequest)
+    {
+        if (!IsMultipartFormData(httpRequest.ContentType))
+            return false;
+
+        if (!httpRequest.Body.CanSeek)
+            return false;
+
+        var form = httpRequest.ReadFormAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        var formItems = new List<string>();
+        foreach (var formValue in form)
+        {
+            formItems.Add($"{formValue.Key}={formValue.Value}");
+        }
+
+        foreach (var formFile in form.Files)
+        {
+            var stream = formFile.OpenReadStream();
+            LogFormFileContent("AspNetCore", formFile.Name, formFile.FileName, stream);
+            formItems.Add(GetFileFormValue(formFile.Name, formFile.FileName, formFile.ContentType, formFile.Length));
+        }
+
+        if (httpRequest.Body.CanSeek)
+            httpRequest.Body.Seek(0, SeekOrigin.Begin);
+
+        if (formItems.Count > 0)
+            activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_CONTENT_BODY, string.Join("&", formItems));
+
+        return true;
+    }
+
+    private static bool IsMultipartFormData(string? contentType)
+    {
+        return !string.IsNullOrWhiteSpace(contentType) && contentType.StartsWith("multipart/form-data", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string GetFileFormValue(string key, string fileName, string? contentType, long? fileLength)
+    {
+        var fileInfo = $"[file:{fileName}";
+        if (!string.IsNullOrWhiteSpace(contentType))
+            fileInfo += $",contentType:{contentType}";
+        if (fileLength.HasValue && fileLength > 0)
+            fileInfo += $",length:{fileLength.Value}";
+        fileInfo += "]";
+        return $"{key}={fileInfo}";
+    }
+
+    private static void LogFormFileContent(string source, string key, string fileName, Stream fileStream)
+    {
+        var logger = OpenTelemetryInstrumentationOptions.Logger;
+        (long length, string? content) = fileStream.ReadAsBase64();
+        if (length <= 0)
+            return;
+
+        using var scope = logger?.BeginScope(new Dictionary<string, object?>
+        {
+            ["source"] = source,
+            ["form.key"] = key,
+            ["file.name"] = fileName,
+            ["file.length"] = length
+        });
+
+        if (length - OpenTelemetryInstrumentationOptions.MaxBodySize > 0)
+        {
+            logger?.LogInformation("file content exceeded max limit. max: {MaxBodySize}", OpenTelemetryInstrumentationOptions.MaxBodySize);
+            return;
+        }
+
+        logger?.LogInformation("file content(base64): {Content}", content ?? string.Empty);
     }
 }

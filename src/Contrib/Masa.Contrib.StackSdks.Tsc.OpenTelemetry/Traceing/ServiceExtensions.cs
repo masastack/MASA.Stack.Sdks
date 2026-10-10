@@ -9,21 +9,22 @@ public static partial class ServiceExtensions
         Action<TracerProviderBuilder> builderConfigure,
         Action<OpenTelemetryInstrumentationOptions>? configure = null)
     {
-        services.AddOpenTelemetry().AddMasaTracing(services, builderConfigure, configure);
+        services.AddOpenTelemetry().AddMasaTracing(services, builderConfigure, configure, GetConfiguration(services));
         return services;
     }
 
     public static OpenTelemetryBuilder AddMasaTracing(this OpenTelemetryBuilder builder,
         IServiceCollection services,
         Action<TracerProviderBuilder> builderConfigure,
-        Action<OpenTelemetryInstrumentationOptions>? openTelemetryInstrumentationOptions = null)
+        Action<OpenTelemetryInstrumentationOptions>? openTelemetryInstrumentationOptions = null,
+        IConfiguration? configuration = null)
     {
-        FilterConsts.InitTraceFilter(services.BuildServiceProvider().GetRequiredService<IConfiguration>());
+        configuration ??= GetConfiguration(services);
+        FilterConsts.InitTraceFilter(configuration);
         return builder.WithTracing(builder =>
         {
             builder.SetSampler(new AlwaysOnSampler());
-            var option = services.BuildServiceProvider().GetService<OpenTelemetryInstrumentationOptions>();
-            option ??= new OpenTelemetryInstrumentationOptions(services.BuildServiceProvider());
+            var option = GetInstrumentationOptions(services, configuration);
             openTelemetryInstrumentationOptions?.Invoke(option);
 
             if (option.AspNetCoreInstrumentationOptions != null)
@@ -54,5 +55,20 @@ public static partial class ServiceExtensions
             builderConfigure?.Invoke(builder);
             option.BuildTraceCallback?.Invoke(builder);
         });
+    }
+
+    private static IConfiguration? GetConfiguration(IServiceCollection services)
+    {
+        var descriptor = services.LastOrDefault(d => d.ServiceType == typeof(IConfiguration));
+        return descriptor?.ImplementationInstance as IConfiguration;
+    }
+
+    private static OpenTelemetryInstrumentationOptions GetInstrumentationOptions(IServiceCollection services, IConfiguration? configuration)
+    {
+        var descriptor = services.LastOrDefault(d => d.ServiceType == typeof(OpenTelemetryInstrumentationOptions));
+        if (descriptor?.ImplementationInstance is OpenTelemetryInstrumentationOptions options)
+            return options;
+
+        return new OpenTelemetryInstrumentationOptions(loggerFactory: services.BuildServiceProvider().GetRequiredService<ILoggerFactory>(), configuration);
     }
 }

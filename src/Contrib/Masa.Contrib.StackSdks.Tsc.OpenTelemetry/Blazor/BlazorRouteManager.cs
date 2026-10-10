@@ -25,18 +25,21 @@ public sealed class BlazorRouteManager
         if (assembly == null)
             return;
 
-        var typeRoutes = assembly.GetTypes().Select(type => new { type, routes = type.GetCustomAttributes<RouteAttribute>().ToList() }).Where(item => item.routes.Count > 0).ToList();
+        var typeRoutes = assembly.GetTypes()
+            .Select(type => new { type, routes = GetRouteTemplates(type) })
+            .Where(item => item.routes.Count > 0)
+            .ToList();
 
         foreach (var item in typeRoutes)
         {
             if (_routes.ContainsKey(item.type))
                 continue;
-            var routeDatas = item.routes.Select(route =>
+            var routeDatas = item.routes.Select(template =>
             {
-                var values = (route.Template.StartsWith('/') ? route.Template[1..] : route.Template).Split('/');
+                var values = (template.StartsWith('/') ? template[1..] : template).Split('/');
                 return new BlazorRouteData
                 {
-                    Template = route.Template,
+                    Template = template,
                     Type = item.type,
                     RouteKeies = values.Select((value, index) => new BlazorRouteParamKey
                     {
@@ -50,6 +53,17 @@ public sealed class BlazorRouteManager
             }).ToList();
             _routes.Add(item.type, routeDatas);
         }
+    }
+
+    private static List<string> GetRouteTemplates(Type type)
+    {
+        const string routeAttributeName = "Microsoft.AspNetCore.Components.RouteAttribute";
+        return type.GetCustomAttributes(inherit: true)
+            .Where(attr => string.Equals(attr.GetType().FullName, routeAttributeName, StringComparison.Ordinal))
+            .Select(attr => attr.GetType().GetProperty("Template")?.GetValue(attr)?.ToString())
+            .Where(template => !string.IsNullOrWhiteSpace(template))
+            .Cast<string>()
+            .ToList();
     }
 
     internal static bool TryGetUrlRoute(string url, out BlazorRouteData? route)

@@ -19,4 +19,10 @@ public static class MasaStackConfigConstant
     public const string ADMIN_PWD = "ADMIN_PWD";
     public const string DCC_SECRET = "DCC_SECRET";
     public const string SUFFIX_IDENTITY = "SUFFIX_IDENTITY";
+
+    /// <summary>
+    /// Dapr configuration store component name. Default value: masa-stack-dcc.
+    /// Configure via appsettings / env: DCC_STORE_NAME.
+    /// </summary>
+    public const string DCC_STORE_NAME = "DCC_STORE_NAME";
 }

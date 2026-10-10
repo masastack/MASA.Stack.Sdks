@@ -29,8 +29,7 @@ public class ServiceExtensionsTests
             {
                 ServiceName = "test-app"
             }, () => ObservableHelper.OTLPURL, true);
-        });
-        Assert.IsTrue(true);
+        });        
     }
 
     [TestMethod]
@@ -42,7 +41,6 @@ public class ServiceExtensionsTests
             {
                 ServiceName = "test-app"
             }, ObservableHelper.OTLPURL, true);
-        });
-        Assert.IsTrue(true);
+        });        
     }
 }

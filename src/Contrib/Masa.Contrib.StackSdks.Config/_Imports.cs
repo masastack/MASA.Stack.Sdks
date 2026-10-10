@@ -7,6 +7,7 @@ global using Masa.BuildingBlocks.Service.Caller;
 global using Masa.BuildingBlocks.StackSdks.Config;
 global using Masa.BuildingBlocks.StackSdks.Config.Models;
 global using Masa.Contrib.Configuration.ConfigurationApi.Dcc.Options;
+global using Masa.Contrib.Configuration.ConfigurationApi.Dcc.Dapr.Options;
 global using Masa.Contrib.StackSdks.Config;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection.Extensions;

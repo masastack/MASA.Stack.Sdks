@@ -50,32 +50,31 @@ internal class ExceptionHandler
         return null;
     }
 
-    public static async Task SetActivityBody(Activity activity, Stream inputSteam, Encoding? encoding = null)
+    public static void SetActivityBody(Activity activity, Stream inputSteam, Encoding? encoding = null)
     {
-        (long length, string? body) = await inputSteam.ReadAsStringAsync(encoding);
+        (long length, string? body) = inputSteam.ReadAsStringAsync(encoding).ConfigureAwait(false).GetAwaiter().GetResult();
 
         if (length <= 0)
             return;
         if (length - OpenTelemetryInstrumentationOptions.MaxBodySize > 0)
         {
-            OpenTelemetryInstrumentationOptions.Logger?.LogInformation("Request body in base64 encode: {Body}", body);
+            OpenTelemetryInstrumentationOptions.Logger?.LogInformation("Request body size exceeded max limit, length: {Length}, max: {MaxBodySize}", length, OpenTelemetryInstrumentationOptions.MaxBodySize);
         }
         else
         {
             activity.SetTag(OpenTelemetryAttributeName.Http.REQUEST_CONTENT_BODY, body);
         }
     }
-
-    /// <summary>
-    /// 存在坑，masaauth声明不规范导致，之后有调整了再调整此处
-    /// </summary>
-    /// <param name="activity"></param>
-    /// <param name="claims"></param>
+    
     public static void SetUserInfo(Activity activity, ClaimsPrincipal? claims)
     {
         if (claims == null || !claims.Claims.Any()) return;
-        string userId = claims.FindFirstValue(IdentityClaimConsts.USER_ID) ?? claims.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
-        string userName = claims.FindFirstValue(IdentityClaimConsts.USER_NAME) ?? claims.FindFirstValue(ClaimTypes.Name) ?? string.Empty;
+        string userId = claims.FindFirst(IdentityClaimConsts.USER_ID)?.Value
+                        ?? claims.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                        ?? string.Empty;
+        string userName = claims.FindFirst(IdentityClaimConsts.USER_NAME)?.Value
+                          ?? claims.FindFirst(ClaimTypes.Name)?.Value
+                          ?? string.Empty;
 
         activity.AddTag(OpenTelemetryAttributeName.EndUser.ID, userId);
         activity.AddTag(OpenTelemetryAttributeName.EndUser.USER_NICK_NAME, userName);

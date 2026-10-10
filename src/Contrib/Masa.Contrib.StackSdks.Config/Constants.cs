@@ -8,4 +8,6 @@ internal static class Constants
     internal const string DEFAULT_PUBLIC_ID = "public-$Config";
 
     internal const string DEFAULT_CONFIG_NAME = "$public.DefaultConfig";
+
+    internal const string DEFAULT_DCC_STORE_NAME = "masa-stack-dcc";
 }

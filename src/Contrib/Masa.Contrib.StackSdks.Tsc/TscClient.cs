@@ -6,12 +6,13 @@ namespace Masa.Contrib.StackSdks.Tsc;
 
 internal class TscClient : ITscClient
 {
-    public TscClient(ICaller caller)
+    internal TscClient(ICaller caller)
     {
         LogService = new LogService(caller);
         MetricService = new MetricService(caller);
         TraceService = new TraceService(caller);
         ApmService = new ApmService(caller);
+        TopologyService = new TopologyService(caller);
     }
 
     public ILogService LogService { get; }
@@ -21,4 +22,6 @@ internal class TscClient : ITscClient
     public ITraceService TraceService { get; }
 
     public IApmService ApmService { get; }
+
+    public ITopologyService TopologyService { get; }
 }

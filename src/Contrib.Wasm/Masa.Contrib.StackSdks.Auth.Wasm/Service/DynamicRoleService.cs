@@ -47,6 +47,6 @@ public class DynamicRoleService : IDynamicRoleService
     public Task<List<DynamicRoleModel>> HasAsync(params Guid[] roleIds)
     {
         var requestUri = $"{_party}/has";
-        return _caller.PostAsync<List<DynamicRoleModel>>(requestUri, new { roleIds });
+        return _caller.PostAsync<List<DynamicRoleModel>>(requestUri, new { roleIds })!;
     }
 }

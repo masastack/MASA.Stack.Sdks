@@ -21,7 +21,6 @@ internal static class HttpClientFilterExtenistion
         var headers = httpRequestMessage.Headers;
         if (headers.Connection != null && headers.Connection.Any() && headers.Upgrade != null && headers.Upgrade.Any())
         {
-            Activity.Current = null;
             return true;
         }
         return false;
