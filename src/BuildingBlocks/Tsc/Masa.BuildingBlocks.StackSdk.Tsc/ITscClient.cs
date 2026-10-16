@@ -12,4 +12,6 @@ public interface ITscClient
     public ITraceService TraceService { get; }
 
     public IApmService ApmService { get; }
+
+    public ITopologyService TopologyService { get; }
 }
