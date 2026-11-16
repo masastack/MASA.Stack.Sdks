@@ -14,7 +14,6 @@ public static class IdentityClaimConsts
     public const string EMAIL = "email";
     public const string USER_ID = "sub";
     public const string USER_NAME = "userName";
-    public const string IMPERSONATOR_USER_ID = $"{DEFAULT_PREFIX}/impersonatorUserId";
     public const string DOMAIN_NAME = $"{DEFAULT_PREFIX}/domainName";
     private const string DEFAULT_PREFIX = "https://masastack.com/security/identity/claims";
 }

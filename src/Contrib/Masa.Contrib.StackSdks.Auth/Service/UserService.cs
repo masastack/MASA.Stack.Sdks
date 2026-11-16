@@ -413,18 +413,6 @@ public class UserService : IUserService
         return _caller.PostAsync(requestUri, userClaimValuesModel);
     }
 
-    public async Task<GetImpersonateOutputModel> GetImpersonateAsync(GetImpersonateInputModel model)
-    {
-        var requestUri = $"api/user/impersonate";
-        return await _caller.GetAsync<object, GetImpersonateOutputModel>(requestUri, model) ?? new();
-    }
-
-    public async Task<ImpersonateOutputModel> ImpersonateAsync(ImpersonateInputModel model)
-    {
-        var requestUri = $"api/user/impersonate";
-        return await _caller.PostAsync<object, ImpersonateOutputModel>(requestUri, model) ?? new();
-    }
-
     public async Task<Dictionary<Guid, string>> GetLdapUsersAccountAsync(IEnumerable<Guid> userIds)
     {
         var requestUri = $"api/thirdPartyUser/ldapUsersAccount";
