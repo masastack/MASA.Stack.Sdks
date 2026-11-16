@@ -121,10 +121,6 @@ public interface IUserService
 
     Task AddClaimValuesAsync(UserClaimValuesModel userClaimValuesModel);
 
-    Task<GetImpersonateOutputModel> GetImpersonateAsync(GetImpersonateInputModel model);
-
-    Task<ImpersonateOutputModel> ImpersonateAsync(ImpersonateInputModel model);
-
     Task<Dictionary<Guid, string>> GetLdapUsersAccountAsync(IEnumerable<Guid> userIds);
 
     Task<Dictionary<Guid, string>> GetThirdPartyUserFieldValueAsync(GetThirdPartyUserFieldValueModel model);
